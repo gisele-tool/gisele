@@ -14,4 +14,9 @@ DESCRIPTION
   The Gisele process analyzer toolset provides tools and technique to model and analyze
   complex process models such as care processes.
 
+  When --ast is used, the command parses a process file and prints its Abstract Syntax
+  Tree (AST) on standard output. By default, this option prints the AST for manual
+  debugging, that is with colors and extra information. Use --ast=ruby to get a ruby
+  array for automatic processing.
+
 SystemExit

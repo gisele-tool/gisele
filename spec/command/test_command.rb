@@ -20,7 +20,7 @@ module Gisele
 
         out.should eq stdout
       end
-      
+
     end
 
   end

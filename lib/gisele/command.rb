@@ -14,6 +14,11 @@ module Gisele
   #   The Gisele process analyzer toolset provides tools and technique to model and analyze
   #   complex process models such as care processes.
   #
+  #   When --ast is used, the command parses a process file and prints its Abstract Syntax
+  #   Tree (AST) on standard output. By default, this option prints the AST for manual
+  #   debugging, that is with colors and extra information. Use --ast=ruby to get a ruby
+  #   array for automatic processing.
+  #
   class Gisele::Command <  Quickl::Command(__FILE__, __LINE__)
 
     # Install options
@@ -23,7 +28,7 @@ module Gisele
         @ast = (value || "debug").to_sym
       end
       opt.on_tail('--help', "Show this help message") do
-        raise Quickl::Help 
+        raise Quickl::Help
       end
       opt.on_tail('--version', 'Show version and exit') do
         raise Quickl::Exit, "gisele #{Gisele::VERSION} (c) The University of Louvain"
