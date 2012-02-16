@@ -1,5 +1,28 @@
 grammar Gisele::Language::Grammar
 
+  ### Task definitions
+
+  rule task_def
+    'task' spaces task_name spaces
+      task_signature?
+      task_refinement?
+    spaces 'end'
+  end
+
+  rule task_signature
+    task_signature_element+
+  end
+
+  rule task_signature_element
+    (fluent_def | trackvar_def) spaces
+  end
+
+  rule task_refinement
+    'refinement' spaces
+      process_statement spaces
+    'end'
+  end
+
   ### Process statements
 
   rule process_statement

@@ -301,5 +301,29 @@ module Gisele::Language
 
     end # process_statement
 
+    describe 'the task_def rule' do
+
+      it 'parses a simple task definition' do
+        taskdef = <<-TASKDEF.strip
+          task Process
+            refinement Diagnosis end
+          end
+        TASKDEF
+        parse(taskdef, :task_def).should eq(taskdef)
+      end
+
+      it 'supports optional variable definitions in the signature' do
+        taskdef = <<-TASKDEF.strip
+          task Process
+            fluent   diagKnown {Diagnosis:start}, {} initially false
+            trackvar mplus     {Diagnosis:end}
+            refinement Diagnosis end
+          end
+        TASKDEF
+        parse(taskdef, :task_def).should eq(taskdef)
+      end
+
+    end
+
   end
 end
