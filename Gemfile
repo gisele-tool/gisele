@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 group :runtime do
-  gem "citrus", "~> 2.4.1"
+  gem "citrus", "~> 2.4"
 end
 
 group :development do
