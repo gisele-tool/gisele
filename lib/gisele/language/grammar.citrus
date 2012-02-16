@@ -1,5 +1,15 @@
 grammar Gisele::Language::Grammar
 
+  ### Events
+
+  rule event_set
+    '{' spacing event_commalist? spacing '}'
+  end
+
+  rule event_commalist
+    event spacing (',' spacing event_commalist)?
+  end
+
   rule event
     task_start_or_end | event_name
   end
