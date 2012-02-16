@@ -9,7 +9,7 @@ module Gisele
         end
         kind = ast.first
         if respond_to? :"on_#{kind}"
-          send :"on_#{kind}", ast[1..-1]
+          send :"on_#{kind}", *ast[1..-1]
         else
           on_missing kind, ast[1..-1]
         end

@@ -6,11 +6,11 @@ module Gisele::Language
       Class.new(Transformer) do
         public :non_terminal?
 
-        def on_hello(args)
+        def on_hello(*args)
           [:seen_hello] + args
         end
 
-        def on_copy(args)
+        def on_copy(*args)
           deep_copy(:copy, args)
         end
 
