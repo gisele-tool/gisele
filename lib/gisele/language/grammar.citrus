@@ -1,0 +1,7 @@
+grammar Gisele::Language::Grammar
+
+  rule task_name
+    [A-Z] [A-Za-z0-9_]*
+  end
+
+end
