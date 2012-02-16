@@ -4,6 +4,7 @@ group :runtime do
   gem "citrus", "~> 2.4"
   gem "epath", "~> 0.0.1"
   gem "quickl", "~> 0.4.3"
+  gem "awesome_print", "~> 1.0"
 end
 
 group :development do

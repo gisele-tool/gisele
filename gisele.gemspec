@@ -130,6 +130,7 @@ Gem::Specification.new do |s|
   s.add_dependency("citrus", "~> 2.4")
   s.add_dependency("epath", "~> 0.0.1")
   s.add_dependency("quickl", "~> 0.4.3")
+  s.add_dependency("awesome_print", "~> 1.0")
 
   # The version of ruby required by this gem
   #
