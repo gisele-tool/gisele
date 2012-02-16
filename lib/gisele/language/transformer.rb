@@ -4,10 +4,7 @@ module Gisele
       class UnexpectedNodeError < StandardError; end
 
       def call(ast)
-        unless ast.is_a? Array
-          raise ArgumentError, "Array expected, got #{ast}"
-        end
-        unless ast.first.is_a? Symbol
+        unless non_terminal?(ast)
           raise ArgumentError, "Non terminal expected, got #{ast.inspect}"
         end
         kind = ast.first
@@ -20,6 +17,12 @@ module Gisele
 
       def on_missing(kind, args)
         raise UnexpectedNodeError, "Unexpected node: #{ast.first}"
+      end
+
+      protected
+
+      def non_terminal?(node)
+        node.is_a?(Array) and node.first.is_a?(Symbol)
       end
 
     end # class Transformer
