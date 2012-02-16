@@ -1,4 +1,4 @@
-[ :task, "Simple",
+[:task, "Simple",
   [:signature,
     [:fluent, "diagKnown",
       [:event_set, "Diagnosis:start"],
