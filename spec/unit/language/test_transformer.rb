@@ -10,6 +10,10 @@ module Gisele::Language
           [:seen_hello] + args
         end
 
+        def on_copy(args)
+          deep_copy(:copy, args)
+        end
+
         def on_missing(kind, *args)
           [:seen_missing, kind] + args
         end
@@ -53,6 +57,15 @@ module Gisele::Language
         lambda{
           transformer.call("world").should raise_error(ArgumentError, /world/)
         }
+      end
+
+    end
+
+    describe "deep_copy" do
+
+      it 'provides a friendly way of applying copy/recurse' do
+        ast = [:copy, [:hello, 'world'], "!"]
+        transformer.call(ast).should eq([:copy, [:seen_hello, "world"], "!"])
       end
 
     end

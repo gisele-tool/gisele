@@ -25,6 +25,12 @@ module Gisele
         node.is_a?(Array) and node.first.is_a?(Symbol)
       end
 
+      def deep_copy(kind, args)
+        args.inject [kind] do |memo,arg|
+          memo << (non_terminal?(arg) ? call(arg) : arg)
+        end
+      end
+
     end # class Transformer
   end # module Language
 end # module Gisele
