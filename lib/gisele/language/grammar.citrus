@@ -26,7 +26,7 @@ grammar Gisele::Language::Grammar
   ### Process statements
 
   rule process_statement
-      implicit_seq_statement | explicit_statement
+    implicit_seq_statement | explicit_statement
   end
 
   rule implicit_seq_statement
@@ -50,20 +50,27 @@ grammar Gisele::Language::Grammar
   end
 
   rule if_statement
-    'if' spaces bool_expr spaces
-      process_statement spaces
-    elsif_clause*
-    else_clause?
-    'end'
+    ('if' spaces cond:bool_expr spaces
+      dost:process_statement spaces
+      elsifclauses:elsif_clause*
+      elseclause:else_clause?
+    'end'){
+      elsifs = elsifclauses.matches.map{|c| c.value}
+      elsec  = elseclause.empty? ? [] : [elseclause.first.value]
+      [:if, cond.value, dost.value] + elsifs + elsec
+    }
   end
 
   rule elsif_clause
-    'elsif' spaces bool_expr spaces 
-      process_statement spaces
+    ('elsif' spaces cond:bool_expr spaces dost:process_statement spaces){
+      [:elsif, cond.value, dost.value]
+    }
   end
 
   rule else_clause
-    'else' spaces process_statement spaces
+    ('else' spaces dost:process_statement spaces){
+      [:else, dost.value]
+    }
   end
 
   rule while_statement

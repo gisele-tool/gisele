@@ -50,16 +50,16 @@ module Gisele::Language
         expected = [:event_set, "Diagnosis:start", "an_event"]
         ast(expr, :event_set).should eq(expected)
       end
-    
+
     end # event_set
 
     describe "the fluent_def rule" do
 
       it 'parses fluent definitions as expected' do
         defn     = "fluent diagKnown {Diagnosis:start, diagnosis}, {Treatment:end} initially false"
-        expected = [:fluent, 
+        expected = [:fluent,
                      "diagKnown",
-                     [:event_set, "Diagnosis:start", "diagnosis"], 
+                     [:event_set, "Diagnosis:start", "diagnosis"],
                      [:event_set, "Treatment:end"],
                      false]
         ast(defn, :fluent_def).should eq(expected)
@@ -67,9 +67,9 @@ module Gisele::Language
 
       it 'does not require the initial value' do
         defn     = "fluent diagKnown {Diagnosis:start, diagnosis}, {Treatment:end}"
-        expected = [:fluent, 
+        expected = [:fluent,
                      "diagKnown",
-                     [:event_set, "Diagnosis:start", "diagnosis"], 
+                     [:event_set, "Diagnosis:start", "diagnosis"],
                      [:event_set, "Treatment:end"],
                      nil]
         ast(defn, :fluent_def).should eq(expected)
@@ -81,9 +81,9 @@ module Gisele::Language
 
       it 'parses tracking variable definitions as expected' do
         defn     = "trackvar mplus {Diagnosis:start}"
-        expected = [:trackvar, 
+        expected = [:trackvar,
                      "mplus",
-                     [:event_set, "Diagnosis:start"], 
+                     [:event_set, "Diagnosis:start"],
                      [:event_set],
                      nil]
         ast(defn, :trackvar_def).should eq(expected)
@@ -91,9 +91,9 @@ module Gisele::Language
 
       it 'supports obsolete events and initial value' do
         defn     = "trackvar mplus {Diagnosis:start}, {Treatment:end} initially true"
-        expected = [:trackvar, 
+        expected = [:trackvar,
                      "mplus",
-                     [:event_set, "Diagnosis:start"], 
+                     [:event_set, "Diagnosis:start"],
                      [:event_set, "Treatment:end"],
                      true]
         ast(defn, :trackvar_def).should eq(expected)
@@ -151,7 +151,7 @@ module Gisele::Language
         expr     = "while goodCond Task1 end"
         expected = \
           [:while,
-            [:varref, "goodCond"], 
+            [:varref, "goodCond"],
             [:task_call, "Task1"]]
         ast(expr, :while_statement).should eq(expected)
       end
@@ -160,12 +160,68 @@ module Gisele::Language
         expr     = "while goodCond Task1 Task2 end"
         expected = \
           [:while,
-            [:varref, "goodCond"], 
+            [:varref, "goodCond"],
             [:seq, [:task_call, "Task1"], [:task_call, "Task2"]]]
         ast(expr, :while_statement).should eq(expected)
       end
 
     end # while_statement
+
+    describe "the else_clause rule" do
+
+      it 'parses as expected' do
+        expr     = "else Task1 "
+        expected = \
+          [:else, [:task_call, "Task1"]]
+        ast(expr, :else_clause).should eq(expected)
+      end
+
+    end # else_clause
+
+    describe "the elsif_clause rule" do
+
+      it 'parses as expected' do
+        expr     = "elsif goodCond Task1 "
+        expected = \
+          [:elsif, [:varref, "goodCond"], [:task_call, "Task1"]]
+        ast(expr, :elsif_clause).should eq(expected)
+      end
+
+    end # elsif_clause
+
+    describe "the if_statement rule" do
+
+      it 'parses as expected' do
+        expr     = "if goodCond Task1 end"
+        expected = \
+          [:if, [:varref, "goodCond"], [:task_call, "Task1"]]
+        ast(expr, :if_statement).should eq(expected)
+      end
+
+      it 'supports a else clause' do
+        expr     = "if goodCond Task1 else Task2 end"
+        expected = \
+          [:if,
+            [:varref, "goodCond"], [:task_call, "Task1"],
+            [:else, [:task_call, "Task2"]] ]
+        ast(expr, :if_statement).should eq(expected)
+      end
+
+      it 'supports elsif clauses' do
+        expr     = "if goodCond Task1 elsif otherCond Task2 elsif stillAnother Task3 else Task4 end"
+        expected = \
+          [:if,
+            [:varref, "goodCond"], [:task_call, "Task1"],
+            [:elsif,
+              [:varref, "otherCond"], [:task_call, "Task2"]],
+            [:elsif,
+              [:varref, "stillAnother"], [:task_call, "Task3"]],
+            [:else,
+              [:task_call, "Task4"]] ]
+        ast(expr, :if_statement).should eq(expected)
+      end
+
+    end # if_statement
 
   end
 end
