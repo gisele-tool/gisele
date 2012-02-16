@@ -14,23 +14,23 @@ module Gisele
         end
 
         def on_if(condition, dost, *clauses)
-          @condition = condition
-          base = [:case, [:when, @condition, @main.call(dost)] ]
+          base = [:case, [:when, condition, @main.call(dost)] ]
+          @condition = [:not, condition]
           clauses.inject base do |memo,clause|
             memo << call(clause)
           end
         end
 
         def on_elsif(condition, dost)
-          prev, @condition = @condition, [:and, @condition, condition]
-          [:when, 
-            [:and, condition, [:not, prev]],
+          prev, @condition = @condition, [:and, [:not, condition], @condition]
+          [:when,
+            [:and, condition, prev],
             @main.call(dost)]
         end
 
         def on_else(dost)
           [:when,
-            [:not, @condition],
+            @condition,
             @main.call(dost)]
         end
 
