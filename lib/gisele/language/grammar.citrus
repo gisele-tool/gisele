@@ -80,21 +80,27 @@ grammar Gisele::Language::Grammar
   ### Boolean expressions
 
   rule bool_expr
-    bool_and
-  end
-
-  rule bool_and
-      (bool_or spaces 'and' spaces bool_expr) 
-    | bool_or
+    bool_or
   end
 
   rule bool_or
-      (bool_not spaces 'or' spaces bool_expr) 
+      (left:bool_and spaces 'or' spaces right:bool_or){
+        [:or, left.value, right.value]
+      }
+    | bool_and
+  end
+
+  rule bool_and
+      (left:bool_not spaces 'and' spaces right:bool_and){
+        [:and, left.value, right.value]
+      }
     | bool_not
   end
 
   rule bool_not
-      ('not' &([ \t\n] | '(') spacing bool_term) 
+      ('not' &([ \t\n] | '(') spacing term:bool_not){
+        [:not, term.value]
+      }
     | bool_term
   end
 
@@ -103,11 +109,15 @@ grammar Gisele::Language::Grammar
   end
 
   rule bool_parenthesed
-    '(' spacing bool_expr spacing ')'
+    ('(' spacing expr:bool_expr spacing ')'){
+      expr.value
+    }
   end
 
   rule bool_varref
-    variable_name
+    (variable_name){
+      [:varref, strip]
+    }
   end
 
   ### Variables
