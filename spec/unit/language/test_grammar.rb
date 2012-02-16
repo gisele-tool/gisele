@@ -236,5 +236,70 @@ module Gisele::Language
 
     end # bool_expr
 
+    ### Process statements
+
+    describe 'the par_statement rule' do
+
+      it 'parses a single parallel statement' do
+        expr = 'par Task end'
+        parse(expr, :par_statement).should eq(expr)
+      end
+
+    end # par_statement
+
+    describe 'the seq_statement rule' do
+
+      it 'parses a single sequence statement' do
+        expr = 'seq Task end'
+        parse(expr, :seq_statement).should eq(expr)
+      end
+
+    end # seq_statement
+
+    describe 'the while_statement rule' do
+
+      it 'parses a single while statement' do
+        expr = 'while badCond Task end'
+        parse(expr, :while_statement).should eq(expr)
+      end
+
+    end # while_statement
+
+    describe 'the if_statement rule' do
+
+      it 'parses a single if statement' do
+        expr = 'if goodCond Task end'
+        parse(expr, :if_statement).should eq(expr)
+      end
+
+      it 'supports an optional else' do
+        expr = 'if goodCond GoodTask else BadTask end'
+        parse(expr, :if_statement).should eq(expr)
+      end
+
+      it 'supports an optional elsif clauses' do
+        expr = 'if goodCond GoodTask elsif otherCond OtherTask elsif yetAnother BadTask end'
+        parse(expr, :if_statement).should eq(expr)
+      end
+
+    end # if_statement
+
+    describe 'the process_statement rule' do
+
+      it 'parses a simple process statement' do
+        expr = <<-PROCESS.strip
+          DoSomething
+          if goodCond
+            DoForGood
+          else
+            DoForBad
+          end
+          CleanDesk
+        PROCESS
+        parse(expr, :process_statement).should eq(expr)
+      end
+
+    end # process_statement
+
   end
 end

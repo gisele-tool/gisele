@@ -1,5 +1,59 @@
 grammar Gisele::Language::Grammar
 
+  ### Process statements
+
+  rule process_statement
+      implicit_statement
+    | explicit_statement
+  end
+
+  rule implicit_statement
+    explicit_statement (spaces explicit_statement)+
+  end
+
+  rule explicit_statement
+      if_statement
+    | while_statement
+    | seq_statement
+    | par_statement
+    | task_call_statement
+  end
+
+  rule if_statement
+    'if' spaces bool_expr spaces
+      process_statement spaces
+    elsif_clause*
+    else_clause?
+    'end'
+  end
+
+  rule elsif_clause
+    'elsif' spaces bool_expr spaces 
+      process_statement spaces
+  end
+
+  rule else_clause
+    'else' spaces process_statement spaces
+  end
+
+  rule while_statement
+    'while' spaces bool_expr spaces
+      process_statement spaces
+    'end'
+  end
+
+  rule seq_statement
+    'seq' spaces explicit_statement+ spaces 'end'
+  end
+
+  rule par_statement
+    'par' spaces explicit_statement+ spaces 'end'
+  end
+
+  rule task_call_statement
+    task_name
+  end
+
   ### Boolean expressions
 
   rule bool_expr
