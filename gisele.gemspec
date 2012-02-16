@@ -128,6 +128,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency("rspec", "~> 2.8.0")
   s.add_development_dependency("wlang", "~> 0.10.2")
   s.add_dependency("citrus", "~> 2.4")
+  s.add_dependency("epath", "~> 0.0.1")
 
   # The version of ruby required by this gem
   #

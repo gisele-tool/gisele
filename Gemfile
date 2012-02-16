@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 group :runtime do
   gem "citrus", "~> 2.4"
+  gem "epath", "~> 0.0.1"
 end
 
 group :development do
