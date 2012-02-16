@@ -4,4 +4,8 @@ grammar Gisele::Language::Grammar
     [A-Z] [A-Za-z0-9_]*
   end
 
+  rule variable_name
+    [a-z] [A-Za-z0-9_]*
+  end
+
 end
