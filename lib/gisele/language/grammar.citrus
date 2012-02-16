@@ -8,6 +8,8 @@ grammar Gisele::Language::Grammar
     task_name ':' ('start' | 'end')
   end
 
+  ### Names
+  
   rule task_name
     [A-Z] [A-Za-z0-9_]*
   end
@@ -18,6 +20,22 @@ grammar Gisele::Language::Grammar
 
   rule event_name
     [a-z] [a-z0-9_]*
+  end
+
+  ### Literals
+
+  rule boolean_literal
+    'true' | 'false'
+  end
+
+  ### Spacing
+
+  rule spaces
+    [ \t\n]+
+  end
+
+  rule spacing
+    [ \t\n]*
   end
 
 end

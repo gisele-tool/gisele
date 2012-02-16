@@ -8,6 +8,36 @@ module Gisele::Language
       grammar.parse(text, :root => rule, :consume => consume)
     end
 
+    describe 'the spaces rule' do
+
+      it 'parses all kind of spaces' do
+        parse(' ', :spaces).should eq(' ')
+        parse("\t", :spaces).should eq("\t")
+        parse("\n", :spaces).should eq("\n")
+        parse(" \t\n", :spaces).should eq(" \t\n")
+      end
+
+      it 'enforces mandatory spacing' do
+        lambda{ parse('', :spaces) }.should raise_error(Citrus::ParseError)
+      end
+
+    end
+
+    describe 'the spacing rule' do
+
+      it 'parses all kind of spaces' do
+        parse(' ', :spacing).should eq(' ')
+        parse("\t", :spacing).should eq("\t")
+        parse("\n", :spacing).should eq("\n")
+        parse(" \t\n", :spacing).should eq(" \t\n")
+      end
+
+      it 'does not enforces mandatory spacing' do
+        parse('', :spacing).should eq('')
+      end
+
+    end
+
     describe 'the task_name rule' do
 
       it 'parses correct task names' do
