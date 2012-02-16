@@ -166,7 +166,6 @@ module Gisele::Language
 
     ### Variables
 
-
     describe 'the fluent_def rule' do
 
       it 'parses valid fluent definitions' do
@@ -185,6 +184,25 @@ module Gisele::Language
       end
 
     end # fluent_def
+
+    describe 'the trackvar_def rule' do
+
+      it 'parses valid tracking variable definitions' do
+        defn = 'trackvar plateletLow {BloodTest:end}'
+        parse(defn, :trackvar_def).should eq(defn)
+      end
+
+      it 'supports an optional initial value' do
+        defn = 'trackvar plateletLow {BloodTest:end} initially false'
+        parse(defn, :trackvar_def).should eq(defn)
+      end
+
+      it 'supports optional obsolete events' do
+        defn = 'trackvar plateletLow {BloodTest:end}, {Chemotherapy:end}'
+        parse(defn, :trackvar_def).should eq(defn)
+      end
+
+    end # trackvar_def
 
   end
 end

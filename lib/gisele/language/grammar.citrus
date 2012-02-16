@@ -2,6 +2,12 @@ grammar Gisele::Language::Grammar
 
   ### Variables
 
+  rule trackvar_def
+    'trackvar' spaces variable_name spacing
+      event_set (spacing ',' spacing event_set)?
+      (spaces 'initially' spaces boolean_literal)?
+  end
+
   rule fluent_def
     'fluent' spaces variable_name spacing
       event_set spacing ',' spacing event_set
