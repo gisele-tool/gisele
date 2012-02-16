@@ -223,5 +223,42 @@ module Gisele::Language
 
     end # if_statement
 
+    describe 'the task_refinement rule' do
+
+      it 'parses as expected' do
+        expr     = "refinement Task1 end"
+        expected = [:task_call, "Task1"]
+        ast(expr, :task_refinement).should eq(expected)
+      end
+
+    end # task_refinement
+
+    describe 'the task_signature rule' do
+
+      it 'parses as expected' do
+        expr     = "fluent diagKnown {}, {}\ntrackvar mplus {}"
+        expected = \
+          [ [:fluent, "diagKnown", [:event_set], [:event_set], nil],
+            [:trackvar, "mplus", [:event_set], [:event_set], nil]]
+        ast(expr, :task_signature).should eq(expected)
+      end
+
+    end # task_signature
+
+    describe 'the task_def rule' do
+
+      it 'parses as expected' do
+        expr     = "task Task1 fluent diagKnown {}, {} refinement Task2 end end"
+        expected = \
+          [:task, "Task1",
+            [:signature,
+              [:fluent, "diagKnown", [:event_set], [:event_set], nil]],
+            [:refinement,
+              [:task_call, "Task2"]]]
+        ast(expr, :task_def).should eq(expected)
+      end
+
+    end # task_def
+
   end
 end

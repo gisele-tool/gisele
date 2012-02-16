@@ -3,24 +3,30 @@ grammar Gisele::Language::Grammar
   ### Task definitions
 
   rule task_def
-    'task' spaces task_name spaces
-      task_signature?
-      task_refinement?
-    spaces 'end'
+    ('task' spaces tname:task_name spaces
+      signature:(task_signature spaces)?
+      refinement:(task_refinement spaces)?
+    'end'){
+      sigvalue = [:signature]  + (signature.empty?  ? [] : signature.first.first.value)
+      refvalue = [:refinement, (refinement.empty? ? [] : refinement.first.first.value)]
+      [:task, tname.value, sigvalue, refvalue]
+    }
   end
 
   rule task_signature
-    task_signature_element+
+    (front:task_signature_element tail:(spaces task_signature)?){
+      [front.value] + (tail.empty? ? [] : tail.first.matches.last.value)
+    }
   end
 
   rule task_signature_element
-    (fluent_def | trackvar_def) spaces
+    fluent_def | trackvar_def
   end
 
   rule task_refinement
-    'refinement' spaces
-      process_statement spaces
-    'end'
+    ('refinement' spaces main:process_statement spaces 'end'){
+      main.value
+    }
   end
 
   ### Process statements
