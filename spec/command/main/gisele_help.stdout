@@ -1,0 +1,20 @@
+
+Gisele - A Process Analyzer Toolset
+
+SYNOPSIS
+  gisele [--version] [--help] [--output=...] COMMAND [cmd opts] ARGS...
+
+OPTIONS
+      --help                       Show this help message
+      --version                    Show version and exit
+
+COMMANDS
+
+
+DESCRIPTION
+  The Gisele process analyzer toolset provides tools and technique to model and analyze
+  complex process models such as care processes.
+
+See 'gisele help COMMAND' for more information on a specific command.
+
+SystemExit
