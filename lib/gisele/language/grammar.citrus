@@ -1,5 +1,38 @@
 grammar Gisele::Language::Grammar
 
+  ### Boolean expressions
+
+  rule bool_expr
+    bool_and
+  end
+
+  rule bool_and
+      (bool_or spaces 'and' spaces bool_expr) 
+    | bool_or
+  end
+
+  rule bool_or
+      (bool_not spaces 'or' spaces bool_expr) 
+    | bool_not
+  end
+
+  rule bool_not
+      ('not' &([ \t\n] | '(') spacing bool_term) 
+    | bool_term
+  end
+
+  rule bool_term
+    bool_parenthesed | boolean_literal | bool_varref
+  end
+
+  rule bool_parenthesed
+    '(' spacing bool_expr spacing ')'
+  end
+
+  rule bool_varref
+    variable_name
+  end
+
   ### Variables
 
   rule trackvar_def
