@@ -5,5 +5,10 @@ require_relative "gisele/loader"
 #
 module Gisele
 
+  def parse(input)
+    Language::Parser::parse(input)
+  end
+  module_function :parse
+
 end # module Gisele
 require_relative 'gisele/language'

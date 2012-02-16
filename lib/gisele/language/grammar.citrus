@@ -231,12 +231,16 @@ grammar Gisele::Language::Grammar
 
   ### Spacing
 
+  rule comment
+    "#" (![\n] .)*
+  end
+
   rule spaces
-    [ \t\n]+
+    (comment | [ \t\n])+
   end
 
   rule spacing
-    [ \t\n]*
+    (comment | [ \t\n])*
   end
 
 end
