@@ -12,7 +12,7 @@ module Gisele
 
         out, err = capture_io do
           begin
-            Command.run(argv)
+            Dir.chdir(fixtures_dir){ Command.run(argv) }
           rescue SystemExit
             puts "SystemExit"
           end

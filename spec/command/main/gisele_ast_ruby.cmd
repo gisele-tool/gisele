@@ -1,0 +1,1 @@
+gisele --ast=ruby tasks/simple.gis

@@ -13,12 +13,17 @@ end
 
 module Helpers
 
+  def fixtures_dir
+    (Path.dir/:fixtures)
+  end
+
   def fixture_files(glob)
-    (Path.dir/:fixtures).glob(glob)
+    fixtures_dir.glob(glob)
   end
 
 end
 
 RSpec.configure do |c|
-  c.extend Helpers
+  c.extend  Helpers
+  c.include Helpers
 end
