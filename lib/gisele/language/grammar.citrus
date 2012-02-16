@@ -8,4 +8,8 @@ grammar Gisele::Language::Grammar
     [a-z] [A-Za-z0-9_]*
   end
 
+  rule event_name
+    [a-z] [a-z0-9_]*
+  end
+
 end
