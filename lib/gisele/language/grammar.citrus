@@ -1,5 +1,13 @@
 grammar Gisele::Language::Grammar
 
+  ### Units
+
+  rule task_unit
+    (spacing defn:task_def spacing){
+      defn.value
+    }
+  end
+
   ### Task definitions
 
   rule task_def
