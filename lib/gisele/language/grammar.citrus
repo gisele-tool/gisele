@@ -26,12 +26,19 @@ grammar Gisele::Language::Grammar
   ### Process statements
 
   rule process_statement
-      statement_list
-    | explicit_statement
+      implicit_seq_statement | explicit_statement
+  end
+
+  rule implicit_seq_statement
+    (front:explicit_statement spaces tail:statement_list){
+      [:seq, front.value] + tail.value
+    }
   end
 
   rule statement_list
-    explicit_statement (spaces explicit_statement)+
+    (f:explicit_statement t:(spaces statement_list)?){
+      [f.value] + (t.empty? ? [] : t.first.matches.last.value)
+    }
   end
 
   rule explicit_statement
@@ -60,21 +67,29 @@ grammar Gisele::Language::Grammar
   end
 
   rule while_statement
-    'while' spaces bool_expr spaces
-      process_statement spaces
-    'end'
+    ('while' spaces cond:bool_expr spaces
+      dost:process_statement spaces
+    'end'){
+      [:while, cond.value, dost.value]
+    }
   end
 
   rule seq_statement
-    'seq' spaces statement_list spaces 'end'
+    ('seq' spaces list:statement_list spaces 'end'){
+      [:seq] + list.value
+    }
   end
 
   rule par_statement
-    'par' spaces statement_list spaces 'end'
+    ('par' spaces list:statement_list spaces 'end'){
+      [:par] + list.value
+    }
   end
 
   rule task_call_statement
-    task_name
+    (task_name){
+      [:task_call, strip]
+    }
   end
 
   ### Boolean expressions
@@ -122,26 +137,47 @@ grammar Gisele::Language::Grammar
 
   ### Variables
 
+  rule variable_def
+    trackvar_def | fluent_def
+  end
+
   rule trackvar_def
-    'trackvar' spaces variable_name spacing
-      event_set (spacing ',' spacing event_set)?
-      (spaces 'initially' spaces boolean_literal)?
+    ('trackvar' spaces name:variable_name spacing
+      init:event_set term:(spacing ',' spacing event_set)?
+      initially:initially_def?){
+        termval = term.empty?      ? [:event_set] : term.first.matches.last.value
+        initval = initially.empty? ? nil          : initially.first.value
+        [:trackvar, name.value, init.value, termval, initval]
+      }
   end
 
   rule fluent_def
-    'fluent' spaces variable_name spacing
-      event_set spacing ',' spacing event_set
-    (spaces 'initially' spaces boolean_literal)?
+      ('fluent' spaces name:variable_name spacing
+          init:event_set spacing ',' spacing term:event_set initially:initially_def?){
+        initval = initially.empty? ? nil : initially.first.value
+        [:fluent, name.value, init.value, term.value, initval]
+      }
+  end
+  
+  rule initially_def
+    (spaces 'initially' spaces lit:boolean_literal){
+      lit.value
+    }
   end
 
   ### Events
 
   rule event_set
-    '{' spacing event_commalist? spacing '}'
+    ('{' spacing list:event_commalist? spacing '}'){
+      [:event_set] + (list.empty? ? [] : list.first.value)
+    }
   end
 
   rule event_commalist
-    event spacing (',' spacing event_commalist)?
+    (front:event tail:(spacing ',' spacing event_commalist)?){
+      tailval = tail.empty? ? [] : tail.first.matches.last.value
+      [ front.value ] + tailval
+    }
   end
 
   rule event
@@ -169,7 +205,7 @@ grammar Gisele::Language::Grammar
   ### Literals
 
   rule boolean_literal
-    'true' | 'false'
+    ('true' | 'false'){ strip == "true" ? true : false }
   end
 
   ### Spacing
