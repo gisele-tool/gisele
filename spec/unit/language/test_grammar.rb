@@ -11,9 +11,10 @@ module Gisele::Language
     describe 'the task_name rule' do
 
       it 'parses correct task names' do
-        parse('A',         :task_name).should eq('A')
-        parse('Diagnosis', :task_name).should eq('Diagnosis')
-        parse('TaskName',  :task_name).should eq('TaskName')
+        parse('A',          :task_name).should eq('A')
+        parse('Diagnosis',  :task_name).should eq('Diagnosis')
+        parse('TaskName',   :task_name).should eq('TaskName')
+        parse('Task_Name',  :task_name).should eq('Task_Name')
       end
 
       it 'raises on invalid task names' do
