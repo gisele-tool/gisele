@@ -16,7 +16,11 @@ module Gisele::Language
         parse('TaskName',  :task_name).should eq('TaskName')
       end
 
-    end
+      it 'raises on invalid task names' do
+        lambda{ parse('not_a_task_name',  :task_name) }.should raise_error(Citrus::ParseError)
+      end
+
+    end # task_name
 
   end
 end
