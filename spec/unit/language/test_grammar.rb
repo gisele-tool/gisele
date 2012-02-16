@@ -101,6 +101,8 @@ module Gisele::Language
 
     end # event_name
 
+    ### Events
+
     describe 'the task_start_or_end rule' do
 
       it 'parses correct event names' do
@@ -161,6 +163,28 @@ module Gisele::Language
       end
 
     end # event_set
+
+    ### Variables
+
+
+    describe 'the fluent_def rule' do
+
+      it 'parses valid fluent definitions' do
+        defn = 'fluent diagKnown {Diagnosis:start}, {Treatment:end} initially false'
+        parse(defn, :fluent_def).should eq(defn)
+      end
+
+      it 'supports a missing initial value' do
+        defn = 'fluent diagKnown {Diagnosis:start}, {Treatment:end}'
+        parse(defn, :fluent_def).should eq(defn)
+      end
+
+      it 'supports empty sets for events' do
+        defn = 'fluent diagKnown {}, {} initially true'
+        parse(defn, :fluent_def).should eq(defn)
+      end
+
+    end # fluent_def
 
   end
 end

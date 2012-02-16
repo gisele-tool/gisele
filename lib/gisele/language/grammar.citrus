@@ -1,5 +1,13 @@
 grammar Gisele::Language::Grammar
 
+  ### Variables
+
+  rule fluent_def
+    'fluent' spaces variable_name spacing
+      event_set spacing ',' spacing event_set
+    (spaces 'initially' spaces boolean_literal)?
+  end
+
   ### Events
 
   rule event_set
