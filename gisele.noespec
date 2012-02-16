@@ -3,6 +3,9 @@ template-info:
   version: 1.7.0
   links:
     source: https://github.com/blambeau/noe
+  manifest:
+    spec/test___lower__.rb:
+      ignore: true
 variables:
   lower:
     gisele
