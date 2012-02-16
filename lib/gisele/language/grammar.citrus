@@ -26,11 +26,11 @@ grammar Gisele::Language::Grammar
   ### Process statements
 
   rule process_statement
-      implicit_statement
+      statement_list
     | explicit_statement
   end
 
-  rule implicit_statement
+  rule statement_list
     explicit_statement (spaces explicit_statement)+
   end
 
@@ -66,11 +66,11 @@ grammar Gisele::Language::Grammar
   end
 
   rule seq_statement
-    'seq' spaces explicit_statement+ spaces 'end'
+    'seq' spaces statement_list spaces 'end'
   end
 
   rule par_statement
-    'par' spaces explicit_statement+ spaces 'end'
+    'par' spaces statement_list spaces 'end'
   end
 
   rule task_call_statement

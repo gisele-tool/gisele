@@ -241,7 +241,7 @@ module Gisele::Language
     describe 'the par_statement rule' do
 
       it 'parses a single parallel statement' do
-        expr = 'par Task end'
+        expr = 'par Task1 Task2 end'
         parse(expr, :par_statement).should eq(expr)
       end
 
@@ -250,7 +250,7 @@ module Gisele::Language
     describe 'the seq_statement rule' do
 
       it 'parses a single sequence statement' do
-        expr = 'seq Task end'
+        expr = 'seq Task1 Task2 end'
         parse(expr, :seq_statement).should eq(expr)
       end
 
