@@ -1,5 +1,13 @@
 grammar Gisele::Language::Grammar
 
+  rule event
+    task_start_or_end | event_name
+  end
+
+  rule task_start_or_end
+    task_name ':' ('start' | 'end')
+  end
+
   rule task_name
     [A-Z] [A-Za-z0-9_]*
   end

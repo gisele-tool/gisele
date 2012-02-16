@@ -52,5 +52,32 @@ module Gisele::Language
 
     end # event_name
 
+    describe 'the task_start_or_end rule' do
+
+      it 'parses correct event names' do
+        parse('Task:start', :task_start_or_end).should eq('Task:start')
+        parse('Task:end',   :task_start_or_end).should eq('Task:end')
+      end
+
+      it 'raises on simple task names' do
+        lambda{ parse('Task', :task_start_or_end) }.should raise_error(Citrus::ParseError)
+      end
+
+    end # task_start_or_end
+
+    describe 'the event rule' do
+
+      it 'parses correct events' do
+        parse('Task:start', :event).should eq('Task:start')
+        parse('Task:end',   :event).should eq('Task:end')
+        parse('an_event',   :event).should eq('an_event')
+      end
+
+      it 'raises on invalid event names' do
+        lambda{ parse('Task', :event) }.should raise_error(Citrus::ParseError)
+      end
+
+    end
+
   end
 end
