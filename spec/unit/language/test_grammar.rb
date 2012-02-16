@@ -8,6 +8,8 @@ module Gisele::Language
       grammar.parse(text, :root => rule, :consume => consume)
     end
 
+    ### Spacing
+
     describe 'the spaces rule' do
 
       it 'parses all kind of spaces' do
@@ -37,6 +39,23 @@ module Gisele::Language
       end
 
     end
+
+    ### Literals
+
+    describe 'the boolean_literal rule' do
+
+      it 'parses booleans' do
+        parse('true',  :boolean_literal).should eq('true')
+        parse('false', :boolean_literal).should eq('false')
+      end
+
+      it 'does not parses integers' do
+        lambda{ parse('0', :boolean_literal) }.should raise_error(Citrus::ParseError)
+      end
+
+    end
+
+    ### Names
 
     describe 'the task_name rule' do
 
