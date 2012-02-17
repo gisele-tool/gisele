@@ -5,8 +5,10 @@ module Gisele::Language
     let(:grammar){ Gisele::Language::Grammar }
 
     def ast(text, rule, consume = true)
-      grammar.parse(text, :root => rule, :consume => consume).to_ast
+      @parsed = grammar.parse(text, :root => rule, :consume => consume).to_ast
     end
+    
+    after{ @parsed.should be_a(Abstract::Node) }
 
     describe "the bool_expr rule" do
 

@@ -4,7 +4,10 @@ module Gisele
       module Node
 
         def to_ast
-          _to_ast
+          ast     = _to_ast
+          modname = Language.rule2mod(ast.first)
+          mod     = Abstract.const_get(modname) rescue Abstract::Node
+          ast.extend(mod)
         end
 
       end # module Node
