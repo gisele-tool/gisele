@@ -21,6 +21,27 @@ module Gisele::Language::AST
 
     end # children
 
+    describe 'copy' do
+
+      it 'collects block results ala `inject`' do
+        source = node([:unit, "world", "gisele"])
+        target = source.copy do |memo,child|
+          memo << child.upcase
+        end
+        target.should be_a(Unit)
+        target.should eq([:unit, "WORLD", "GISELE"])
+      end
+
+      it 'returns a real equal copy when no children' do
+        source = node([:unit])
+        target = source.copy do |memo,child| end
+        target.should eq(source)
+        target.object_id.should_not eq(source.object_id)
+        target.should be_a(Unit)
+      end
+
+    end
+
     describe 'dup' do
 
       it 'duplicates the underlying array' do

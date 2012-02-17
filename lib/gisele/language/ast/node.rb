@@ -24,6 +24,20 @@ module Gisele
           self[1..-1]
         end
 
+        # Applies copy-and-transform to this node.
+        #
+        # Example:
+        #   node = AST.node([:something, "world", [:subnode ...]])
+        #   node.copy do |base,child|
+        #     base << ... make something with child ...
+        #   end
+        #   # => [:something, ...]
+        #
+        def copy(&block)
+          base = AST.node([rule_name])
+          children.inject(base, &block)
+        end
+
         # Duplicates this node.
         #
         # This method ensures that the node marking through modules
