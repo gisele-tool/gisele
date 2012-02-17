@@ -226,7 +226,7 @@ grammar Gisele::Language::Grammar
   ### Literals
 
   rule boolean_literal
-    ('true' | 'false'){ strip == "true" ? true : false }
+    ('true' | 'false') <Gisele::Language::Syntax::BooleanLiteral>
   end
 
   ### Spacing
