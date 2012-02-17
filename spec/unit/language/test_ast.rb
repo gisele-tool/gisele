@@ -223,7 +223,7 @@ module Gisele::Language
 
       it 'parses as expected' do
         expr     = "refinement Task1 end"
-        expected = [:task_call_st, "Task1"]
+        expected = [:task_refinement, [:task_call_st, "Task1"]]
         ast(expr, :task_refinement).should eq(expected)
       end
 
@@ -234,7 +234,8 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "fluent diagKnown {}, {}\ntrackvar mplus {}"
         expected = \
-          [ [:fluent, "diagKnown", [:event_set], [:event_set], nil],
+          [ :task_signature,
+            [:fluent, "diagKnown", [:event_set], [:event_set], nil],
             [:trackvar, "mplus", [:event_set], [:event_set], nil]]
         ast(expr, :task_signature).should eq(expected)
       end
@@ -246,10 +247,10 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "task Task1 fluent diagKnown {}, {} refinement Task2 end end"
         expected = \
-          [:task, "Task1",
-            [:signature,
+          [:task_def, "Task1",
+            [:task_signature,
               [:fluent, "diagKnown", [:event_set], [:event_set], nil]],
-            [:refinement,
+            [:task_refinement,
               [:task_call_st, "Task2"]]]
         ast(expr, :task_def).should eq(expected)
       end

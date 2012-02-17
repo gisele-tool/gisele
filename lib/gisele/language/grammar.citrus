@@ -11,20 +11,13 @@ grammar Gisele::Language::Grammar
   ### Task definitions
 
   rule task_def
-    ('task' spaces tname:task_name spaces
-      signature:(task_signature spaces)?
-      refinement:(task_refinement spaces)?
-    'end'){
-      sigvalue = [:signature]  + (signature.empty?  ? [] : signature.first.first.value)
-      refvalue = [:refinement, (refinement.empty? ? [] : refinement.first.first.value)]
-      [:task, tname.value, sigvalue, refvalue]
-    }
+    ('task' spaces task_name spaces (task_signature spaces)? (task_refinement spaces)? 'end')
+    <Gisele::Language::Syntax::TaskDef>
   end
 
   rule task_signature
-    (front:task_signature_element tail:(spaces task_signature)?){
-      [front.value] + (tail.empty? ? [] : tail.first.matches.last.value)
-    }
+    (task_signature_element (spaces task_signature_element)*)
+    <Gisele::Language::Syntax::TaskSignature>
   end
 
   rule task_signature_element
@@ -32,9 +25,8 @@ grammar Gisele::Language::Grammar
   end
 
   rule task_refinement
-    ('refinement' spaces main:process_statement spaces 'end'){
-      main.value
-    }
+    ('refinement' spaces process_statement spaces 'end')
+    <Gisele::Language::Syntax::TaskRefinement>
   end
 
   ### Process statements
