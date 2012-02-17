@@ -11,6 +11,12 @@ module Gisele
       def on_task_def(node)
         @graph = Yargi::Digraph.new
         call(SugarRemoval.new.call(node.last))
+        @graph.vertices(Connector).each do |vertex|
+          next unless vertex.out_edges.size == 1
+          target = vertex.out_edges.first.target
+          @graph.reconnect(vertex.in_edges, nil, target)
+          @graph.remove_vertex(vertex)
+        end
         @graph
       end
 
