@@ -27,23 +27,19 @@ module Gisele::Language
 
     end # bool_expr
 
-    describe 'the event_commalist rule' do
+    describe 'the event_set rule' do
+
+      it 'parses empty lists as expected' do
+        expr     = '{ }'
+        expected = [:event_set]
+        ast(expr, :event_set).should eq(expected)
+      end
 
       it 'parses singleton lists as expected' do
-        expr     = 'Diagnosis:start'
-        expected = ["Diagnosis:start"]
-        ast(expr, :event_commalist).should eq(expected)
+        expr     = '{Diagnosis:start}'
+        expected = [:event_set, "Diagnosis:start"]
+        ast(expr, :event_set).should eq(expected)
       end
-
-      it 'parses non empty lists as expected' do
-        expr     = 'Diagnosis:start, an_event'
-        expected = ["Diagnosis:start", "an_event"]
-        ast(expr, :event_commalist).should eq(expected)
-      end
-
-    end # event_commalist
-
-    describe 'the event_set rule' do
 
       it 'parses non empty lists as expected' do
         expr     = '{Diagnosis:start, an_event}'

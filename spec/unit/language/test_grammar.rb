@@ -130,22 +130,6 @@ module Gisele::Language
 
     end # event
 
-    describe 'the event_commalist rule' do
-
-      it 'parses a singleton list' do
-        parse('Task:start', :event_commalist).should eq('Task:start')
-      end
-
-      it 'parses multiple events' do
-        parse('Task:start, an_event', :event_commalist).should eq('Task:start, an_event')
-      end
-
-      it 'recognizes invalid events' do
-        lambda{ parse('Task:start, NotAnEvent', :event_commalist) }.should raise_error(Citrus::ParseError)
-      end
-
-    end # event_commalist
-
     describe 'the event_set rule' do
 
       it 'parses empty sets' do
@@ -156,6 +140,10 @@ module Gisele::Language
       it 'parses event singletons' do
         parse('{Task:start}', :event_set).should eq('{Task:start}')
         parse('{  Task:start  }', :event_set).should eq('{  Task:start  }')
+      end
+
+      it 'parses event sets' do
+        parse('{Task:start, Task:end}', :event_set).should eq('{Task:start, Task:end}')
       end
 
       it 'recognizes invalid events in the set' do
