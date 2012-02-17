@@ -35,6 +35,13 @@
                     [
                         :task_call_st,
                         "Diagnosis"
+                    ],
+                    [
+                        :else_clause,
+                        [
+                            :task_call_st,
+                            "NoDiag"
+                        ]
                     ]
                 ],
                 [

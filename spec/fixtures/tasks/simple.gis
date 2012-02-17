@@ -3,6 +3,8 @@ task Simple
   refinement
     if not(diagKnown)
       Diagnosis
+    else
+      NoDiag
     end
     Treatment
   end

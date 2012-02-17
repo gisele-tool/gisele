@@ -4,68 +4,70 @@ module Gisele::Language
     describe "if_st to case_st" do
       include AST::Helpers
 
+      def ast(source)
+        Syntax.ast(source.strip, :root => :if_st)
+      end
+
       def rewrite(ast)
-        SugarRemoval.new.call(node(ast))
+        SugarRemoval.new.call(ast)
       end
 
       it 'rewrites single if correctly' do
-        source   = [:if, [:varref, "goodCond"], [:task_call, "Task1"]]
+        source   = ast("if goodCond Task1 end")
         expected = \
-          [:case,
-            [:when, [:varref, "goodCond"], [:task_call, "Task1"] ]]
+          [:case_st,
+            [:when_clause, [:var_ref, "goodCond"], [:task_call_st, "Task1"] ]]
         rewrite(source).should eq(expected)
       end
 
       it 'negates the else clause' do
-        source   = \
-          [:if,
-            [:varref, "goodCond"], [:task_call, "Task1"],
-            [:else,                [:task_call, "Task2"] ]]
+        source   = ast("if goodCond Task1 else Task2 end")
         expected = \
-          [:case,
-            [:when, [:varref, "goodCond"], [:task_call, "Task1"] ],
-            [:when, [:not, [:varref, "goodCond"]], [:task_call, "Task2"] ]
+          [:case_st,
+            [:when_clause, [:var_ref, "goodCond"], [:task_call_st, "Task1"] ],
+            [:when_clause, [:bool_not, [:var_ref, "goodCond"]], [:task_call_st, "Task2"] ]
           ]
         rewrite(source).should eq(expected)
       end
 
       it 'handles elsif clauses correctly' do
-        source = \
-          [:if,
-            [:varref, "c1"], [:task_call, "Task1"],
-            [:elsif, [:varref, "c2"], [:task_call, "Task2"]],
-            [:elsif, [:varref, "c3"], [:task_call, "Task3"]],
-            [:else,                   [:task_call, "Task4"] ]]
+        source = ast(<<-IF)
+          if    c1 Task1
+          elsif c2 Task2
+          elsif c3 Task3
+          else  Task4
+          end
+        IF
         expected = \
-          [:case,
-            [:when,
-              [:varref, "c1"],
-              [:task_call, "Task1"] ],
-            [:when,
-              [:and,
-                [:varref, "c2"],
-                [:not, [:varref, "c1"]] ],
-              [:task_call, "Task2"] ],
-            [:when,
-              [:and,
-                [:varref, "c3"],
-                [:and,
-                  [:not, [:varref, "c2"]],
-                  [:not, [:varref, "c1"]] ]],
-              [:task_call, "Task3"] ],
-            [:when,
-              [:and,
-                [:not, [:varref, "c3"]],
-                [:and,
-                  [:not, [:varref, "c2"]],
-                  [:not, [:varref, "c1"]]]],
-              [:task_call, "Task4"] ],
+          [:case_st,
+            [:when_clause,
+              [:var_ref, "c1"],
+              [:task_call_st, "Task1"] ],
+            [:when_clause,
+              [:bool_and,
+                [:var_ref, "c2"],
+                [:bool_not, [:var_ref, "c1"]] ],
+              [:task_call_st, "Task2"] ],
+            [:when_clause,
+              [:bool_and,
+                [:var_ref, "c3"],
+                [:bool_and,
+                  [:bool_not, [:var_ref, "c2"]],
+                  [:bool_not, [:var_ref, "c1"]] ]],
+              [:task_call_st, "Task3"] ],
+            [:when_clause,
+              [:bool_and,
+                [:bool_not, [:var_ref, "c3"]],
+                [:bool_and,
+                  [:bool_not, [:var_ref, "c2"]],
+                  [:bool_not, [:var_ref, "c1"]]]],
+              [:task_call_st, "Task4"] ],
           ]
         rewrite(source).should eq(expected)
       end
 
       it 'recurse on other nodes' do
-        if_st = [:if, [:varref, "goodCond"], [:task_call, "Task1"]]
+        if_st = ast("if goodCond Task1 end")
         rw_st = rewrite(if_st)
         rewrite([:unit, if_st]).should eq([:unit, rw_st])
       end

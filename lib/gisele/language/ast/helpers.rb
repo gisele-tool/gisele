@@ -3,6 +3,11 @@ module Gisele
     module AST
       module Helpers
 
+        def ast(arg)
+          return node(arg) if looks_a_node?(arg)
+          Syntax.ast(arg)
+        end
+
         def node(arg)
           return arg if arg.is_a?(Node)
           unless looks_a_node?(arg)

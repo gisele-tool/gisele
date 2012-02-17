@@ -23,9 +23,13 @@ module Gisele
 
     # Install options
     options do |opt|
-      @ast = nil
+      @print_ast = nil
       opt.on('--ast=[MODE]', 'Prints the process abstract syntax tree (debug,ruby)') do |value|
-        @ast = (value || "debug").to_sym
+        @print_ast = (value || "debug").to_sym
+      end
+      @sugar = true
+      opt.on('--no-sugar', 'Apply syntactic sugar removal') do
+        @sugar = false
       end
       opt.on_tail('--help', "Show this help message") do
         raise Quickl::Help
@@ -42,8 +46,9 @@ module Gisele
         raise Quickl::IOAccessError, "File does not exists: #{file}"
       end
 
-      parsed = Gisele.ast(file)
-      print_ast(parsed, @ast) if @ast
+      ast = Gisele.ast(file)
+      ast = Gisele::Language::SugarRemoval.new.call(ast) unless @sugar
+      print_ast(ast, @print_ast) if @print_ast
     end
 
     private
