@@ -12,7 +12,7 @@ variables:
   upper:
     Gisele
   version:
-    0.1.0
+    0.2.0
   summary: |-
     Gisele is a Process Analyzer Toolset
   description: |-
@@ -29,7 +29,7 @@ variables:
     - {name: epath,         version: "~> 0.0.1",  groups: [runtime]}
     - {name: quickl,        version: "~> 0.4.3",  groups: [runtime]}
     - {name: awesome_print, version: "~> 1.0",    groups: [runtime]}
-    - {name: yargi,         version: "~> 0.3.0",  groups: [runtime]}
+    - {name: yargi,         version: "~> 0.2.0",  groups: [runtime]}
     #
     - {name: rake,      version: "~> 0.9.2",  groups: [development]}
     - {name: bundler,   version: "~> 1.0",    groups: [development]}

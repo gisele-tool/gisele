@@ -5,7 +5,7 @@ group :runtime do
   gem "epath", "~> 0.0.1"
   gem "quickl", "~> 0.4.3"
   gem "awesome_print", "~> 1.0"
-  gem "yargi", :path => "../yargi" # "~> 0.3.0"
+  gem "yargi", "~> 0.2.0"
 end
 
 group :development do
