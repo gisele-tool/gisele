@@ -5,7 +5,7 @@ module Gisele
   #
   # SYNOPSIS
   #   gisele [--version] [--help]
-  #   gisele [--ast] PROCESS_FILE
+  #   gisele [--ast | --graph] PROCESS_FILE
   #
   # OPTIONS
   # #{summarized_options}
@@ -14,14 +14,18 @@ module Gisele
   #   The Gisele process analyzer toolset provides tools and technique to model and analyze
   #   complex process models such as care processes.
   #
-  #   When --ast is used, the command parses a process file and prints its Abstract Syntax
+  #   When --no-sugar is specified, syntactic sugar is first removed before making any other
+  #   transformation. For now, this rewrites all `if` statements as explicit `case` guarded
+  #   commands.
+  #
+  #   When --ast is used, the command parses the process file and prints its Abstract Syntax
   #   Tree (AST) on standard output. By default, this option prints the AST for manual
   #   debugging, that is with colors and extra information. Use --ast=ruby to get a ruby
   #   array for automatic processing.
   #
-  #   When --no-sugar is specified, syntactic sugar is first removed before making any other
-  #   transformation. For now, this rewrites all `if` statements as explicit `case` guarded
-  #   commands.
+  #   When --graph is used, the command parses the process file. It then converts the AST into
+  #   a directed graph representing the process as a box-and-arrow workflow and outputs it on 
+  #   standard output. For now, the only output format available is dot (from graphviz).
   #
   class Gisele::Command <  Quickl::Command(__FILE__, __LINE__)
 
