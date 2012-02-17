@@ -11,17 +11,17 @@ module Gisele::Language
     describe "the bool_expr rule" do
 
       it 'returns expected ast on simple expressions' do
-        expected = [:and, [:varref, "diagKnown"], [:varref, "platLow"]]
+        expected = [:and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]]
         ast("diagKnown and platLow", :bool_expr).should eq(expected)
       end
 
       it 'respects priorities' do
-        expected = [:or, [:and, [:varref, "diagKnown"], [:varref, "platLow"]], [:varref, "platHigh"]]
+        expected = [:or, [:and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]], [:var_ref, "platHigh"]]
         ast("diagKnown and platLow or platHigh", :bool_expr).should eq(expected)
       end
 
       it 'supports double negations' do
-        expected = [:not, [:not, [:varref, "diagKnown"]]]
+        expected = [:not, [:not, [:var_ref, "diagKnown"]]]
         ast("not not(diagKnown)", :bool_expr).should eq(expected)
       end
 
@@ -147,7 +147,7 @@ module Gisele::Language
         expr     = "while goodCond Task1 end"
         expected = \
           [:while,
-            [:varref, "goodCond"],
+            [:var_ref, "goodCond"],
             [:task_call, "Task1"]]
         ast(expr, :while_statement).should eq(expected)
       end
@@ -156,7 +156,7 @@ module Gisele::Language
         expr     = "while goodCond Task1 Task2 end"
         expected = \
           [:while,
-            [:varref, "goodCond"],
+            [:var_ref, "goodCond"],
             [:seq, [:task_call, "Task1"], [:task_call, "Task2"]]]
         ast(expr, :while_statement).should eq(expected)
       end
@@ -179,7 +179,7 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "elsif goodCond Task1 "
         expected = \
-          [:elsif, [:varref, "goodCond"], [:task_call, "Task1"]]
+          [:elsif, [:var_ref, "goodCond"], [:task_call, "Task1"]]
         ast(expr, :elsif_clause).should eq(expected)
       end
 
@@ -190,7 +190,7 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "if goodCond Task1 end"
         expected = \
-          [:if, [:varref, "goodCond"], [:task_call, "Task1"]]
+          [:if, [:var_ref, "goodCond"], [:task_call, "Task1"]]
         ast(expr, :if_statement).should eq(expected)
       end
 
@@ -198,7 +198,7 @@ module Gisele::Language
         expr     = "if goodCond Task1 else Task2 end"
         expected = \
           [:if,
-            [:varref, "goodCond"], [:task_call, "Task1"],
+            [:var_ref, "goodCond"], [:task_call, "Task1"],
             [:else, [:task_call, "Task2"]] ]
         ast(expr, :if_statement).should eq(expected)
       end
@@ -207,11 +207,11 @@ module Gisele::Language
         expr     = "if goodCond Task1 elsif otherCond Task2 elsif stillAnother Task3 else Task4 end"
         expected = \
           [:if,
-            [:varref, "goodCond"], [:task_call, "Task1"],
+            [:var_ref, "goodCond"], [:task_call, "Task1"],
             [:elsif,
-              [:varref, "otherCond"], [:task_call, "Task2"]],
+              [:var_ref, "otherCond"], [:task_call, "Task2"]],
             [:elsif,
-              [:varref, "stillAnother"], [:task_call, "Task3"]],
+              [:var_ref, "stillAnother"], [:task_call, "Task3"]],
             [:else,
               [:task_call, "Task4"]] ]
         ast(expr, :if_statement).should eq(expected)

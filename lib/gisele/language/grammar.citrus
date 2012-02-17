@@ -151,9 +151,8 @@ grammar Gisele::Language::Grammar
   end
 
   rule bool_varref
-    (variable_name){
-      [:varref, strip]
-    }
+    (variable_name)
+    <Gisele::Language::Syntax::VarRef>
   end
 
   ### Variables
