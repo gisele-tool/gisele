@@ -4,7 +4,7 @@ module Gisele
       module StList
         include Node
 
-        def _to_ast
+        def value
           captures[:explicit_statement].map{|x| x.to_ast}
         end
 

@@ -5,7 +5,7 @@ module Gisele
         include Node
 
         def _to_ast
-          [:par_st] + captures[:st_list].first.to_ast
+          [:par_st] + captures[:st_list].first.value
         end
 
       end # module ParSt

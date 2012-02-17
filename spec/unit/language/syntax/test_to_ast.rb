@@ -105,22 +105,6 @@ module Gisele::Language::Syntax
 
     end # task_call_statement
 
-    describe "the st_list rule" do
-
-      it 'parses a list of 2 elements' do
-        expr     = "Task1 Task2"
-        expected = [[:task_call_st, "Task1"], [:task_call_st, "Task2"]]
-        ast(expr, :st_list).should eq(expected)
-      end
-
-      it 'parses a list of 3 elements' do
-        expr     = "Task1 Task2 Task3"
-        expected = [[:task_call_st, "Task1"], [:task_call_st, "Task2"], [:task_call_st, "Task3"]]
-        ast(expr, :st_list).should eq(expected)
-      end
-
-    end # st_list
-
     describe "the par_st rule" do
 
       it 'parses as expected' do

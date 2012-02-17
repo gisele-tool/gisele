@@ -6,7 +6,7 @@ module Gisele
 
         def _to_ast
           front = captures[:explicit_statement].first.to_ast
-          tail  = captures[:st_list].first.to_ast
+          tail  = captures[:st_list].first.value
           [:seq_st, front] + tail
         end
 

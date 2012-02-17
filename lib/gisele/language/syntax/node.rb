@@ -4,10 +4,7 @@ module Gisele
       module Node
 
         def to_ast
-          ast     = _to_ast
-          modname = Language.rule2mod(ast.first)
-          mod     = AST.const_get(modname) rescue AST::Node
-          ast.extend(mod)
+          Language::AST.node(_to_ast)
         end
 
       end # module Node
