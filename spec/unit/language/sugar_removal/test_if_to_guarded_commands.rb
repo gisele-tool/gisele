@@ -16,7 +16,9 @@ module Gisele::Language
         source   = ast("if goodCond Task1 end")
         expected = \
           [:case_st,
-            [:when_clause, [:var_ref, "goodCond"], [:task_call_st, "Task1"] ]]
+            [:when_clause, 
+              [:bool_expr, [:var_ref, "goodCond"]], 
+              [:task_call_st, "Task1"] ]]
         rewrite(source).should eq(expected)
       end
 
@@ -24,8 +26,12 @@ module Gisele::Language
         source   = ast("if goodCond Task1 else Task2 end")
         expected = \
           [:case_st,
-            [:when_clause, [:var_ref, "goodCond"], [:task_call_st, "Task1"] ],
-            [:when_clause, [:bool_not, [:var_ref, "goodCond"]], [:task_call_st, "Task2"] ]
+            [:when_clause, 
+              [:bool_expr, [:var_ref, "goodCond"]], 
+              [:task_call_st, "Task1"] ],
+            [:when_clause, 
+              [:bool_expr, [:bool_not, [:var_ref, "goodCond"]]], 
+              [:task_call_st, "Task2"] ]
           ]
         rewrite(source).should eq(expected)
       end
@@ -41,26 +47,26 @@ module Gisele::Language
         expected = \
           [:case_st,
             [:when_clause,
-              [:var_ref, "c1"],
+              [:bool_expr, [:var_ref, "c1"]],
               [:task_call_st, "Task1"] ],
             [:when_clause,
-              [:bool_and,
+              [:bool_expr, [:bool_and,
                 [:var_ref, "c2"],
-                [:bool_not, [:var_ref, "c1"]] ],
+                [:bool_not, [:var_ref, "c1"]] ]],
               [:task_call_st, "Task2"] ],
             [:when_clause,
-              [:bool_and,
+              [:bool_expr, [:bool_and,
                 [:var_ref, "c3"],
                 [:bool_and,
                   [:bool_not, [:var_ref, "c2"]],
-                  [:bool_not, [:var_ref, "c1"]] ]],
+                  [:bool_not, [:var_ref, "c1"]] ]]],
               [:task_call_st, "Task3"] ],
             [:when_clause,
-              [:bool_and,
+              [:bool_expr, [:bool_and,
                 [:bool_not, [:var_ref, "c3"]],
                 [:bool_and,
                   [:bool_not, [:var_ref, "c2"]],
-                  [:bool_not, [:var_ref, "c1"]]]],
+                  [:bool_not, [:var_ref, "c1"]]]]],
               [:task_call_st, "Task4"] ],
           ]
         rewrite(source).should eq(expected)
@@ -71,10 +77,10 @@ module Gisele::Language
         expected = \
           [:case_st,
             [:when_clause,
-              [:bool_not, [:var_ref, "goodCond"]],
+              [:bool_expr, [:bool_not, [:var_ref, "goodCond"]]],
               [:task_call_st, "Task1"] ],
             [:when_clause,
-              [:var_ref, "goodCond"],
+              [:bool_expr, [:var_ref, "goodCond"]],
               [:task_call_st, "Task2"] ] ]
         rewrite(source).should eq(expected)
       end

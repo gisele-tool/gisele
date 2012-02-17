@@ -26,10 +26,13 @@
                 [
                     :if_st,
                     [
-                        :bool_not,
+                        :bool_expr,
                         [
-                            :var_ref,
-                            "diagKnown"
+                            :bool_not,
+                            [
+                                :var_ref,
+                                "diagKnown"
+                            ]
                         ]
                     ],
                     [

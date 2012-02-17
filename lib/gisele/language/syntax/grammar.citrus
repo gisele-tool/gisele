@@ -90,7 +90,8 @@ grammar Gisele::Language::Syntax::Grammar
   ### Boolean expressions
 
   rule bool_expr
-    bool_or
+    (spacing theexpr:bool_or)
+    <Gisele::Language::Syntax::BoolExpr>
   end
 
   rule bool_or
@@ -116,7 +117,7 @@ grammar Gisele::Language::Syntax::Grammar
   end
 
   rule bool_paren
-    ('(' spacing expr:bool_expr spacing ')')
+    ('(' spacing expr:bool_or spacing ')')
     <Gisele::Language::Syntax::BoolParen>
   end
 

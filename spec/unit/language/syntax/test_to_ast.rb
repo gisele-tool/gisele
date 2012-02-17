@@ -11,23 +11,25 @@ module Gisele::Language::Syntax
     describe "the bool_expr rule" do
 
       it 'returns expected ast on simple expressions' do
-        expected = [:bool_and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]]
+        expected = \
+          [:bool_expr, [:bool_and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]]]
         ast("diagKnown and platLow", :bool_expr).should eq(expected)
       end
 
       it 'respects priorities' do
-        expected = [:bool_or, [:bool_and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]], [:var_ref, "platHigh"]]
+        expected = [:bool_expr,
+          [:bool_or, [:bool_and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]], [:var_ref, "platHigh"]]]
         ast("diagKnown and platLow or platHigh", :bool_expr).should eq(expected)
       end
 
       it 'supports double negations' do
-        expected = [:bool_not, [:bool_not, [:var_ref, "diagKnown"]]]
+        expected = [:bool_expr, [:bool_not, [:bool_not, [:var_ref, "diagKnown"]]]]
         ast("not not(diagKnown)", :bool_expr).should eq(expected)
       end
 
       it 'makes boolean literals explicit' do
-        ast("true",  :bool_expr).should eq([:bool_lit, true])
-        ast("false", :bool_expr).should eq([:bool_lit, false])
+        ast("true",  :bool_expr).should eq([:bool_expr, [:bool_lit, true]])
+        ast("false", :bool_expr).should eq([:bool_expr, [:bool_lit, false]])
       end
 
     end # bool_expr
@@ -136,7 +138,7 @@ module Gisele::Language::Syntax
         expr     = "while goodCond Task1 end"
         expected = \
           [:while_st,
-            [:var_ref, "goodCond"],
+            [:bool_expr, [:var_ref, "goodCond"]],
             [:task_call_st, "Task1"]]
         ast(expr, :while_st).should eq(expected)
       end
@@ -145,7 +147,7 @@ module Gisele::Language::Syntax
         expr     = "while goodCond Task1 Task2 end"
         expected = \
           [:while_st,
-            [:var_ref, "goodCond"],
+            [:bool_expr, [:var_ref, "goodCond"]],
             [:seq_st, [:task_call_st, "Task1"], [:task_call_st, "Task2"]]]
         ast(expr, :while_st).should eq(expected)
       end
@@ -168,7 +170,9 @@ module Gisele::Language::Syntax
       it 'parses as expected' do
         expr     = "elsif goodCond Task1 "
         expected = \
-          [:elsif_clause, [:var_ref, "goodCond"], [:task_call_st, "Task1"]]
+          [:elsif_clause, 
+            [:bool_expr, [:var_ref, "goodCond"]], 
+            [:task_call_st, "Task1"]]
         ast(expr, :elsif_clause).should eq(expected)
       end
 
@@ -179,7 +183,9 @@ module Gisele::Language::Syntax
       it 'parses as expected' do
         expr     = "if goodCond Task1 end"
         expected = \
-          [:if_st, [:var_ref, "goodCond"], [:task_call_st, "Task1"]]
+          [:if_st, 
+            [:bool_expr, [:var_ref, "goodCond"]], 
+            [:task_call_st, "Task1"]]
         ast(expr, :if_st).should eq(expected)
       end
 
@@ -187,7 +193,8 @@ module Gisele::Language::Syntax
         expr     = "if goodCond Task1 else Task2 end"
         expected = \
           [:if_st,
-            [:var_ref, "goodCond"], [:task_call_st, "Task1"],
+            [:bool_expr, [:var_ref, "goodCond"]], 
+            [:task_call_st, "Task1"],
             [:else_clause, [:task_call_st, "Task2"]] ]
         ast(expr, :if_st).should eq(expected)
       end
@@ -196,11 +203,11 @@ module Gisele::Language::Syntax
         expr     = "if goodCond Task1 elsif otherCond Task2 elsif stillAnother Task3 else Task4 end"
         expected = \
           [:if_st,
-            [:var_ref, "goodCond"], [:task_call_st, "Task1"],
+            [:bool_expr, [:var_ref, "goodCond"]], [:task_call_st, "Task1"],
             [:elsif_clause,
-              [:var_ref, "otherCond"], [:task_call_st, "Task2"]],
+              [:bool_expr, [:var_ref, "otherCond"]], [:task_call_st, "Task2"]],
             [:elsif_clause,
-              [:var_ref, "stillAnother"], [:task_call_st, "Task3"]],
+              [:bool_expr, [:var_ref, "stillAnother"]], [:task_call_st, "Task3"]],
             [:else_clause,
               [:task_call_st, "Task4"]] ]
         ast(expr, :if_st).should eq(expected)

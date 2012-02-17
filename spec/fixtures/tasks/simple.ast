@@ -1,19 +1,57 @@
-[:unit,
-  [:task_def, "Simple",
-    [:task_signature,
-      [:fluent, "diagKnown",
-        [:event_set, "Diagnosis:start"],
-        [:event_set, "Treatment:end"],
-        nil ]
-      ],
-    [:task_refinement, 
-      [:seq_st, 
-        [:if_st, 
-          [:bool_not, [:var_ref, "diagKnown"]], 
-          [:task_call_st, "Diagnosis"],
-          [:else_clause,
-            [:task_call_st, "NoDiag"] ]],
-        [:task_call_st, "Treatment"]]
-      ]
-  ]
+[
+    :unit,
+    [
+        :task_def,
+        "Simple",
+        [
+            :task_signature,
+            [
+                :fluent,
+                "diagKnown",
+                [
+                    :event_set,
+                    "Diagnosis:start"
+                ],
+                [
+                    :event_set,
+                    "Treatment:end"
+                ],
+                nil
+            ]
+        ],
+        [
+            :task_refinement,
+            [
+                :seq_st,
+                [
+                    :if_st,
+                    [
+                        :bool_expr,
+                        [
+                            :bool_not,
+                            [
+                                :var_ref,
+                                "diagKnown"
+                            ]
+                        ]
+                    ],
+                    [
+                        :task_call_st,
+                        "Diagnosis"
+                    ],
+                    [
+                        :else_clause,
+                        [
+                            :task_call_st,
+                            "NoDiag"
+                        ]
+                    ]
+                ],
+                [
+                    :task_call_st,
+                    "Treatment"
+                ]
+            ]
+        ]
+    ]
 ]

@@ -16,7 +16,7 @@ module Gisele
         def on_if_st(node)
           condition, dost, *clauses = node.children
           base = [:case_st, [:when_clause, condition, @main.call(dost)] ]
-          @condition = negate(condition)
+          @condition = negate(condition.last)
           clauses.inject base do |memo,clause|
             memo << call(clause)
           end
@@ -24,16 +24,17 @@ module Gisele
 
         def on_elsif_clause(node)
           condition, dost, = node.children
+          condition = condition.last
           prev, @condition = @condition, [:bool_and, negate(condition), @condition]
           [:when_clause,
-            [:bool_and, condition, prev],
+            [:bool_expr, [:bool_and, condition, prev]],
             @main.call(dost)]
         end
 
         def on_else_clause(node)
           dost, = node.children
           [:when_clause,
-            @condition,
+            [:bool_expr, @condition],
             @main.call(dost)]
         end
 
