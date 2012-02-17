@@ -4,14 +4,10 @@ module Gisele
       include AST::Helpers
 
       def call(node)
-        unless looks_a_node?(node)
-          raise ArgumentError, "AST node expected, got #{node.inspect}"
-        end
-        node = node(node)
+        node = pre_call(node)
         meth = :"on_#{node.rule_name}"
         meth = :"on_missing" unless respond_to?(meth)
-        rewr = send(meth, node)
-        looks_a_node?(rewr) ? node(rewr) : rewr
+        post_call send(meth, node)
       end
 
       def on_missing(node)
@@ -19,6 +15,17 @@ module Gisele
       end
 
       protected
+
+      def pre_call(node)
+        unless looks_a_node?(node)
+          raise ArgumentError, "AST node expected, got #{node.inspect}", caller
+        end
+        node(node)
+      end
+
+      def post_call(transformed)
+        looks_a_node?(transformed) ? node(transformed) : transformed
+      end
 
       def copy_and_applyall(node)
         node.copy do |memo,child|
