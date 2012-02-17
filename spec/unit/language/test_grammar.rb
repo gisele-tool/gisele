@@ -226,23 +226,23 @@ module Gisele::Language
 
     ### Process statements
 
-    describe 'the par_statement rule' do
+    describe 'the par_st rule' do
 
       it 'parses a single parallel statement' do
         expr = 'par Task1 Task2 end'
-        parse(expr, :par_statement).should eq(expr)
+        parse(expr, :par_st).should eq(expr)
       end
 
-    end # par_statement
+    end # par_st
 
-    describe 'the seq_statement rule' do
+    describe 'the seq_st rule' do
 
       it 'parses a single sequence statement' do
         expr = 'seq Task1 Task2 end'
-        parse(expr, :seq_statement).should eq(expr)
+        parse(expr, :seq_st).should eq(expr)
       end
 
-    end # seq_statement
+    end # seq_st
 
     describe 'the while_statement rule' do
 

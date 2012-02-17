@@ -40,26 +40,25 @@ grammar Gisele::Language::Grammar
   ### Process statements
 
   rule process_statement
-    implicit_seq_statement | explicit_statement
+    implicit_seq_st | explicit_statement
   end
 
-  rule implicit_seq_statement
-    (front:explicit_statement spaces tail:statement_list){
+  rule implicit_seq_st
+    (front:explicit_statement spaces tail:st_list){
       [:seq, front.value] + tail.value
     }
   end
 
-  rule statement_list
-    (f:explicit_statement t:(spaces statement_list)?){
-      [f.value] + (t.empty? ? [] : t.first.matches.last.value)
-    }
+  rule st_list
+    (explicit_statement (spaces explicit_statement)*)
+    <Gisele::Language::Syntax::StList>
   end
 
   rule explicit_statement
       if_statement
     | while_statement
-    | seq_statement
-    | par_statement
+    | seq_st
+    | par_st
     | task_call_st
   end
 
@@ -95,16 +94,14 @@ grammar Gisele::Language::Grammar
     }
   end
 
-  rule seq_statement
-    ('seq' spaces list:statement_list spaces 'end'){
-      [:seq] + list.value
-    }
+  rule seq_st
+    ('seq' spaces st_list spaces 'end')
+    <Gisele::Language::Syntax::SeqSt>
   end
 
-  rule par_statement
-    ('par' spaces list:statement_list spaces 'end'){
-      [:par] + list.value
-    }
+  rule par_st
+    ('par' spaces st_list spaces 'end')
+    <Gisele::Language::Syntax::ParSt>
   end
 
   rule task_call_st

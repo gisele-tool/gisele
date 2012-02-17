@@ -105,41 +105,41 @@ module Gisele::Language
 
     end # task_call_statement
 
-    describe "the statement_list rule" do
+    describe "the st_list rule" do
 
       it 'parses a list of 2 elements' do
         expr     = "Task1 Task2"
         expected = [[:task_call_st, "Task1"], [:task_call_st, "Task2"]]
-        ast(expr, :statement_list).should eq(expected)
+        ast(expr, :st_list).should eq(expected)
       end
 
       it 'parses a list of 3 elements' do
         expr     = "Task1 Task2 Task3"
         expected = [[:task_call_st, "Task1"], [:task_call_st, "Task2"], [:task_call_st, "Task3"]]
-        ast(expr, :statement_list).should eq(expected)
+        ast(expr, :st_list).should eq(expected)
       end
 
-    end # statement_list
+    end # st_list
 
-    describe "the par_statement rule" do
+    describe "the par_st rule" do
 
       it 'parses as expected' do
         expr     = "par Task1 Task2 end"
-        expected = [:par, [:task_call_st, "Task1"], [:task_call_st, "Task2"]]
-        ast(expr, :par_statement).should eq(expected)
+        expected = [:par_st, [:task_call_st, "Task1"], [:task_call_st, "Task2"]]
+        ast(expr, :par_st).should eq(expected)
       end
 
-    end # par_statement
+    end # par_st
 
-    describe "the seq_statement rule" do
+    describe "the seq_st rule" do
 
       it 'parses as expected' do
         expr     = "seq Task1 Task2 end"
-        expected = [:seq, [:task_call_st, "Task1"], [:task_call_st, "Task2"]]
-        ast(expr, :seq_statement).should eq(expected)
+        expected = [:seq_st, [:task_call_st, "Task1"], [:task_call_st, "Task2"]]
+        ast(expr, :seq_st).should eq(expected)
       end
 
-    end # seq_statement
+    end # seq_st
 
     describe "the while_statement rule" do
 
