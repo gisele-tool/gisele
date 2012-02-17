@@ -2,6 +2,9 @@
 
 ## Enhancements
 
+* The main `gisele` command now accepts a --no-sugar option that removes syntactic
+  sugar. This option is limited to the rewriting of `if` statements as guarded `case`
+  commands for now. Additional rewriting could be added in the future.
 * All AST nodes (obtained via `Gisele.ast` or similar) now include the module 
   `Gisele::Language::AST::Node` which contains a few utilities.
 
