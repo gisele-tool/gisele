@@ -1,7 +1,6 @@
 require 'spec_helper'
 module Gisele::Language
   describe Transformer do
-    include AST::Helpers
 
     let(:transformer_class){
       Class.new(Transformer) do
@@ -25,12 +24,12 @@ module Gisele::Language
     describe 'call' do
 
       it 'dispatches to existing methods' do
-        ast = node([:hello, "world"])
+        ast = [:hello, "world"]
         transformer.call(ast).should eq([:seen_hello, [:hello, "world"]])
       end
 
       it 'calls on_missing when not found' do
-        ast = node([:nosuchone, "world"])
+        ast = [:nosuchone, "world"]
         transformer.call(ast).should eq([:seen_missing, [:nosuchone, "world"]])
       end
 
@@ -45,7 +44,7 @@ module Gisele::Language
     describe "deep_copy" do
 
       it 'provides a friendly way of applying copy/recurse' do
-        ast = node([:copy, node([:hello, 'world']), "!"])
+        ast = [:copy, [:hello, 'world'], "!"]
         transformer.call(ast).should eq([:copy, [:seen_hello, [:hello, "world"]], "!"])
       end
 

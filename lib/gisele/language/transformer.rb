@@ -1,12 +1,15 @@
 module Gisele
   module Language
     class Transformer
+      include AST::Helpers
+
       class UnexpectedNodeError < StandardError; end
 
       def call(node)
-        unless node.is_a?(AST::Node)
+        unless looks_a_node?(node)
           raise ArgumentError, "AST node expected, got #{node.inspect}"
         end
+        node = node(node)
         meth = :"on_#{node.rule_name}"
         meth = :"on_missing" unless respond_to?(meth)
         send(meth, node)
