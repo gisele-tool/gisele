@@ -1,0 +1,8 @@
+task_call_st:
+  shape: box
+while_st:
+  shape: diamond
+if_st:
+  shape: diamond
+case_st:
+  shape: diamond

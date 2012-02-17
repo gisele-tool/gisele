@@ -1,6 +1,8 @@
 module Gisele
   module Language
 
+    DOT_ATTRIBUTES = YAML.load_file(Path.dir/"language/dot.yml")
+
     def rule2mod(rule)
       rule.to_s.gsub(/(^|_)([a-z])/){|x| $2.capitalize}.to_sym
     end

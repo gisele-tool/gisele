@@ -35,6 +35,10 @@ module Gisele
       opt.on('--no-sugar', 'Apply syntactic sugar removal') do
         @sugar = false
       end
+      @print_graph = nil
+      opt.on('--graph=[MODE]', 'Converts and print a graph (dot)') do |value|
+        @print_graph = (value || "dot").to_sym
+      end
       opt.on_tail('--help', "Show this help message") do
         raise Quickl::Help
       end
@@ -52,7 +56,9 @@ module Gisele
 
       ast = Gisele.ast(file)
       ast = Gisele::Language::SugarRemoval.new.call(ast) unless @sugar
+
       print_ast(ast, @print_ast) if @print_ast
+      print_graph(ast, @print_graph) if @print_graph
     end
 
     private
@@ -68,5 +74,10 @@ module Gisele
       ap ast, options
     end
 
-  end # class Command
+    def print_graph(ast, option)
+      graph = Gisele::Language::ToGraph.new.call(ast)
+      puts graph.to_dot
+    end
+
+end # class Command
 end # module Gisele

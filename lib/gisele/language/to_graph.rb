@@ -1,6 +1,7 @@
 module Gisele
   module Language
     class ToGraph < Transformer
+      module Connector; end
 
       def recurse_on_last(node)
         call(node.last)
@@ -57,13 +58,13 @@ module Gisele
 
         entry, exit = entry_and_exit(node)
 
-        diamond = add_vertex(cond)
+        diamond = add_vertex(node)
         connect(entry, diamond)
 
         c_entry, c_exit = call(node.last)
 
-        connect(diamond, exit,    :semantics => false_ast_node)
-        connect(diamond, c_entry, :semantics => true_ast_node)
+        connect(diamond, exit,    false_ast_node)
+        connect(diamond, c_entry, true_ast_node)
         connect(c_exit, diamond)
 
         [entry, exit]
@@ -80,20 +81,15 @@ module Gisele
       private
 
       def add_vertex(node)
-        @graph.add_vertex(:semantics => node)
+        @graph.add_vertex(node.dot_attributes)
       end
 
       def entry_and_exit(node)
-        @graph.add_n_vertices(2) do |v,i|
-          v.add_marks(
-            :semantics => node,
-            :kind => (i == 0 ? :entry : :exit)
-          )
-        end
+        @graph.add_n_vertices(2, Connector)
       end
 
       def connect(source, target, node = nil)
-        marks = node.nil? ? {} : {:semantics => node}
+        marks = node.nil? ? {} : node.dot_attributes
         @graph.connect(source, target, marks)
       end
 
