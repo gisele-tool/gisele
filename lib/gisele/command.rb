@@ -5,7 +5,7 @@ module Gisele
   #
   # SYNOPSIS
   #   gisele [--version] [--help]
-  #   gisele [--ast] PROCESS_FILE
+  #   gisele [--ast | --graph] PROCESS_FILE
   #
   # OPTIONS
   # #{summarized_options}
@@ -14,14 +14,18 @@ module Gisele
   #   The Gisele process analyzer toolset provides tools and technique to model and analyze
   #   complex process models such as care processes.
   #
-  #   When --ast is used, the command parses a process file and prints its Abstract Syntax
+  #   When --no-sugar is specified, syntactic sugar is first removed before making any other
+  #   transformation. For now, this rewrites all `if` statements as explicit `case` guarded
+  #   commands.
+  #
+  #   When --ast is used, the command parses the process file and prints its Abstract Syntax
   #   Tree (AST) on standard output. By default, this option prints the AST for manual
   #   debugging, that is with colors and extra information. Use --ast=ruby to get a ruby
   #   array for automatic processing.
   #
-  #   When --no-sugar is specified, syntactic sugar is first removed before making any other
-  #   transformation. For now, this rewrites all `if` statements as explicit `case` guarded
-  #   commands.
+  #   When --graph is used, the command parses the process file. It then converts the AST into
+  #   a directed graph representing the process as a box-and-arrow workflow and outputs it on 
+  #   standard output. For now, the only output format available is dot (from graphviz).
   #
   class Gisele::Command <  Quickl::Command(__FILE__, __LINE__)
 
@@ -34,6 +38,10 @@ module Gisele
       @sugar = true
       opt.on('--no-sugar', 'Apply syntactic sugar removal') do
         @sugar = false
+      end
+      @print_graph = nil
+      opt.on('--graph=[MODE]', 'Converts and print a graph (dot)') do |value|
+        @print_graph = (value || "dot").to_sym
       end
       opt.on_tail('--help', "Show this help message") do
         raise Quickl::Help
@@ -52,7 +60,9 @@ module Gisele
 
       ast = Gisele.ast(file)
       ast = Gisele::Language::SugarRemoval.new.call(ast) unless @sugar
+
       print_ast(ast, @print_ast) if @print_ast
+      print_graph(ast, @print_graph) if @print_graph
     end
 
     private
@@ -68,5 +78,10 @@ module Gisele
       ap ast, options
     end
 
-  end # class Command
+    def print_graph(ast, option)
+      graph = Gisele::Language::ToGraph.new.call(ast)
+      puts graph.to_dot
+    end
+
+end # class Command
 end # module Gisele

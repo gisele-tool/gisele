@@ -21,6 +21,14 @@ module SpecHelpers
     fixtures_dir.glob(glob)
   end
 
+  def simple_ast
+    Gisele::ast(fixtures_dir/:tasks/"simple.gis")
+  end
+
+  def complete_ast
+    Gisele::ast(fixtures_dir/:tasks/"complete.gis")
+  end
+
 end
 
 RSpec.configure do |c|

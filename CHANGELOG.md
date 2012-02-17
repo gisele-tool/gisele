@@ -1,4 +1,9 @@
-# 0.2.0 / FIX ME
+# 0.2.0 / 2012-02-17
+
+## Enhancements
+
+* A --graph option has been added to the main `gisele` shell command. It outputs a graph in
+  the graphviz/dot format representing a process as a box-and-arrow workflow.
 
 ## Breaking changes
 

@@ -1,0 +1,18 @@
+task Complete
+  refinement
+    FirstTask
+    if everyoneHappy
+      par
+        MakeJoy
+        DrinkBeers
+      end
+    elsif someoneHappy
+      DrinkBeer
+    else
+      DoNothingSpecial
+    end
+    while not(endOfTheDay)
+      WaitAndSee
+    end
+  end
+end
