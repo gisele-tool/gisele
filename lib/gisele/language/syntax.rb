@@ -3,7 +3,7 @@ module Gisele
   module Language
     module Syntax
       Citrus.load(File.expand_path('../syntax/grammar', __FILE__))
-      
+
       def parse(input)
         source = parsing_source(input)
         Grammar.parse(source)
