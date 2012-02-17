@@ -12,7 +12,7 @@ variables:
   upper:
     Gisele
   version:
-    0.0.1
+    0.1.0
   summary: |-
     Gisele is a Process Analyzer Toolset
   description: |-
