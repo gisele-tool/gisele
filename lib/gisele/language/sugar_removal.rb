@@ -15,8 +15,17 @@ module Gisele
 
         def on_if_st(node)
           condition, dost, *clauses = node.children
-          base = [:case_st, [:when_clause, condition, @main.call(dost)] ]
+
+          # create case_st with same markers as the if_st
+          when_clause = [:when_clause, condition, @main.call(dost)]
+          when_clause = node(when_clause, node.markers.dup)
+          base        = [:case_st, when_clause]
+          base        = node(base, node.markers.dup)
+
+          # this is the condition for elsif clauses
           @condition = negate(condition.last)
+
+          # make injection now
           clauses.inject base do |memo,clause|
             memo << call(clause)
           end
@@ -24,18 +33,29 @@ module Gisele
 
         def on_elsif_clause(node)
           condition, dost, = node.children
+
+          # install new conditions for me and next elsif clauses
           condition = condition.last
-          prev, @condition = @condition, [:bool_and, negate(condition), @condition]
-          [:when_clause,
-            [:bool_expr, [:bool_and, condition, prev]],
-            @main.call(dost)]
+          previous  = @condition
+          @condition = [:bool_and, negate(condition), @condition]
+
+          # convert elsif to when and keep the markers
+          base = \
+            [:when_clause,
+              [:bool_expr, [:bool_and, condition, previous]],
+              @main.call(dost) ]
+          node(base, node.markers.dup)
         end
 
         def on_else_clause(node)
           dost, = node.children
-          [:when_clause,
-            [:bool_expr, @condition],
-            @main.call(dost)]
+
+          # convert else to when and keep the markers
+          base = \
+            [:when_clause,
+              [:bool_expr, @condition],
+              @main.call(dost)]
+          node(base, node.markers.dup)
         end
 
         private

@@ -91,6 +91,20 @@ module Gisele::Language
         rewrite([:unit, if_st]).should eq([:unit, rw_st])
       end
 
+      it 'keeps traceability markers on a single if' do
+        if_st = ast("if goodCond Task1 end")
+        rw_st = rewrite(if_st)
+        rw_st.markers.should eq(if_st.markers)
+        rw_st.last.markers.should eq(if_st.markers)
+      end
+
+      it 'keeps traceability markers when a else if present' do
+        if_st = ast("if goodCond Task1 else Task2 end")
+        rw_st = rewrite(if_st)
+        rw_st.markers.should eq(if_st.markers)
+        rw_st.last.markers.should eq(if_st.last.markers)
+      end
+
     end
   end
 end
