@@ -1,10 +1,11 @@
 require 'spec_helper'
 module Gisele::Language
   describe SugarRemoval do
-    describe "IfToGuardedCommands" do
+    describe "if_st to case_st" do
+      include AST::Helpers
 
       def rewrite(ast)
-        SugarRemoval.new.call(ast)
+        SugarRemoval.new.call(node(ast))
       end
 
       it 'rewrites single if correctly' do

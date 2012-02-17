@@ -1,56 +1,37 @@
 require 'spec_helper'
 module Gisele::Language
   describe Transformer do
+    include AST::Helpers
 
     let(:transformer_class){
       Class.new(Transformer) do
-        public :non_terminal?
 
-        def on_hello(*args)
-          [:seen_hello] + args
+        def on_hello(node)
+          [:seen_hello, node]
         end
 
-        def on_copy(*args)
-          deep_copy(:copy, args)
+        def on_copy(node)
+          deep_copy(node)
         end
 
-        def on_missing(kind, *args)
-          [:seen_missing, kind] + args
+        def on_missing(node)
+          [:seen_missing, node]
         end
 
       end
     }
-
     let(:transformer){ transformer_class.new }
-
-    describe "non_terminal?" do
-
-      it 'recognizes non terminals' do
-        transformer.non_terminal?([:hello]).should be_true
-        transformer.non_terminal?([:hello, "world"]).should be_true
-      end
-
-      it 'recognizes terminals' do
-        transformer.non_terminal?("world").should be_false
-      end
-
-      it 'do not fail on nil and empty arrays' do
-        transformer.non_terminal?(nil).should be_false
-        transformer.non_terminal?([]).should be_false
-      end
-
-    end
 
     describe 'call' do
 
       it 'dispatches to existing methods' do
-        ast = [:hello, "world"]
-        transformer.call(ast).should eq([:seen_hello, "world"])
+        ast = node([:hello, "world"])
+        transformer.call(ast).should eq([:seen_hello, [:hello, "world"]])
       end
 
       it 'calls on_missing when not found' do
-        ast = [:nosuchone, "world"]
-        transformer.call(ast).should eq([:seen_missing, :nosuchone, ["world"]])
+        ast = node([:nosuchone, "world"])
+        transformer.call(ast).should eq([:seen_missing, [:nosuchone, "world"]])
       end
 
       it 'raises an ArgumentError unless called on a non terminal' do
@@ -64,8 +45,8 @@ module Gisele::Language
     describe "deep_copy" do
 
       it 'provides a friendly way of applying copy/recurse' do
-        ast = [:copy, [:hello, 'world'], "!"]
-        transformer.call(ast).should eq([:copy, [:seen_hello, "world"], "!"])
+        ast = node([:copy, node([:hello, 'world']), "!"])
+        transformer.call(ast).should eq([:copy, [:seen_hello, [:hello, "world"]], "!"])
       end
 
     end
