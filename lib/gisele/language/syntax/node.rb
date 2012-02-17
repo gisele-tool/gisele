@@ -6,7 +6,7 @@ module Gisele
         def to_ast
           ast     = _to_ast
           modname = Language.rule2mod(ast.first)
-          mod     = Abstract.const_get(modname) rescue Abstract::Node
+          mod     = AST.const_get(modname) rescue AST::Node
           ast.extend(mod)
         end
 

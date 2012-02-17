@@ -6,7 +6,7 @@ module Gisele::Language::Syntax
       @parsed = Grammar.parse(text, :root => rule, :consume => consume).to_ast
     end
 
-    after{ @parsed.should be_a(Gisele::Language::Abstract::Node) }
+    after{ @parsed.should be_a(Gisele::Language::AST::Node) }
 
     describe "the bool_expr rule" do
 

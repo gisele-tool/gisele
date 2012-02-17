@@ -1,9 +1,10 @@
 module Gisele
   module Language
-    module Abstract
-      module Node
+    module AST
+      module Unit
+        include Node
 
       end # module Node
-    end # module Abstract
+    end # module AST
   end # module Language
 end # module Gisele

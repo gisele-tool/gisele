@@ -1,5 +1,5 @@
 require 'spec_helper'
-module Gisele::Language::Abstract
+module Gisele::Language::AST
   module Node; public :most_specific_module; end
   describe Node do
 
@@ -28,12 +28,12 @@ module Gisele::Language::Abstract
     describe 'dup' do
 
       it 'duplicates the underlying array' do
-        arr = [:unit, "etc."] 
+        arr = [:unit, "etc."]
         node(arr).dup.should eq(arr)
       end
 
       it 'ensures duplicated array is still a node' do
-        arr = [:unit, "etc."] 
+        arr = [:unit, "etc."]
         node(arr).dup.should be_a(Unit)
         node(arr).dup.should be_a(Node)
       end

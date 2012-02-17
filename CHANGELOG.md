@@ -3,7 +3,7 @@
 ## Enhancements
 
 * All AST nodes (obtained via `Gisele.ast` or similar) now include the module 
-  `Gisele::Language::Abstract::Node` which contains a few utilities.
+  `Gisele::Language::AST::Node` which contains a few utilities.
 
 ## Breaking changes
 
