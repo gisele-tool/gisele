@@ -19,6 +19,12 @@ module Gisele::Language
         AST.node([:nosuchnode]).should be_a(AST::Node)
       end
 
+      it 'applies coercions recursively' do
+        source = [:unit, [:hello, "world"]]
+        AST.node(source).should eq(source)
+        AST.node(source).last.should be_a(AST::Node)
+      end
+
       it 'raises unless a ast node array' do
         lambda{ AST.node("foo") }.should raise_error(ArgumentError, /foo/)
         lambda{ AST.node(nil) }.should raise_error(ArgumentError, /nil/)
