@@ -1,7 +1,7 @@
 module Gisele
   module Language
     class SugarRemoval < Transformer
-      alias :on_missing :deep_copy
+      alias :on_missing :copy_and_applyall
 
       def on_if(node)
         IfToGuardedCommands.new(self).call(node)

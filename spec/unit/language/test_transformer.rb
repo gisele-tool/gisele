@@ -10,7 +10,7 @@ module Gisele::Language
         end
 
         def on_copy(node)
-          deep_copy(node)
+          copy_and_applyall(node)
         end
 
         def on_missing(node)
@@ -41,7 +41,7 @@ module Gisele::Language
 
     end
 
-    describe "deep_copy" do
+    describe "copy_and_applyall" do
 
       it 'provides a friendly way of applying copy/recurse' do
         ast = [:copy, [:hello, 'world'], "!"]

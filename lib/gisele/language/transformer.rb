@@ -21,9 +21,8 @@ module Gisele
 
       protected
 
-      def deep_copy(node)
-        copy = AST::node([node.rule_name])
-        node.children.inject copy do |memo,child|
+      def copy_and_applyall(node)
+        node.copy do |memo,child|
           memo << (child.is_a?(AST::Node) ? call(child) : child)
         end
       end
