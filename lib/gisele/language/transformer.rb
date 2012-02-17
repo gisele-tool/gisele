@@ -12,7 +12,8 @@ module Gisele
         node = node(node)
         meth = :"on_#{node.rule_name}"
         meth = :"on_missing" unless respond_to?(meth)
-        send(meth, node)
+        rewr = send(meth, node)
+        looks_a_node?(rewr) ? node(rewr) : rewr
       end
 
       def on_missing(node)

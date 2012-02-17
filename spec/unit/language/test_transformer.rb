@@ -33,6 +33,11 @@ module Gisele::Language
         transformer.call(ast).should eq([:seen_missing, [:nosuchone, "world"]])
       end
 
+      it 'performs post node transformation if required' do
+        ast = [:hello, "world"]
+        transformer.call(ast).should be_a(AST::Node)
+      end
+
       it 'raises an ArgumentError unless called on a non terminal' do
         lambda{
           transformer.call("world").should raise_error(ArgumentError, /world/)
