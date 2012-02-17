@@ -4,7 +4,7 @@ module Gisele
       module BoolOr
         include Node
 
-        def to_ast
+        def _to_ast
           [:bool_or, left.to_ast, right.to_ast]
         end
 

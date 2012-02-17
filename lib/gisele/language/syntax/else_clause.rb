@@ -4,7 +4,7 @@ module Gisele
       module ElseClause
         include Node
 
-        def to_ast
+        def _to_ast
           [:else_clause, captures[:process_statement].first.to_ast]
         end
 

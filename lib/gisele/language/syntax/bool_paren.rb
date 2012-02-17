@@ -4,7 +4,7 @@ module Gisele
       module BoolParen
         include Node
 
-        def to_ast
+        def _to_ast
           captures[:expr].first.to_ast
         end
 

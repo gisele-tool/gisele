@@ -4,7 +4,7 @@ module Gisele
       module BoolAnd
         include Node
 
-        def to_ast
+        def _to_ast
           [:bool_and, left.to_ast, right.to_ast]
         end
 

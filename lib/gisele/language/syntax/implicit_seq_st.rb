@@ -4,7 +4,7 @@ module Gisele
       module ImplicitSeqSt
         include Node
 
-        def to_ast
+        def _to_ast
           front = captures[:explicit_statement].first.to_ast
           tail  = captures[:st_list].first.to_ast
           [:seq_st, front] + tail

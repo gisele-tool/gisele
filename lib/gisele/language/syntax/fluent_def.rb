@@ -4,7 +4,7 @@ module Gisele
       module FluentDef
         include Node
 
-        def to_ast
+        def _to_ast
           name       = captures[:variable_name].first.strip
           init, term = captures[:event_set].map{|x| x.to_ast}
           initval    = captures[:initially_def].first

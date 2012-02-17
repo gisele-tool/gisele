@@ -4,7 +4,7 @@ module Gisele
       module WhileSt
         include Node
 
-        def to_ast
+        def _to_ast
           cond = captures[:bool_expr].first.to_ast
           dost = captures[:process_statement].first.to_ast
           [:while_st, cond, dost]

@@ -4,7 +4,7 @@ module Gisele
       module VarRef
         include Node
 
-        def to_ast
+        def _to_ast
           [:var_ref, strip]
         end
 

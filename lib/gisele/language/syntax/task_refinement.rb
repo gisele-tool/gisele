@@ -4,7 +4,7 @@ module Gisele
       module TaskRefinement
         include Node
 
-        def to_ast
+        def _to_ast
           main = captures[:process_statement].first.to_ast
           [:task_refinement, main]
         end

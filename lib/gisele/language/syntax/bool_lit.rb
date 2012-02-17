@@ -4,7 +4,7 @@ module Gisele
       module BoolLit
         include Node
 
-        def to_ast
+        def _to_ast
           captures[:boolean_literal].first.value
         end
 

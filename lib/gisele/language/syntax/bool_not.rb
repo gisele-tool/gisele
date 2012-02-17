@@ -4,7 +4,7 @@ module Gisele
       module BoolNot
         include Node
 
-        def to_ast
+        def _to_ast
           [:bool_not, captures[:expr].first.to_ast]
         end
 

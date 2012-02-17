@@ -4,7 +4,7 @@ module Gisele
       module SeqSt
         include Node
 
-        def to_ast
+        def _to_ast
           [:seq_st] + captures[:st_list].first.to_ast
         end
 

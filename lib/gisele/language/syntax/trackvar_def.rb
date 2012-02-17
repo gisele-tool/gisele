@@ -4,7 +4,7 @@ module Gisele
       module TrackvarDef
         include Node
 
-        def to_ast
+        def _to_ast
           name       = captures[:variable_name].first.strip
           init, term = captures[:event_set].map{|x| x.to_ast}
           term       = [:event_set] unless term

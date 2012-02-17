@@ -3,8 +3,8 @@ module Gisele
     module Syntax
       module Node
 
-        def value
-          to_ast
+        def to_ast
+          _to_ast
         end
 
       end # module Node

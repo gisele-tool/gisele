@@ -4,7 +4,7 @@ module Gisele
       module IfSt
         include Node
 
-        def to_ast
+        def _to_ast
           cond    = captures[:bool_expr].first.to_ast
           dost    = captures[:process_statement].first.to_ast
           elsifs  = captures[:elsif_clause].map{|x| x.to_ast}

@@ -4,7 +4,7 @@ module Gisele
       module TaskCallSt
         include Node
 
-        def to_ast
+        def _to_ast
           [:task_call_st, strip]
         end
 

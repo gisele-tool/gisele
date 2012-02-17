@@ -5,7 +5,7 @@ module Gisele::Language
     let(:grammar){ Gisele::Language::Grammar }
 
     def ast(text, rule, consume = true)
-      grammar.parse(text, :root => rule, :consume => consume).value
+      grammar.parse(text, :root => rule, :consume => consume).to_ast
     end
 
     describe "the bool_expr rule" do
