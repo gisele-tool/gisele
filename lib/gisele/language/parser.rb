@@ -9,7 +9,7 @@ module Gisele
 
       def call(input)
         return input if input.is_a?(Array)
-        grammar.parse(parsing_source(input)).value
+        grammar.parse(parsing_source(input)).to_ast
       end
       alias :parse :call
 

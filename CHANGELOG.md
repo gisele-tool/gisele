@@ -2,6 +2,10 @@
 
 ## Breaking changes
 
+The top AST element of a process file is always a :unit. The latter may contain 
+one ore more task definitions. Import/include nodes will probably be added later
+and authorized at the beginning of the file.
+
 The following syntax nodes have been renamed:
   :varref     -> :var_ref
   :or         -> :bool_or
