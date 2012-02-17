@@ -16,7 +16,7 @@ module Gisele
         def on_if_st(node)
           condition, dost, *clauses = node.children
           base = [:case_st, [:when_clause, condition, @main.call(dost)] ]
-          @condition = [:bool_not, condition]
+          @condition = negate(condition)
           clauses.inject base do |memo,clause|
             memo << call(clause)
           end
@@ -24,7 +24,7 @@ module Gisele
 
         def on_elsif_clause(node)
           condition, dost, = node.children
-          prev, @condition = @condition, [:bool_and, [:bool_not, condition], @condition]
+          prev, @condition = @condition, [:bool_and, negate(condition), @condition]
           [:when_clause,
             [:bool_and, condition, prev],
             @main.call(dost)]
@@ -35,6 +35,16 @@ module Gisele
           [:when_clause,
             @condition,
             @main.call(dost)]
+        end
+
+        private
+
+        def negate(cond)
+          if cond.rule_name == :bool_not
+            cond.last
+          else
+            [:bool_not, cond]
+          end
         end
 
       end # class IfToGuardedCommands

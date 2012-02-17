@@ -66,6 +66,19 @@ module Gisele::Language
         rewrite(source).should eq(expected)
       end
 
+      it 'avoids double negations' do
+        source   = ast("if not(goodCond) Task1 else Task2 end")
+        expected = \
+          [:case_st,
+            [:when_clause,
+              [:bool_not, [:var_ref, "goodCond"]],
+              [:task_call_st, "Task1"] ],
+            [:when_clause,
+              [:var_ref, "goodCond"],
+              [:task_call_st, "Task2"] ] ]
+        rewrite(source).should eq(expected)
+      end
+
       it 'recurse on other nodes' do
         if_st = ast("if goodCond Task1 end")
         rw_st = rewrite(if_st)

@@ -42,14 +42,8 @@
                     [
                         :when_clause,
                         [
-                            :bool_not,
-                            [
-                                :bool_not,
-                                [
-                                    :var_ref,
-                                    "diagKnown"
-                                ]
-                            ]
+                            :var_ref,
+                            "diagKnown"
                         ],
                         [
                             :task_call_st,
