@@ -1,4 +1,11 @@
-# 0.1.0 / FIX ME
+# 0.2.0 / FIX ME
+
+## Breaking changes
+
+* Boolean literals (true, false) are now explicitly represented in boolean expressions,
+  under a :bool_lit AST node.
+
+# 0.1.0 / 2012-02-17
 
 ## Enhancements
 

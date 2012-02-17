@@ -112,7 +112,7 @@ grammar Gisele::Language::Syntax::Grammar
   end
 
   rule bool_term
-    bool_paren | boolean_literal | bool_varref
+    bool_paren | bool_lit | bool_varref
   end
 
   rule bool_paren

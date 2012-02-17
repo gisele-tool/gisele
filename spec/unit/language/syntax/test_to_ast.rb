@@ -25,6 +25,11 @@ module Gisele::Language::Syntax
         ast("not not(diagKnown)", :bool_expr).should eq(expected)
       end
 
+      it 'makes boolean literals explicit' do
+        ast("true",  :bool_expr).should eq([:bool_lit, true])
+        ast("false", :bool_expr).should eq([:bool_lit, false])
+      end
+
     end # bool_expr
 
     describe 'the event_set rule' do

@@ -5,7 +5,7 @@ module Gisele
         include Node
 
         def _to_ast
-          captures[:boolean_literal].first.value
+          [:bool_lit, strip == "true"]
         end
 
       end # module BoolLit
