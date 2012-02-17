@@ -1,8 +1,8 @@
 require 'spec_helper'
-module Gisele::Language
+module Gisele::Language::Syntax
   describe Grammar do
 
-    let(:grammar){ Gisele::Language::Grammar }
+    let(:grammar){ Gisele::Language::Syntax::Grammar }
 
     def parse(text, rule, consume = true)
       grammar.parse(text, :root => rule, :consume => consume)

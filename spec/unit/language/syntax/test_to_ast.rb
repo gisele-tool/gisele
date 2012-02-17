@@ -1,14 +1,12 @@
 require 'spec_helper'
-module Gisele::Language
-  describe Grammar, "ast" do
-
-    let(:grammar){ Gisele::Language::Grammar }
+module Gisele::Language::Syntax
+  describe Grammar, "to_ast" do
 
     def ast(text, rule, consume = true)
-      @parsed = grammar.parse(text, :root => rule, :consume => consume).to_ast
+      @parsed = Grammar.parse(text, :root => rule, :consume => consume).to_ast
     end
     
-    after{ @parsed.should be_a(Abstract::Node) }
+    after{ @parsed.should be_a(Gisele::Language::Abstract::Node) }
 
     describe "the bool_expr rule" do
 

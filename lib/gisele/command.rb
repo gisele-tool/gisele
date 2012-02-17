@@ -42,7 +42,7 @@ module Gisele
         raise Quickl::IOAccessError, "File does not exists: #{file}"
       end
 
-      parsed = Gisele::Language::Parser.parse(file)
+      parsed = Gisele.ast(file)
       print_ast(parsed, @ast) if @ast
     end
 

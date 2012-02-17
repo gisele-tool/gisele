@@ -1,4 +1,4 @@
-grammar Gisele::Language::Grammar
+grammar Gisele::Language::Syntax::Grammar
 
   ### Units
 

@@ -5,7 +5,7 @@ describe "The examples" do
 
     describe file do
       it 'parses without any error' do
-        Gisele::parse(file).should be_a(Array)
+        Gisele::ast(file).should be_a(Array)
       end
     end
 
