@@ -64,6 +64,12 @@ module Gisele::Language
         rewrite(source).should eq(expected)
       end
 
+      it 'recurse on other nodes' do
+        if_st = [:if, [:varref, "goodCond"], [:task_call, "Task1"]]
+        rw_st = rewrite(if_st)
+        rewrite([:unit, if_st]).should eq([:unit, rw_st])
+      end
+
     end
   end
 end
