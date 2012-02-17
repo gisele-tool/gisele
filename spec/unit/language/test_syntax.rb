@@ -1,27 +1,48 @@
 require 'spec_helper'
 module Gisele::Language
-  describe Syntax, "ast" do
+  describe Syntax do
+    include Syntax
 
-    fixture_files('tasks/**/*.gis').each do |file|
-      if file.sub_ext(".ast").exist?
+    describe "parse" do
 
-        it "returns the expected ast on #{file}" do
-          parsed   = Syntax.ast(file)
-          expected = Kernel::eval(file.sub_ext(".ast").read, TOPLEVEL_BINDING, file.sub_ext(".ast").to_s)
-          parsed.should eq(expected)
-        end
+      it 'works with a file' do
+        parsed = parse(fixtures_dir/:tasks/"simple.gis")
+        parsed.should be_a(Citrus::Match)
+      end
 
-      else
+      it 'works on a String' do
+        parsed = parse("task Hello end")
+        parsed.should be_a(Citrus::Match)
+      end
 
-        it "parses #{file} without error" do
-          parsed = Syntax.ast(file)
-          parsed.should be_a(Array)
-          parsed.first.should eq(:task)
-        end
-
+      it 'accepts parse options' do
+        parsed = parse("if goodCond Task1 end", :root => :if_st)
+        parsed.should be_a(Citrus::Match)
       end
 
     end
+
+    describe "ast" do
+
+      it 'accepts parse options' do
+        ast = ast("if goodCond Task1 end", :root => :if_st)
+        ast.should be_a(AST::Node)
+        ast.first.should eq(:if_st)
+      end
+
+      fixture_files('tasks/**/*.gis').each do |file|
+        it "works on #{file}" do
+          parsed = Syntax.ast(file)
+          parsed.should be_a(Array)
+          parsed.should be_a(AST::Node)
+          parsed.first.should eq(:unit)
+          if (astfile = file.sub_ext(".ast")).exist?
+            parsed.should eq(Kernel::eval(astfile.read, TOPLEVEL_BINDING, astfile.to_s))
+          end
+        end
+      end
+
+    end # ast
 
   end
 end

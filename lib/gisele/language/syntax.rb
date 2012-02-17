@@ -4,14 +4,14 @@ module Gisele
     module Syntax
       Citrus.load(File.expand_path('../syntax/grammar', __FILE__))
 
-      def parse(input)
+      def parse(input, options = {})
         source = parsing_source(input)
-        Grammar.parse(source)
+        Grammar.parse(source, options)
       end
       module_function :parse
 
-      def ast(input)
-        parse(input).to_ast
+      def ast(input, parse_options = {})
+        parse(input, parse_options).to_ast
       end
       module_function :ast
 
