@@ -57,13 +57,13 @@ module Gisele
 
         entry, exit = entry_and_exit(node)
 
-        diamond = add_vertex(node)
+        diamond = add_vertex(cond)
         connect(entry, diamond)
 
         c_entry, c_exit = call(node.last)
 
-        connect(diamond, exit,    :semantics => false)
-        connect(diamond, c_entry, :semantics => true)
+        connect(diamond, exit,    :semantics => false_ast_node)
+        connect(diamond, c_entry, :semantics => true_ast_node)
         connect(c_exit, diamond)
 
         [entry, exit]
@@ -95,6 +95,14 @@ module Gisele
       def connect(source, target, node = nil)
         marks = node.nil? ? {} : {:semantics => node}
         @graph.connect(source, target, marks)
+      end
+
+      def false_ast_node
+        node([:bool_expr, [:bool_lit, false]])
+      end
+
+      def true_ast_node
+        node([:bool_expr, [:bool_lit, true]])
       end
 
     end # class SugarRemoval
