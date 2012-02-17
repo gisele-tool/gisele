@@ -163,34 +163,24 @@ grammar Gisele::Language::Grammar
   end
 
   rule trackvar_def
-    ('trackvar' spaces name:variable_name spacing
-      init:event_set term:(spacing ',' spacing event_set)?
-      initially:initially_def?){
-        termval = term.empty?      ? [:event_set] : term.first.matches.last.value
-        initval = initially.empty? ? nil          : initially.first.value
-        [:trackvar, name.value, init.value, termval, initval]
-      }
+    ('trackvar' spaces variable_name spacing event_set (spacing ',' spacing event_set)? initially_def?)
+    <Gisele::Language::Syntax::TrackvarDef>
   end
 
   rule fluent_def
-      ('fluent' spaces name:variable_name spacing
-          init:event_set spacing ',' spacing term:event_set initially:initially_def?){
-        initval = initially.empty? ? nil : initially.first.value
-        [:fluent, name.value, init.value, term.value, initval]
-      }
+    ('fluent' spaces variable_name spacing event_set spacing ',' spacing event_set initially_def?)
+    <Gisele::Language::Syntax::FluentDef>
   end
-  
+
   rule initially_def
-    (spaces 'initially' spaces lit:boolean_literal){
-      lit.value
-    }
+    (spaces 'initially' spaces lit:boolean_literal){ lit.strip == "true" }
   end
 
   ### Events
 
   rule event_set
-      ('{' spacing event (spacing ',' spacing event)* spacing '}') <Gisele::Language::Syntax::EventSet>
-    | ('{' spacing '}') <Gisele::Language::Syntax::EventSet>
+    ('{' spacing (event (spacing ',' spacing event)*)? spacing '}')
+    <Gisele::Language::Syntax::EventSet>
   end
 
   rule event
