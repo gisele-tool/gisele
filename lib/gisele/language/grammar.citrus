@@ -173,7 +173,7 @@ grammar Gisele::Language::Grammar
   end
 
   rule initially_def
-    (spaces 'initially' spaces lit:boolean_literal){ lit.strip == "true" }
+    (spaces 'initially' spaces lit:boolean_literal){ lit.value }
   end
 
   ### Events
@@ -208,7 +208,7 @@ grammar Gisele::Language::Grammar
   ### Literals
 
   rule boolean_literal
-    ('true' | 'false') <Gisele::Language::Syntax::BooleanLiteral>
+    ('true' | 'false'){ strip == "true" }
   end
 
   ### Spacing

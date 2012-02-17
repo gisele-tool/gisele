@@ -11,7 +11,6 @@ module Gisele
     end # module Syntax
   end # module Language
 end # module Gisele
-require_relative 'boolean_literal'
 require_relative 'event_set'
 require_relative 'fluent_def'
 require_relative 'trackvar_def'
