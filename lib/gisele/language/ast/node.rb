@@ -15,9 +15,9 @@ module Gisele
           first
         end
 
-        # Returns the children of this node. 
+        # Returns the children of this node.
         #
-        # Children are defined as all but the rule name in the underlying 
+        # Children are defined as all but the rule name in the underlying
         # array.
         #
         def children
@@ -26,7 +26,7 @@ module Gisele
 
         # Duplicates this node.
         #
-        # This method ensures that the node marking through modules 
+        # This method ensures that the node marking through modules
         # will correctly be applied to the duplicated array.
         #
         def dup
