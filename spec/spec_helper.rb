@@ -11,7 +11,7 @@ ensure
   $stdout, $stderr = stdout, stderr
 end
 
-module Helpers
+module SpecHelpers
 
   def fixtures_dir
     (Path.dir/:fixtures)
@@ -21,13 +21,9 @@ module Helpers
     fixtures_dir.glob(glob)
   end
 
-  def node(arr)
-    Gisele::Language::AST::node(arr)
-  end
-
 end
 
 RSpec.configure do |c|
-  c.extend  Helpers
-  c.include Helpers
+  c.extend  SpecHelpers
+  c.include SpecHelpers
 end

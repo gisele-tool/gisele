@@ -1,10 +1,7 @@
 require 'spec_helper'
 module Gisele::Language::AST
   describe Node do
-
-    def node(array)
-      array.extend(Node)
-    end
+    include Helpers
 
     describe 'rule_name' do
       it 'returns the first array element' do
