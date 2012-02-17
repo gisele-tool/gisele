@@ -94,11 +94,11 @@ module Gisele
       end
 
       def false_ast_node
-        node([:bool_expr, [:bool_lit, false]])
+        Syntax.ast("false", :root => :bool_expr)
       end
 
       def true_ast_node
-        node([:bool_expr, [:bool_lit, true]])
+        Syntax.ast("true", :root => :bool_expr)
       end
 
     end # class SugarRemoval
