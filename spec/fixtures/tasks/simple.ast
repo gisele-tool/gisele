@@ -8,8 +8,8 @@
   [:refinement, 
     [:seq, 
       [:if, 
-        [:not, [:var_ref, "diagKnown"]], 
-        [:task_call, "Diagnosis"] ],
-      [:task_call, "Treatment"]]
+        [:bool_not, [:var_ref, "diagKnown"]], 
+        [:task_call_st, "Diagnosis"] ],
+      [:task_call_st, "Treatment"]]
     ]
 ]

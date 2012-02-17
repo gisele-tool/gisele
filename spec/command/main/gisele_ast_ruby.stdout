@@ -31,12 +31,12 @@
                     ]
                 ],
                 [
-                    :task_call,
+                    :task_call_st,
                     "Diagnosis"
                 ]
             ],
             [
-                :task_call,
+                :task_call_st,
                 "Treatment"
             ]
         ]

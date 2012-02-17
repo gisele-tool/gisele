@@ -60,7 +60,7 @@ grammar Gisele::Language::Grammar
     | while_statement
     | seq_statement
     | par_statement
-    | task_call_statement
+    | task_call_st
   end
 
   rule if_statement
@@ -107,10 +107,9 @@ grammar Gisele::Language::Grammar
     }
   end
 
-  rule task_call_statement
-    (task_name){
-      [:task_call, strip]
-    }
+  rule task_call_st
+    (task_name)
+    <Gisele::Language::Syntax::TaskCallSt>
   end
 
   ### Boolean expressions

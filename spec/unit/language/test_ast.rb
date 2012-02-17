@@ -97,10 +97,10 @@ module Gisele::Language
 
     end # trackvar_def rule
 
-    describe "the task_call_statement rule" do
+    describe "the task_call_st rule" do
 
       it 'parses as expected' do
-        ast("Diagnosis", :task_call_statement).should eq([:task_call, "Diagnosis"])
+        ast("Diagnosis", :task_call_st).should eq([:task_call_st, "Diagnosis"])
       end
 
     end # task_call_statement
@@ -109,13 +109,13 @@ module Gisele::Language
 
       it 'parses a list of 2 elements' do
         expr     = "Task1 Task2"
-        expected = [[:task_call, "Task1"], [:task_call, "Task2"]]
+        expected = [[:task_call_st, "Task1"], [:task_call_st, "Task2"]]
         ast(expr, :statement_list).should eq(expected)
       end
 
       it 'parses a list of 3 elements' do
         expr     = "Task1 Task2 Task3"
-        expected = [[:task_call, "Task1"], [:task_call, "Task2"], [:task_call, "Task3"]]
+        expected = [[:task_call_st, "Task1"], [:task_call_st, "Task2"], [:task_call_st, "Task3"]]
         ast(expr, :statement_list).should eq(expected)
       end
 
@@ -125,7 +125,7 @@ module Gisele::Language
 
       it 'parses as expected' do
         expr     = "par Task1 Task2 end"
-        expected = [:par, [:task_call, "Task1"], [:task_call, "Task2"]]
+        expected = [:par, [:task_call_st, "Task1"], [:task_call_st, "Task2"]]
         ast(expr, :par_statement).should eq(expected)
       end
 
@@ -135,7 +135,7 @@ module Gisele::Language
 
       it 'parses as expected' do
         expr     = "seq Task1 Task2 end"
-        expected = [:seq, [:task_call, "Task1"], [:task_call, "Task2"]]
+        expected = [:seq, [:task_call_st, "Task1"], [:task_call_st, "Task2"]]
         ast(expr, :seq_statement).should eq(expected)
       end
 
@@ -148,7 +148,7 @@ module Gisele::Language
         expected = \
           [:while,
             [:var_ref, "goodCond"],
-            [:task_call, "Task1"]]
+            [:task_call_st, "Task1"]]
         ast(expr, :while_statement).should eq(expected)
       end
 
@@ -157,7 +157,7 @@ module Gisele::Language
         expected = \
           [:while,
             [:var_ref, "goodCond"],
-            [:seq, [:task_call, "Task1"], [:task_call, "Task2"]]]
+            [:seq, [:task_call_st, "Task1"], [:task_call_st, "Task2"]]]
         ast(expr, :while_statement).should eq(expected)
       end
 
@@ -168,7 +168,7 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "else Task1 "
         expected = \
-          [:else, [:task_call, "Task1"]]
+          [:else, [:task_call_st, "Task1"]]
         ast(expr, :else_clause).should eq(expected)
       end
 
@@ -179,7 +179,7 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "elsif goodCond Task1 "
         expected = \
-          [:elsif, [:var_ref, "goodCond"], [:task_call, "Task1"]]
+          [:elsif, [:var_ref, "goodCond"], [:task_call_st, "Task1"]]
         ast(expr, :elsif_clause).should eq(expected)
       end
 
@@ -190,7 +190,7 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "if goodCond Task1 end"
         expected = \
-          [:if, [:var_ref, "goodCond"], [:task_call, "Task1"]]
+          [:if, [:var_ref, "goodCond"], [:task_call_st, "Task1"]]
         ast(expr, :if_statement).should eq(expected)
       end
 
@@ -198,8 +198,8 @@ module Gisele::Language
         expr     = "if goodCond Task1 else Task2 end"
         expected = \
           [:if,
-            [:var_ref, "goodCond"], [:task_call, "Task1"],
-            [:else, [:task_call, "Task2"]] ]
+            [:var_ref, "goodCond"], [:task_call_st, "Task1"],
+            [:else, [:task_call_st, "Task2"]] ]
         ast(expr, :if_statement).should eq(expected)
       end
 
@@ -207,13 +207,13 @@ module Gisele::Language
         expr     = "if goodCond Task1 elsif otherCond Task2 elsif stillAnother Task3 else Task4 end"
         expected = \
           [:if,
-            [:var_ref, "goodCond"], [:task_call, "Task1"],
+            [:var_ref, "goodCond"], [:task_call_st, "Task1"],
             [:elsif,
-              [:var_ref, "otherCond"], [:task_call, "Task2"]],
+              [:var_ref, "otherCond"], [:task_call_st, "Task2"]],
             [:elsif,
-              [:var_ref, "stillAnother"], [:task_call, "Task3"]],
+              [:var_ref, "stillAnother"], [:task_call_st, "Task3"]],
             [:else,
-              [:task_call, "Task4"]] ]
+              [:task_call_st, "Task4"]] ]
         ast(expr, :if_statement).should eq(expected)
       end
 
@@ -223,7 +223,7 @@ module Gisele::Language
 
       it 'parses as expected' do
         expr     = "refinement Task1 end"
-        expected = [:task_call, "Task1"]
+        expected = [:task_call_st, "Task1"]
         ast(expr, :task_refinement).should eq(expected)
       end
 
@@ -250,7 +250,7 @@ module Gisele::Language
             [:signature,
               [:fluent, "diagKnown", [:event_set], [:event_set], nil]],
             [:refinement,
-              [:task_call, "Task2"]]]
+              [:task_call_st, "Task2"]]]
         ast(expr, :task_def).should eq(expected)
       end
 
