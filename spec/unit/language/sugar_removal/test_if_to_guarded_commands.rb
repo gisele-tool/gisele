@@ -30,7 +30,7 @@ module Gisele::Language
 
       it 'handles elsif clauses correctly' do
         source = \
-          [:if, 
+          [:if,
             [:varref, "c1"], [:task_call, "Task1"],
             [:elsif, [:varref, "c2"], [:task_call, "Task2"]],
             [:elsif, [:varref, "c3"], [:task_call, "Task3"]],
@@ -38,18 +38,18 @@ module Gisele::Language
         expected = \
           [:case,
             [:when,
-              [:varref, "c1"], 
+              [:varref, "c1"],
               [:task_call, "Task1"] ],
             [:when,
               [:and,
                 [:varref, "c2"],
                 [:not, [:varref, "c1"]] ],
               [:task_call, "Task2"] ],
-            [:when, 
+            [:when,
               [:and,
                 [:varref, "c3"],
                 [:and,
-                  [:not, [:varref, "c2"]], 
+                  [:not, [:varref, "c2"]],
                   [:not, [:varref, "c1"]] ]],
               [:task_call, "Task3"] ],
             [:when,
