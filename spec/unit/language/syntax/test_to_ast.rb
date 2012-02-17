@@ -170,8 +170,8 @@ module Gisele::Language::Syntax
       it 'parses as expected' do
         expr     = "elsif goodCond Task1 "
         expected = \
-          [:elsif_clause, 
-            [:bool_expr, [:var_ref, "goodCond"]], 
+          [:elsif_clause,
+            [:bool_expr, [:var_ref, "goodCond"]],
             [:task_call_st, "Task1"]]
         ast(expr, :elsif_clause).should eq(expected)
       end
@@ -183,8 +183,8 @@ module Gisele::Language::Syntax
       it 'parses as expected' do
         expr     = "if goodCond Task1 end"
         expected = \
-          [:if_st, 
-            [:bool_expr, [:var_ref, "goodCond"]], 
+          [:if_st,
+            [:bool_expr, [:var_ref, "goodCond"]],
             [:task_call_st, "Task1"]]
         ast(expr, :if_st).should eq(expected)
       end
@@ -193,7 +193,7 @@ module Gisele::Language::Syntax
         expr     = "if goodCond Task1 else Task2 end"
         expected = \
           [:if_st,
-            [:bool_expr, [:var_ref, "goodCond"]], 
+            [:bool_expr, [:var_ref, "goodCond"]],
             [:task_call_st, "Task1"],
             [:else_clause, [:task_call_st, "Task2"]] ]
         ast(expr, :if_st).should eq(expected)

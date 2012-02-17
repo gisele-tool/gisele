@@ -16,8 +16,8 @@ module Gisele::Language
         source   = ast("if goodCond Task1 end")
         expected = \
           [:case_st,
-            [:when_clause, 
-              [:bool_expr, [:var_ref, "goodCond"]], 
+            [:when_clause,
+              [:bool_expr, [:var_ref, "goodCond"]],
               [:task_call_st, "Task1"] ]]
         rewrite(source).should eq(expected)
       end
@@ -26,11 +26,11 @@ module Gisele::Language
         source   = ast("if goodCond Task1 else Task2 end")
         expected = \
           [:case_st,
-            [:when_clause, 
-              [:bool_expr, [:var_ref, "goodCond"]], 
+            [:when_clause,
+              [:bool_expr, [:var_ref, "goodCond"]],
               [:task_call_st, "Task1"] ],
-            [:when_clause, 
-              [:bool_expr, [:bool_not, [:var_ref, "goodCond"]]], 
+            [:when_clause,
+              [:bool_expr, [:bool_not, [:var_ref, "goodCond"]]],
               [:task_call_st, "Task2"] ]
           ]
         rewrite(source).should eq(expected)
