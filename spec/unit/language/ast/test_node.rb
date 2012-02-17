@@ -12,6 +12,18 @@ module Gisele::Language::AST
       end
     end
 
+    describe 'children' do
+
+      it 'returns all but the rule name' do
+        node([:hello, "world", "!"]).children.should eq(["world", "!"])
+      end
+
+      it 'returns an empty array when no children' do
+        node([:hello]).children.should eq([])
+      end
+
+    end # children
+
     describe 'dup' do
 
       it 'duplicates the underlying array' do

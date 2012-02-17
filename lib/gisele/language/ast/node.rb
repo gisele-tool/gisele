@@ -15,6 +15,15 @@ module Gisele
           first
         end
 
+        # Returns the children of this node. 
+        #
+        # Children are defined as all but the rule name in the underlying 
+        # array.
+        #
+        def children
+          self[1..-1]
+        end
+
         # Duplicates this node.
         #
         # This method ensures that the node marking through modules 

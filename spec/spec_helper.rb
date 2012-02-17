@@ -21,6 +21,10 @@ module Helpers
     fixtures_dir.glob(glob)
   end
 
+  def node(arr)
+    Gisele::Language::AST::node(arr)
+  end
+
 end
 
 RSpec.configure do |c|
