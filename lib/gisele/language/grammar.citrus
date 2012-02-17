@@ -189,12 +189,8 @@ grammar Gisele::Language::Grammar
   ### Events
 
   rule event_set
-      ('{' spacing front:event tail:(spacing ',' spacing event)* spacing '}'){
-        [:event_set, front.value] + tail.matches.map{|m| m.matches.last.value}
-      } 
-    | ('{' spacing '}'){
-      [:event_set]
-    }
+      ('{' spacing event (spacing ',' spacing event)* spacing '}') <Gisele::Language::Syntax::EventSet>
+    | ('{' spacing '}') <Gisele::Language::Syntax::EventSet>
   end
 
   rule event

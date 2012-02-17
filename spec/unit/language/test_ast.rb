@@ -42,8 +42,8 @@ module Gisele::Language
       end
 
       it 'parses non empty lists as expected' do
-        expr     = '{Diagnosis:start, an_event}'
-        expected = [:event_set, "Diagnosis:start", "an_event"]
+        expr     = '{Diagnosis:start, an_event, another_one}'
+        expected = [:event_set, "Diagnosis:start", "an_event", "another_one"]
         ast(expr, :event_set).should eq(expected)
       end
 

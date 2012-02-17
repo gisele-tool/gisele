@@ -12,3 +12,4 @@ module Gisele
   end # module Language
 end # module Gisele
 require_relative 'boolean_literal'
+require_relative 'event_set'
