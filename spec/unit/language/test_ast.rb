@@ -146,19 +146,19 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "while goodCond Task1 end"
         expected = \
-          [:while,
+          [:while_st,
             [:var_ref, "goodCond"],
             [:task_call_st, "Task1"]]
-        ast(expr, :while_statement).should eq(expected)
+        ast(expr, :while_st).should eq(expected)
       end
 
       it 'recognizes implicit sequences' do
         expr     = "while goodCond Task1 Task2 end"
         expected = \
-          [:while,
+          [:while_st,
             [:var_ref, "goodCond"],
-            [:seq, [:task_call_st, "Task1"], [:task_call_st, "Task2"]]]
-        ast(expr, :while_statement).should eq(expected)
+            [:seq_st, [:task_call_st, "Task1"], [:task_call_st, "Task2"]]]
+        ast(expr, :while_st).should eq(expected)
       end
 
     end # while_statement
@@ -168,7 +168,7 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "else Task1 "
         expected = \
-          [:else, [:task_call_st, "Task1"]]
+          [:else_clause, [:task_call_st, "Task1"]]
         ast(expr, :else_clause).should eq(expected)
       end
 
@@ -179,7 +179,7 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "elsif goodCond Task1 "
         expected = \
-          [:elsif, [:var_ref, "goodCond"], [:task_call_st, "Task1"]]
+          [:elsif_clause, [:var_ref, "goodCond"], [:task_call_st, "Task1"]]
         ast(expr, :elsif_clause).should eq(expected)
       end
 
@@ -190,31 +190,31 @@ module Gisele::Language
       it 'parses as expected' do
         expr     = "if goodCond Task1 end"
         expected = \
-          [:if, [:var_ref, "goodCond"], [:task_call_st, "Task1"]]
-        ast(expr, :if_statement).should eq(expected)
+          [:if_st, [:var_ref, "goodCond"], [:task_call_st, "Task1"]]
+        ast(expr, :if_st).should eq(expected)
       end
 
       it 'supports a else clause' do
         expr     = "if goodCond Task1 else Task2 end"
         expected = \
-          [:if,
+          [:if_st,
             [:var_ref, "goodCond"], [:task_call_st, "Task1"],
-            [:else, [:task_call_st, "Task2"]] ]
-        ast(expr, :if_statement).should eq(expected)
+            [:else_clause, [:task_call_st, "Task2"]] ]
+        ast(expr, :if_st).should eq(expected)
       end
 
       it 'supports elsif clauses' do
         expr     = "if goodCond Task1 elsif otherCond Task2 elsif stillAnother Task3 else Task4 end"
         expected = \
-          [:if,
+          [:if_st,
             [:var_ref, "goodCond"], [:task_call_st, "Task1"],
-            [:elsif,
+            [:elsif_clause,
               [:var_ref, "otherCond"], [:task_call_st, "Task2"]],
-            [:elsif,
+            [:elsif_clause,
               [:var_ref, "stillAnother"], [:task_call_st, "Task3"]],
-            [:else,
+            [:else_clause,
               [:task_call_st, "Task4"]] ]
-        ast(expr, :if_statement).should eq(expected)
+        ast(expr, :if_st).should eq(expected)
       end
 
     end # if_statement

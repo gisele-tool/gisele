@@ -248,29 +248,29 @@ module Gisele::Language
 
       it 'parses a single while statement' do
         expr = 'while badCond Task end'
-        parse(expr, :while_statement).should eq(expr)
+        parse(expr, :while_st).should eq(expr)
       end
 
     end # while_statement
 
-    describe 'the if_statement rule' do
+    describe 'the if_st rule' do
 
       it 'parses a single if statement' do
         expr = 'if goodCond Task end'
-        parse(expr, :if_statement).should eq(expr)
+        parse(expr, :if_st).should eq(expr)
       end
 
       it 'supports an optional else' do
         expr = 'if goodCond GoodTask else BadTask end'
-        parse(expr, :if_statement).should eq(expr)
+        parse(expr, :if_st).should eq(expr)
       end
 
       it 'supports an optional elsif clauses' do
         expr = 'if goodCond GoodTask elsif otherCond OtherTask elsif yetAnother BadTask end'
-        parse(expr, :if_statement).should eq(expr)
+        parse(expr, :if_st).should eq(expr)
       end
 
-    end # if_statement
+    end # if_st
 
     describe 'the process_statement rule' do
 

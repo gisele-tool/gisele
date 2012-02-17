@@ -44,9 +44,8 @@ grammar Gisele::Language::Grammar
   end
 
   rule implicit_seq_st
-    (front:explicit_statement spaces tail:st_list){
-      [:seq, front.value] + tail.value
-    }
+    (explicit_statement spaces st_list)
+    <Gisele::Language::Syntax::ImplicitSeqSt>
   end
 
   rule st_list
@@ -55,43 +54,31 @@ grammar Gisele::Language::Grammar
   end
 
   rule explicit_statement
-      if_statement
-    | while_statement
+      if_st
+    | while_st
     | seq_st
     | par_st
     | task_call_st
   end
 
-  rule if_statement
-    ('if' spaces cond:bool_expr spaces
-      dost:process_statement spaces
-      elsifclauses:elsif_clause*
-      elseclause:else_clause?
-    'end'){
-      elsifs = elsifclauses.matches.map{|c| c.value}
-      elsec  = elseclause.empty? ? [] : [elseclause.first.value]
-      [:if, cond.value, dost.value] + elsifs + elsec
-    }
+  rule if_st
+    ('if' spaces bool_expr spaces process_statement spaces elsif_clause* else_clause? 'end')
+    <Gisele::Language::Syntax::IfSt>
   end
 
   rule elsif_clause
-    ('elsif' spaces cond:bool_expr spaces dost:process_statement spaces){
-      [:elsif, cond.value, dost.value]
-    }
+    ('elsif' spaces bool_expr spaces process_statement spaces)
+    <Gisele::Language::Syntax::ElsifClause>
   end
 
   rule else_clause
-    ('else' spaces dost:process_statement spaces){
-      [:else, dost.value]
-    }
+    ('else' spaces process_statement spaces)
+    <Gisele::Language::Syntax::ElseClause>
   end
 
-  rule while_statement
-    ('while' spaces cond:bool_expr spaces
-      dost:process_statement spaces
-    'end'){
-      [:while, cond.value, dost.value]
-    }
+  rule while_st
+    ('while' spaces bool_expr spaces process_statement spaces 'end')
+    <Gisele::Language::Syntax::WhileSt>
   end
 
   rule seq_st
