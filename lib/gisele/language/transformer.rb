@@ -3,8 +3,6 @@ module Gisele
     class Transformer
       include AST::Helpers
 
-      class UnexpectedNodeError < StandardError; end
-
       def call(node)
         unless looks_a_node?(node)
           raise ArgumentError, "AST node expected, got #{node.inspect}"

@@ -14,7 +14,11 @@ module Gisele::Language
         end
 
         def on_missing(node)
-          [:seen_missing, node]
+          if node.rule_name == :nosuchone
+            [:seen_missing, node]
+          else
+            super
+          end
         end
 
       end
@@ -31,6 +35,11 @@ module Gisele::Language
       it 'calls on_missing when not found' do
         ast = [:nosuchone, "world"]
         transformer.call(ast).should eq([:seen_missing, [:nosuchone, "world"]])
+      end
+
+      it 'raises unexpected by default in on_missing' do
+        ast = [:nonono, "world"]
+        lambda{ transformer.call(ast) }.should raise_error(Gisele::UnexpectedNodeError, /nonono/)
       end
 
       it 'performs post node transformation if required' do
