@@ -8,6 +8,7 @@ SYNOPSIS
 OPTIONS
       --ast=[MODE]                 Prints the process abstract syntax tree (debug,ruby)
       --no-sugar                   Apply syntactic sugar removal
+      --graph=[MODE]               Converts and print a graph (dot)
       --help                       Show this help message
       --version                    Show version and exit
 
