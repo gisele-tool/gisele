@@ -41,11 +41,11 @@ module Gisele
       end
 
       def on_par_st(node)
-        entry, exit = entry_and_exit(node)
+        entry, exit = add_vertex(node), add_vertex(node)
         node.children.each do |child|
           c_entry, c_exit = call(child)
           connect(entry, c_entry)
-          connect(exit,  c_exit)
+          connect(c_exit, exit)
         end
         [entry, exit]
       end
