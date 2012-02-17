@@ -1,14 +1,14 @@
 module Gisele
   module Language
     module AST
-      module TaskCallSt
+      module WhenClause
         include Node
 
         def label
-          last.to_s
+          self[1].label
         end
 
-      end # module TaskCallSt
+      end # module WhenClause
     end # module AST
   end # module Language
 end # module Gisele

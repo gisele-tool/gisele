@@ -1,3 +1,9 @@
+task_refinement:
+  shape: circle
+  style: filled
+  fillcolor: black
+  fixed: true
+  width: 0.1
 task_call_st:
   shape: box
 while_st:

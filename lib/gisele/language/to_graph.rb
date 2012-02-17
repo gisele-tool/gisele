@@ -6,13 +6,20 @@ module Gisele
       def recurse_on_last(node)
         call(node.last)
       end
-      alias :on_unit            :recurse_on_last
-      alias :on_task_refinement :recurse_on_last
+      alias :on_unit :recurse_on_last
 
       def on_task_def(node)
         @graph = Yargi::Digraph.new
         call(SugarRemoval.new.call(node.last))
         @graph
+      end
+
+      def on_task_refinement(node)
+        entry, exit = add_vertex(node), add_vertex(node)
+        c_entry, c_exit = call(node.last)
+        connect(entry, c_entry)
+        connect(c_exit, exit)
+        [entry, exit]
       end
 
       def on_seq_st(node)
@@ -84,8 +91,8 @@ module Gisele
         @graph.add_vertex(node.dot_attributes)
       end
 
-      def entry_and_exit(node)
-        @graph.add_n_vertices(2, Connector)
+      def entry_and_exit(node, tag = Connector)
+        @graph.add_n_vertices(2, tag)
       end
 
       def connect(source, target, node = nil)

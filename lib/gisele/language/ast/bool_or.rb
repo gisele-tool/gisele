@@ -1,14 +1,14 @@
 module Gisele
   module Language
     module AST
-      module TaskCallSt
+      module BoolOr
         include Node
 
         def label
-          last.to_s
+          markers[:match] ? markers[:match].to_s : "(#{self[1].label} or #{self[2].label})"
         end
 
-      end # module TaskCallSt
+      end # module BoolOr
     end # module AST
   end # module Language
 end # module Gisele

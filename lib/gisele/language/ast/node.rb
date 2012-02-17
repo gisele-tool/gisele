@@ -79,3 +79,12 @@ module Gisele
 end # module Gisele
 require_relative 'unit'
 require_relative 'task_call_st'
+require_relative 'while_st'
+require_relative 'if_st'
+require_relative 'elsif_clause'
+require_relative 'when_clause'
+require_relative 'bool_expr'
+require_relative 'bool_and'
+require_relative 'bool_or'
+require_relative 'bool_not'
+require_relative 'var_ref'

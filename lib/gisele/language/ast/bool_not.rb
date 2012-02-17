@@ -1,14 +1,14 @@
 module Gisele
   module Language
     module AST
-      module TaskCallSt
+      module BoolNot
         include Node
 
         def label
-          last.to_s
+          markers[:match] ? markers[:match].to_s : "not(#{last.label})"
         end
 
-      end # module TaskCallSt
+      end # module BoolNot
     end # module AST
   end # module Language
 end # module Gisele
