@@ -1,0 +1,1 @@
+gisele --no-sugar --ast=ruby tasks/simple.gis
