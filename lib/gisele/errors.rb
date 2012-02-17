@@ -8,7 +8,7 @@ module Gisele
     end
   end
 
-  # Internal errors certainly denote bugs in the implementation. 
+  # Internal errors certainly denote bugs in the implementation.
   # They are typically raised when a precondition is violated.
   class InternalError < Error
   end
