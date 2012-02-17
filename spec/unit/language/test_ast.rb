@@ -11,17 +11,17 @@ module Gisele::Language
     describe "the bool_expr rule" do
 
       it 'returns expected ast on simple expressions' do
-        expected = [:and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]]
+        expected = [:bool_and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]]
         ast("diagKnown and platLow", :bool_expr).should eq(expected)
       end
 
       it 'respects priorities' do
-        expected = [:or, [:and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]], [:var_ref, "platHigh"]]
+        expected = [:bool_or, [:bool_and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]], [:var_ref, "platHigh"]]
         ast("diagKnown and platLow or platHigh", :bool_expr).should eq(expected)
       end
 
       it 'supports double negations' do
-        expected = [:not, [:not, [:var_ref, "diagKnown"]]]
+        expected = [:bool_not, [:bool_not, [:var_ref, "diagKnown"]]]
         ast("not not(diagKnown)", :bool_expr).should eq(expected)
       end
 

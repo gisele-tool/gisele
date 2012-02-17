@@ -120,34 +120,35 @@ grammar Gisele::Language::Grammar
   end
 
   rule bool_or
-      (left:bool_and spaces 'or' spaces right:bool_or){
-        [:or, left.value, right.value]
-      }
+      (left:bool_and spaces 'or' spaces right:bool_or)
+      <Gisele::Language::Syntax::BoolOr>
     | bool_and
   end
 
   rule bool_and
-      (left:bool_not spaces 'and' spaces right:bool_and){
-        [:and, left.value, right.value]
-      }
+      (left:bool_not spaces 'and' spaces right:bool_and)
+      <Gisele::Language::Syntax::BoolAnd>
     | bool_not
   end
 
   rule bool_not
-      ('not' &([ \t\n] | '(') spacing term:bool_not){
-        [:not, term.value]
-      }
+      ('not' &([ \t\n] | '(') spacing expr:bool_not)
+      <Gisele::Language::Syntax::BoolNot>
     | bool_term
   end
 
   rule bool_term
-    bool_parenthesed | boolean_literal | bool_varref
+    bool_paren | boolean_literal | bool_varref
   end
 
-  rule bool_parenthesed
-    ('(' spacing expr:bool_expr spacing ')'){
-      expr.value
-    }
+  rule bool_paren
+    ('(' spacing expr:bool_expr spacing ')')
+    <Gisele::Language::Syntax::BoolParen>
+  end
+
+  rule bool_lit
+    (boolean_literal)
+    <Gisele::Language::Syntax::BoolLit>
   end
 
   rule bool_varref

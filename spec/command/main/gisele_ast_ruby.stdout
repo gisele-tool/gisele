@@ -24,7 +24,7 @@
             [
                 :if,
                 [
-                    :not,
+                    :bool_not,
                     [
                         :var_ref,
                         "diagKnown"
