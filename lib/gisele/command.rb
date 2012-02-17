@@ -19,6 +19,10 @@ module Gisele
   #   debugging, that is with colors and extra information. Use --ast=ruby to get a ruby
   #   array for automatic processing.
   #
+  #   When --no-sugar is specified, syntactic sugar is first removed before making any other
+  #   transformation. For now, this rewrites all `if` statements as explicit `case` guarded
+  #   commands.
+  #
   class Gisele::Command <  Quickl::Command(__FILE__, __LINE__)
 
     # Install options
