@@ -2,8 +2,8 @@ module Gisele
   module Language
     module AST
 
-      def node(arg)
-        AST::Helpers.node(arg)
+      def node(arg, markers = {})
+        AST::Helpers.node(arg, markers)
       end
       module_function :node
 

@@ -3,6 +3,16 @@ module Gisele
     module AST
       module Node
 
+        # Returns the node markers
+        def markers
+          @markers ||= {}
+        end
+
+        # Sets node markers
+        def markers=(markers)
+          @markers = markers
+        end
+
         # Returns the rule name, that is, the first Symbol element
         # of the node array.
         #
@@ -34,7 +44,7 @@ module Gisele
         #   # => [:something, ...]
         #
         def copy(&block)
-          base = AST.node([rule_name])
+          base = AST.node([rule_name], markers.dup)
           children.inject(base, &block)
         end
 
@@ -44,7 +54,7 @@ module Gisele
         # will correctly be applied to the duplicated array.
         #
         def dup
-          AST.node(super)
+          AST.node(super, markers.dup)
         end
 
       end # module Node

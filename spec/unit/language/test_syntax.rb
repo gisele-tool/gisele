@@ -30,6 +30,11 @@ module Gisele::Language
         ast.first.should eq(:if_st)
       end
 
+      it 'sets traceability marks correctly' do
+        ast = ast("if goodCond Task1 end", :root => :if_st)
+        ast.markers[:match].should_not be_nil
+      end
+
       fixture_files('tasks/**/*.gis').each do |file|
         it "works on #{file}" do
           parsed = Syntax.ast(file)

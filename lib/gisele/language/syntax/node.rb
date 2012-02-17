@@ -4,7 +4,7 @@ module Gisele
       module Node
 
         def to_ast
-          Language::AST.node(_to_ast)
+          Language::AST.node(_to_ast, {:match => self})
         end
 
       end # module Node

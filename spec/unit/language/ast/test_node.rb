@@ -21,6 +21,14 @@ module Gisele::Language::AST
 
     end # children
 
+    describe 'markers' do
+
+      it 'defaults to an empty hash' do
+        node([:hello]).markers.should eq({})
+      end
+
+    end # markers
+
     describe 'copy' do
 
       it 'collects block results ala `inject`' do
@@ -40,6 +48,13 @@ module Gisele::Language::AST
         target.should be_a(Unit)
       end
 
+      it 'keeps the markers unchanged' do
+        node = node([:unit], {:hello => "World"})
+        copy = node.copy do |memo,child| end
+        copy.markers.should eq({:hello => "World"})
+        copy.markers.object_id.should_not eq(node.markers.object_id)
+      end
+
     end
 
     describe 'dup' do
@@ -53,6 +68,13 @@ module Gisele::Language::AST
         arr = [:unit, "etc."]
         node(arr).dup.should be_a(Unit)
         node(arr).dup.should be_a(Node)
+      end
+
+      it 'keeps the markers unchanged' do
+        node = node([:unit, "etc."], {:hello => "World"})
+        copy = node.dup
+        copy.markers.should eq({:hello => "World"})
+        copy.markers.object_id.should_not eq(node.markers.object_id)
       end
 
     end # dup
