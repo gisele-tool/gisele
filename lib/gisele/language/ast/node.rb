@@ -15,16 +15,13 @@ module Gisele
           first
         end
 
+        # Duplicates this node.
+        #
+        # This method ensures that the node marking through modules 
+        # will correctly be applied to the duplicated array.
+        #
         def dup
-          super.extend(most_specific_module)
-        end
-
-        private
-
-        # Returns the most specific module to use for this node
-        def most_specific_module
-          mod_name = Language.rule2mod(rule_name)
-          AST.const_get(mod_name) rescue Node
+          AST.node(super)
         end
 
       end # module Node

@@ -1,6 +1,5 @@
 require 'spec_helper'
 module Gisele::Language::AST
-  module Node; public :most_specific_module; end
   describe Node do
 
     def node(array)
@@ -12,18 +11,6 @@ module Gisele::Language::AST
         node([:hello]).rule_name.should eq(:hello)
       end
     end
-
-    describe "most_specific_module" do
-
-      it 'returns Node on unexisting sub-module' do
-        node([:nosuchone]).most_specific_module.should eq(Node)
-      end
-
-      it 'returns the most specific module on existing one' do
-        node([:unit]).most_specific_module.should eq(Unit)
-      end
-
-    end # most_specific_module
 
     describe 'dup' do
 
