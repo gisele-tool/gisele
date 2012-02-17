@@ -4,6 +4,9 @@
 
 * Boolean literals (true, false) are now explicitly represented in boolean expressions,
   under a :bool_lit AST node.
+* All statements and clauses relying on boolean conditions (if_st, while_st, elsif_clause,
+  when_clause) have now an explicit :bool_expr node as first child. Previously, a subnode
+  of the boolean grammar was used.
 
 # 0.1.0 / 2012-02-17
 
