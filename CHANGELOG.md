@@ -1,55 +1,56 @@
 # 0.2.0 / 2012-02-17
 
-## Enhancements
+* Enhancements
 
-* A --graph option has been added to the main `gisele` shell command. It outputs a graph in
-  the graphviz/dot format representing a process as a box-and-arrow workflow.
+  * A --graph option has been added to the main `gisele` shell command. It outputs a graph in
+    the graphviz/dot format representing a process as a box-and-arrow workflow.
 
-## Breaking changes
+* Breaking changes
 
-* Boolean literals (true, false) are now explicitly represented in boolean expressions,
-  under a :bool_lit AST node.
-* All statements and clauses relying on boolean conditions (if_st, while_st, elsif_clause,
-  when_clause) have now an explicit :bool_expr node as first child. Previously, a subnode
-  of the boolean grammar was used.
+  * Boolean literals (true, false) are now explicitly represented in boolean expressions,
+    under a :bool_lit AST node.
+  * All statements and clauses relying on boolean conditions (if_st, while_st, elsif_clause,
+    when_clause) have now an explicit :bool_expr node as first child. Previously, a subnode
+    of the boolean grammar was used.
 
 # 0.1.0 / 2012-02-17
 
-## Enhancements
+* Enhancements
 
-* The main `gisele` command now accepts a --no-sugar option that removes syntactic
-  sugar. This option is limited to the rewriting of `if` statements as guarded `case`
-  commands for now. Additional rewriting could be added in the future.
-* All AST nodes (obtained via `Gisele.ast` or similar) now include the module 
-  `Gisele::Language::AST::Node` which contains a few utilities.
+  * The main `gisele` command now accepts a --no-sugar option that removes syntactic
+    sugar. This option is limited to the rewriting of `if` statements as guarded `case`
+    commands for now. Additional rewriting could be added in the future.
+  * All AST nodes (obtained via `Gisele.ast` or similar) now include the module 
+    `Gisele::Language::AST::Node` which contains a few utilities.
 
-## Breaking changes
+* Breaking changes
 
-* The language package has been reorganized and is now considered as belonging to
-  the private API. Further changes there will therefore not b considered as Breaking
-  changes in the future (expect the structure of the AST, of course). 
-  The `Gisele.parse` and `Gisele.ast` methods belong to the public API and are therefore
-  the way to (parse / get an AST) from a process file / source.
+  * The language package has been reorganized and is now considered as belonging to
+    the private API. Further changes there will therefore not b considered as Breaking
+    changes in the future (expect the structure of the AST, of course). 
+    The `Gisele.parse` and `Gisele.ast` methods belong to the public API and are therefore
+    the way to (parse / get an AST) from a process file / source.
 
-* The top AST element of a process file is always a :unit. The latter may contain 
-  one ore more task definitions. Import/include nodes will probably be added later
-  and authorized at the beginning of the file.
+  * The top AST element of a process file is always a :unit. The latter may contain 
+    one ore more task definitions. Import/include nodes will probably be added later
+    and authorized at the beginning of the file.
 
-* The following syntax nodes have been renamed:
-    :varref     -> :var_ref
-    :or         -> :bool_or
-    :and        -> :bool_and
-    :not        -> :bool_not
-    :if         -> :if_st
-    :else       -> :else_clause
-    :elsif      -> :elsif_clause
-    :while      -> :while_st
-    :seq        -> :seq_st
-    :par        -> :par_st
-    :task_call  -> :task_call_st
-    :task       -> :task_def
-    :signature  -> :task_signature
-    :refinement -> :task_refinement
+  * The following syntax nodes have been renamed:
+
+        :varref     -> :var_ref
+        :or         -> :bool_or
+        :and        -> :bool_and
+        :not        -> :bool_not
+        :if         -> :if_st
+        :else       -> :else_clause
+        :elsif      -> :elsif_clause
+        :while      -> :while_st
+        :seq        -> :seq_st
+        :par        -> :par_st
+        :task_call  -> :task_call_st
+        :task       -> :task_def
+        :signature  -> :task_signature
+        :refinement -> :task_refinement
 
 # 0.0.1 / 2012-02-16
 

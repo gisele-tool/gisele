@@ -24,7 +24,7 @@ module Gisele
   #   array for automatic processing.
   #
   #   When --graph is used, the command parses the process file. It then converts the AST into
-  #   a directed graph representing the process as a box-and-arrow workflow and outputs it on 
+  #   a directed graph representing the process as a box-and-arrow workflow and outputs it on
   #   standard output. For now, the only output format available is dot (from graphviz).
   #
   class Gisele::Command <  Quickl::Command(__FILE__, __LINE__)
