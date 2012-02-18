@@ -8,9 +8,10 @@ module Gisele
       end
 
       class ElsifFlattening < Rewriter
+        alias :on_missing :copy_and_applyall
 
-        def initialize(main)
-          @main = main
+        def initialize(parent = nil)
+          @parent = parent || self
         end
 
         def on_if_st(node)
@@ -31,27 +32,28 @@ module Gisele
         def on_elsif_clause(node)
           base = \
             [:else_clause,
-             [:if_st, node[1], @main.call(node[2])] ]
+             [:if_st, node[1], @parent.call(node[2])] ]
           base = node(base, node.markers.dup)
         end
 
         def on_else_clause(node)
-          [:else_clause, @main.call(node.last)]
+          [:else_clause, @parent.call(node.last)]
         end
 
       end # class ElsifFlattening
 
       class IfToGuardedCommands < Rewriter
+        alias :on_missing :copy_and_applyall
 
-        def initialize(main)
-          @main = main
+        def initialize(parent = nil)
+          @parent = parent || self
         end
 
         def on_if_st(node)
           condition, dost, *clauses = node.children
 
           # create case_st with same markers as the if_st
-          when_clause = [:when_clause, condition, @main.call(dost)]
+          when_clause = [:when_clause, condition, @parent.call(dost)]
           when_clause = node(when_clause, node.markers.dup)
           base        = [:case_st, when_clause]
           base        = node(base, node.markers.dup)
@@ -77,7 +79,7 @@ module Gisele
           base = \
             [:when_clause,
               [:bool_expr, [:bool_and, condition, previous]],
-              @main.call(dost) ]
+              @parent.call(dost) ]
           node(base, node.markers.dup)
         end
 
@@ -88,7 +90,7 @@ module Gisele
           base = \
             [:when_clause,
               [:bool_expr, @condition],
-              @main.call(dost)]
+              @parent.call(dost)]
           node(base, node.markers.dup)
         end
 

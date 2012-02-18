@@ -8,7 +8,7 @@ module Gisele::Language
     end
 
     def rewrite(ast)
-      SugarRemoval::ElsifFlattening.new(SugarRemoval.new).call(ast)
+      SugarRemoval::ElsifFlattening.new.call(ast)
     end
 
     it 'rewrites a single if correctly' do
@@ -52,6 +52,34 @@ module Gisele::Language
               Task3
             else
               Task4
+            end
+          end
+        end
+      EOF
+      rewrite(source).should eq(expected)
+    end
+
+    it 'recurses by default' do
+      source = ast(<<-EOF.strip)
+        if goodCond
+          Task1
+        else
+          if bad
+            Task2
+          elsif middle
+            Task3
+          end
+        end
+      EOF
+      expected = ast(<<-EOF.strip)
+        if goodCond
+          Task1
+        else
+          if bad
+            Task2
+          else
+            if middle
+              Task3
             end
           end
         end
