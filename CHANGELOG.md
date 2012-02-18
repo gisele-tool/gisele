@@ -1,9 +1,16 @@
+# 0.3.0 / FIX ME
+
+* Breaking changes
+
+  * The grammar used to allow multiple task definitions inside the same .gis file.
+    This has been changed; unit may only contain a single task_def.
+
 # 0.2.0 / 2012-02-17
 
 * Enhancements
 
-  * A --graph option has been added to the main `gisele` shell command. It outputs a graph in
-    the graphviz/dot format representing a process as a box-and-arrow workflow.
+  * A --graph option has been added to the main `gisele` shell command. It outputs a graph 
+    in the graphviz/dot format representing a process as a box-and-arrow workflow.
 
 * Breaking changes
 

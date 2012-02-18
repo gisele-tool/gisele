@@ -3,7 +3,7 @@ grammar Gisele::Language::Syntax::Grammar
   ### Units
 
   rule unit
-    ((spacing task_def)* spacing)
+    (spacing task_def spacing)
     <Gisele::Language::Syntax::Unit>
   end
 
