@@ -31,7 +31,7 @@ module Gisele
           end
         end
 
-      end # module Dispatch
+      end # module Scoping
     end # class Rewriter
   end # module Language
 end # module Gisele
