@@ -5,18 +5,15 @@ module Gisele
 
         module Methods
 
-          def scoping_helper
-            @scoping_helper ||= Scoping.new
-          end
-
           def scope_stack
             @scope_stack ||= []
           end
 
           def with_scope(scope)
             scope_stack.push(scope)
-            yield
+            result = yield
             scope_stack.pop
+            result
           end
 
         end # module Methods
