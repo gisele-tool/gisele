@@ -9,7 +9,7 @@
 
 * Enhancements
 
-  * A --graph option has been added to the main `gisele` shell command. It outputs a graph 
+  * A --graph option has been added to the main `gisele` shell command. It outputs a graph
     in the graphviz/dot format representing a process as a box-and-arrow workflow.
 
 * Breaking changes
@@ -27,18 +27,18 @@
   * The main `gisele` command now accepts a --no-sugar option that removes syntactic
     sugar. This option is limited to the rewriting of `if` statements as guarded `case`
     commands for now. Additional rewriting could be added in the future.
-  * All AST nodes (obtained via `Gisele.ast` or similar) now include the module 
+  * All AST nodes (obtained via `Gisele.ast` or similar) now include the module
     `Gisele::Language::AST::Node` which contains a few utilities.
 
 * Breaking changes
 
   * The language package has been reorganized and is now considered as belonging to
     the private API. Further changes there will therefore not b considered as Breaking
-    changes in the future (expect the structure of the AST, of course). 
+    changes in the future (expect the structure of the AST, of course).
     The `Gisele.parse` and `Gisele.ast` methods belong to the public API and are therefore
     the way to (parse / get an AST) from a process file / source.
 
-  * The top AST element of a process file is always a :unit. The latter may contain 
+  * The top AST element of a process file is always a :unit. The latter may contain
     one ore more task definitions. Import/include nodes will probably be added later
     and authorized at the beginning of the file.
 
