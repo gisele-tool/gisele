@@ -1,0 +1,46 @@
+#
+# This is a Gisele process for the example of a rectal cancer care process, similar to the
+# case study that can be found in [Dam11].
+#
+# References
+#
+#   * [Dam11] Christophe Damas, Analyzing Multi-View Models of Software Systems, PhD thesis, 
+#             University of Louvain, November 2011
+task RectalCancerPathway
+
+  # This variable tracks if the cancer is treated in emergency
+  # in the initial state
+  trackvar emergency
+    {RectalCancerPathway:start}
+
+  # Is the cancer confirmed by the diagnosis?
+  trackvar cancerConfirmed
+    {Diagnosis:start}
+  initially false
+
+  # Is the emergency treatment envisioned by the
+  # multi-disciplinary staff?
+  trackvar surgeryEnvisioned
+    {StaffMeeting:end}
+  initially false
+
+  # main task refinement
+  refinement
+    if emergency
+      Emergency
+      Surgery
+      PostTreatment
+    else
+      Diagnosis
+      if cancerConfirmed
+        StaffMeeting
+        if surgeryEnvisioned
+          PreTreatment
+          Surgery
+          PostTreatment
+        end
+      end
+    end
+  end
+
+end
