@@ -7,6 +7,40 @@ module Gisele
         IfToGuardedCommands.new(self).call(node)
       end
 
+      class ElsifFlattening < Rewriter
+
+        def initialize(main)
+          @main = main
+        end
+
+        def on_if_st(node)
+          condition, dost, *clauses = node.children
+
+          base = [:if_st, condition, dost]
+          base = node(base, node.markers.dup)
+
+          clauses.inject base do |cur_if, clause|
+            rw_clause = call(clause)
+            cur_if << rw_clause
+            rw_clause.last
+          end
+
+          base
+        end
+
+        def on_elsif_clause(node)
+          base = \
+            [:else_clause,
+             [:if_st, node[1], @main.call(node[2])] ]
+          base = node(base, node.markers.dup)
+        end
+
+        def on_else_clause(node)
+          [:else_clause, @main.call(node.last)]
+        end
+
+      end # class ElsifFlattening
+
       class IfToGuardedCommands < Rewriter
 
         def initialize(main)
