@@ -1,8 +1,6 @@
 language: ruby
-bundler_args: --without=release doc profiling
 rvm:
   - 1.9.2
   - 1.9.3
   - ruby-head
   - jruby-19mode
-  - rbx-19mode

@@ -19,6 +19,7 @@ GEM
     yargi (0.2.0)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
