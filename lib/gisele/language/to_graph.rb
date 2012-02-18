@@ -1,6 +1,6 @@
 module Gisele
   module Language
-    class ToGraph < Transformer
+    class ToGraph < Rewriter
       module Connector; end
 
       def recurse_on_last(node)

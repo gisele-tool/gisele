@@ -1,13 +1,13 @@
 module Gisele
   module Language
-    class SugarRemoval < Transformer
+    class SugarRemoval < Rewriter
       alias :on_missing :copy_and_applyall
 
       def on_if_st(node)
         IfToGuardedCommands.new(self).call(node)
       end
 
-      class IfToGuardedCommands < Transformer
+      class IfToGuardedCommands < Rewriter
 
         def initialize(main)
           @main = main

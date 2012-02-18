@@ -1,6 +1,7 @@
 module Gisele
   module Language
     class Rewriter
+      include AST::Helpers
 
       def self.helpers
         @helpers ||= [ WorkOnNodes.new ]
