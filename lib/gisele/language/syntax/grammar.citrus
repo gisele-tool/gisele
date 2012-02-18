@@ -10,8 +10,17 @@ grammar Gisele::Language::Syntax::Grammar
   ### Task definitions
 
   rule task_def
+    explicit_task_def | implicit_task_def
+  end
+
+  rule explicit_task_def
     ('task' spaces task_name spaces (task_signature spaces)? (task_refinement spaces)? 'end')
-    <Gisele::Language::Syntax::TaskDef>
+    <Gisele::Language::Syntax::ExplicitTaskDef>
+  end
+
+  rule implicit_task_def
+    ('task' spaces task_name spaces (process_statement spaces)? 'end')
+    <Gisele::Language::Syntax::ImplicitTaskDef>
   end
 
   rule task_signature

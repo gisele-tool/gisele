@@ -291,10 +291,19 @@ module Gisele::Language::Syntax
 
     describe 'the task_def rule' do
 
-      it 'parses a simple task definition' do
+      it 'parses a simple explicit task definition' do
         taskdef = <<-TASKDEF.strip
           task Process
             refinement Diagnosis end
+          end
+        TASKDEF
+        parse(taskdef, :task_def).should eq(taskdef)
+      end
+
+      it 'parses a simple implicit task definition' do
+        taskdef = <<-TASKDEF.strip
+          task Process
+            Diagnosis
           end
         TASKDEF
         parse(taskdef, :task_def).should eq(taskdef)

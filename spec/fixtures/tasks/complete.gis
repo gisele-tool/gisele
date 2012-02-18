@@ -9,10 +9,8 @@ task Complete
   initially false
 
   task DrinkBeers
-    refinement
-      while not(drunk)
-        DrinkBeer
-      end
+    while not(drunk)
+      DrinkBeer
     end
   end
 

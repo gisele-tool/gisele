@@ -240,7 +240,7 @@ module Gisele::Language::Syntax
 
     describe 'the task_def rule' do
 
-      it 'parses as expected' do
+      it 'parses an explicit definition as expected' do
         expr     = "task Task1 fluent diagKnown {}, {} refinement Task2 end end"
         expected = \
           [:task_def, "Task1",

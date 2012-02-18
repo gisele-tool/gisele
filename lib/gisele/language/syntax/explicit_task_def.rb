@@ -1,7 +1,7 @@
 module Gisele
   module Language
     module Syntax
-      module TaskDef
+      module ExplicitTaskDef
         include Node
 
         def _to_ast
@@ -11,7 +11,7 @@ module Gisele
           [:task_def, name, sig, ref]
         end
 
-      end # module TaskDef
+      end # module ExplicitTaskDef
     end # module Syntax
   end # module Language
 end # module Gisele
