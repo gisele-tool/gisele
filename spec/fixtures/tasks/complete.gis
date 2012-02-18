@@ -1,4 +1,21 @@
 task Complete
+
+  trackvar everyOneHappy
+    {FirstTask:start}
+
+  fluent someoneHappy
+    {DrinkBeer:start, DrinkBeers:start},
+    {DoNothingSpecial:end}
+  initially false
+
+  task DrinkBeers
+    refinement
+      while not(drunk)
+        DrinkBeer
+      end
+    end
+  end
+
   refinement
     FirstTask
     if everyoneHappy

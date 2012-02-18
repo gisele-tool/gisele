@@ -20,7 +20,7 @@ grammar Gisele::Language::Syntax::Grammar
   end
 
   rule task_signature_element
-    fluent_def | trackvar_def
+    fluent_def | trackvar_def | task_def
   end
 
   rule task_refinement
