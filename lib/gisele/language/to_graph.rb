@@ -10,13 +10,17 @@ module Gisele
 
       def on_task_def(node)
         @graph = Yargi::Digraph.new
-        call(SugarRemoval.new.call(node.last))
+
+        # flatten all elsif
+        call(SugarRemoval::ElsifFlattening.new.call(node.last))
+
         @graph.vertices(Connector).each do |vertex|
           next unless vertex.out_edges.size == 1
           target = vertex.out_edges.first.target
           @graph.reconnect(vertex.in_edges, nil, target)
           @graph.remove_vertex(vertex)
         end
+
         @graph
       end
 
@@ -47,6 +51,29 @@ module Gisele
           connect(entry, c_entry)
           connect(c_exit, exit)
         end
+        [entry, exit]
+      end
+
+      def on_if_st(node)
+        cond, then_clause, else_clause, = node.children
+
+        entry, exit = entry_and_exit(node)
+
+        diamond = add_vertex(node)
+        connect(entry, diamond)
+
+        c_entry, c_exit = call(then_clause)
+        connect(diamond, c_entry, true_ast_node)
+        connect(c_exit, exit)
+
+        if else_clause
+          c_entry, c_exit = call(else_clause.last)
+          connect(diamond, c_entry, false_ast_node)
+          connect(c_exit, exit)
+        else
+          connect(diamond, exit, false_ast_node)
+        end
+
         [entry, exit]
       end
 
