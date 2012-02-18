@@ -251,6 +251,16 @@ module Gisele::Language::Syntax
         ast(expr, :task_def).should eq(expected)
       end
 
+      it 'parses an implicit definition as expected' do
+        expr     = "task Task1 Task2 end"
+        expected = \
+          [:task_def, "Task1",
+            [:task_signature],
+            [:task_refinement,
+              [:task_call_st, "Task2"]]]
+        ast(expr, :task_def).should eq(expected)
+      end
+
     end # task_def
 
   end
