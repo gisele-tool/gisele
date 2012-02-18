@@ -18,6 +18,7 @@ module Gisele
 end # module Gisele
 require_relative 'language/syntax'
 require_relative 'language/ast'
+require_relative 'language/rewriter'
 require_relative 'language/transformer'
 require_relative 'language/sugar_removal'
 require_relative 'language/to_graph'
