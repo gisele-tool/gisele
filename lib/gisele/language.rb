@@ -1,6 +1,7 @@
 module Gisele
   module Language
 
+    require 'yaml'
     DOT_ATTRIBUTES = YAML.load_file(Path.dir/"language/dot.yml")
 
     def rule2mod(rule)
