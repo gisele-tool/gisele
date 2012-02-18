@@ -1,5 +1,14 @@
 # 0.3.0 / FIX ME
 
+* Major enhancements
+
+  * The grammar now allows implicit refinements for tasks that do not define fluents and
+    tracking variables. In that case, "..." may be used in place of "refinement ... end".
+    The resulting AST will always contain an empty signature and the :task_refinement
+    node (syntactic sugar, that is).
+  * The grammar now allows a task definition to contain the definition of sub tasks. The
+    idiomatic place is after fluent and trackvar definitions and before the refinement.
+
 * Breaking changes
 
   * The grammar used to allow multiple task definitions inside the same .gis file.
