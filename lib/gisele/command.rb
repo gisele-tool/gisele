@@ -59,7 +59,7 @@ module Gisele
       end
 
       ast = Gisele.ast(file)
-      ast = Gisele::Language::SugarRemoval.new.call(ast) unless @sugar
+      ast = Language::SugarRemoval.new.call(ast) unless @sugar
 
       print_ast(ast, @print_ast) if @print_ast
       print_graph(ast, @print_graph) if @print_graph
