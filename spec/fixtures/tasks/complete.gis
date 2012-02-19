@@ -27,7 +27,14 @@ task Complete
       DoNothingSpecial
     end
     while not(endOfTheDay)
-      WaitAndSee
+      case curState
+      when somethingToDo
+        DoSomething
+      when nothingToDo
+        DoNothing
+      else
+        WaitAndSee
+      end
     end
   end
 end
