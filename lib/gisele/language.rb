@@ -4,6 +4,27 @@ module Gisele
     require 'yaml'
     DOT_ATTRIBUTES = YAML.load_file(Path.dir/"language/dot.yml")
 
+    RESERVED_WORDS = [
+      "if",
+      "else",
+      "elsif",
+      "when",
+      "while",
+      "seq",
+      "par",
+      "task",
+      "refinement",
+      "fluent",
+      "trackvar",
+      "initially",
+      "end",
+      "not",
+      "or",
+      "and",
+      "true",
+      "false"
+    ]
+
     def rule2mod(rule)
       rule.to_s.gsub(/(^|_)([a-z])/){|x| $2.capitalize}.to_sym
     end

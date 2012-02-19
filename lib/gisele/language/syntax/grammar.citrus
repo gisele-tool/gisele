@@ -182,11 +182,11 @@ grammar Gisele::Language::Syntax::Grammar
   end
 
   rule variable_name
-    [a-z] [A-Za-z0-9_]*
+    !(reserved_word spaces) [a-z] [A-Za-z0-9_]*
   end
 
   rule event_name
-    [a-z] [a-z0-9_]*
+    !(reserved_word spaces) [a-z] [a-z0-9_]*
   end
 
   ### Literals
@@ -207,6 +207,28 @@ grammar Gisele::Language::Syntax::Grammar
 
   rule spacing
     (comment | [ \t\n])*
+  end
+
+  ### Reserved Words
+  rule reserved_word
+      "if"
+    | "else"
+    | "elsif"
+    | "when"
+    | "while"
+    | "seq"
+    | "par"
+    | "task"
+    | "refinement"
+    | "fluent"
+    | "trackvar"
+    | "initially"
+    | "end"
+    | "not"
+    | "or"
+    | "and"
+    | "true"
+    | "false"
   end
 
 end
