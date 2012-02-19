@@ -13,7 +13,7 @@ module Gisele::Language
     it 'rewrites single if correctly' do
       source   = ast("if goodCond Task1 end")
       expected = \
-        [:case_st,
+        [:case_st, nil,
           [:when_clause,
             [:bool_expr, [:var_ref, "goodCond"]],
             [:task_call_st, "Task1"] ]]
@@ -23,7 +23,7 @@ module Gisele::Language
     it 'negates the else clause' do
       source   = ast("if goodCond Task1 else Task2 end")
       expected = \
-        [:case_st,
+        [:case_st, nil,
           [:when_clause,
             [:bool_expr, [:var_ref, "goodCond"]],
             [:task_call_st, "Task1"] ],
@@ -43,7 +43,7 @@ module Gisele::Language
         end
       IF
       expected = \
-        [:case_st,
+        [:case_st, nil,
           [:when_clause,
             [:bool_expr, [:var_ref, "c1"]],
             [:task_call_st, "Task1"] ],
@@ -73,7 +73,7 @@ module Gisele::Language
     it 'avoids double negations' do
       source   = ast("if not(goodCond) Task1 else Task2 end")
       expected = \
-        [:case_st,
+        [:case_st, nil,
           [:when_clause,
             [:bool_expr, [:bool_not, [:var_ref, "goodCond"]]],
             [:task_call_st, "Task1"] ],

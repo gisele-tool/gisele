@@ -9,7 +9,7 @@ module Gisele
         # create case_st with same markers as the if_st
         when_clause = [:when_clause, condition, mainflow.call(dost)]
         when_clause = node(when_clause, node.markers.dup)
-        base        = [:case_st, when_clause]
+        base        = [:case_st, nil, when_clause]
         base        = node(base, node.markers.dup)
 
         # this is the condition for elsif clauses

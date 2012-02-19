@@ -79,14 +79,16 @@ module Gisele
       end
 
       def on_case_st(node)
+        cond, *clauses = node.children
+
         entry, exit = entry_and_exit(node)
 
         diamond = add_vertex(node)
         connect(entry, diamond)
 
-        node.children.each do |when_clause|
-          c_entry, c_exit = call(when_clause.last)
-          connect(diamond, c_entry, when_clause)
+        clauses.each do |clause|
+          c_entry, c_exit = call(clause.last)
+          connect(diamond, c_entry, clause)
           connect(c_exit, exit)
         end
 
