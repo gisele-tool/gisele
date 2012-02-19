@@ -1,7 +1,6 @@
 require 'spec_helper'
 module Gisele::Language
   describe IfToCase do
-    include AST::Helpers
 
     def ast(source)
       Syntax.ast(source.strip, :root => :if_st)

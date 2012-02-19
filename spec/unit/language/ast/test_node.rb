@@ -1,7 +1,6 @@
 require 'spec_helper'
 module Gisele::Language::AST
   describe Node do
-    include Helpers
 
     describe 'rule_name' do
       it 'returns the first array element' do

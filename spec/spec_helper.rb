@@ -12,6 +12,7 @@ ensure
 end
 
 module SpecHelpers
+  include Gisele::Language::AST::Helpers
 
   def fixtures_dir
     (Path.dir/:fixtures)
