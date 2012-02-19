@@ -12,7 +12,7 @@ module Gisele
         @graph = Yargi::Digraph.new
 
         # flatten all elsif
-        call(SugarRemoval::ElsifFlattening.new.call(node.last))
+        call(ElsifFlattener.new.call(node.last))
 
         @graph.vertices(Connector).each do |vertex|
           next unless vertex.out_edges.size == 1

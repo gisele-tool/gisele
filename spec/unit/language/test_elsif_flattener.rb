@@ -1,6 +1,6 @@
 require 'spec_helper'
 module Gisele::Language
-  describe SugarRemoval::ElsifFlattening do
+  describe ElsifFlattener do
     include AST::Helpers
 
     def ast(source)
@@ -8,7 +8,7 @@ module Gisele::Language
     end
 
     def rewrite(ast)
-      SugarRemoval::ElsifFlattening.new.call(ast)
+      ElsifFlattener.new.call(ast)
     end
 
     it 'rewrites a single if correctly' do
