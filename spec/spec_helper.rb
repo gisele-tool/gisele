@@ -14,6 +14,11 @@ end
 module SpecHelpers
   include Gisele::Language::AST::Helpers
 
+  def parse(text, rule, consume = true)
+    grammar = Gisele::Language::Syntax::Grammar
+    grammar.parse(text, :root => rule, :consume => consume)
+  end
+
   def fixtures_dir
     (Path.dir/:fixtures)
   end
