@@ -3,7 +3,7 @@ module Gisele::Language::Syntax
   describe ElsifClause, "to_ast" do
 
     it 'parses as expected' do
-      expr     = "elsif goodCond Task1 "
+      expr     = "elsif goodCond Task1"
       expected = \
         [:elsif_clause,
           [:bool_expr, [:var_ref, "goodCond"]],

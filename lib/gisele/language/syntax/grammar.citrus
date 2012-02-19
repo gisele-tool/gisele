@@ -62,17 +62,21 @@ grammar Gisele::Language::Syntax::Grammar
   end
 
   rule if_st
-    ('if' spaces bool_expr spaces process_statement spaces elsif_clause* else_clause? 'end')
+    ('if' spaces bool_expr spaces 
+      process_statement spaces 
+      (elsif_clause spaces)* 
+      (else_clause spaces)? 
+    'end')
     <Gisele::Language::Syntax::IfSt>
   end
 
   rule elsif_clause
-    ('elsif' spaces bool_expr spaces process_statement spaces)
+    ('elsif' spaces bool_expr spaces process_statement)
     <Gisele::Language::Syntax::ElsifClause>
   end
 
   rule else_clause
-    ('else' spaces process_statement spaces)
+    ('else' spaces process_statement)
     <Gisele::Language::Syntax::ElseClause>
   end
 
