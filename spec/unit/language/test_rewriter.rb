@@ -25,6 +25,19 @@ module Gisele::Language
     }
     let(:rewriter){ rewriter_class.new }
 
+    describe 'mainflow' do
+
+      it 'defaults to self' do
+        rewriter.mainflow.should eq(rewriter)
+      end
+
+      it 'may be passed through options' do
+        rw = rewriter_class.new(:mainflow => :hello)
+        rw.mainflow.should eq(:hello)
+      end
+
+    end # mainflow
+
     describe 'call' do
 
       it 'dispatches to existing methods' do

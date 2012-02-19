@@ -3,6 +3,8 @@ module Gisele
     class Rewriter
       include AST::Helpers
 
+      ### class methods
+
       def self.helpers
         @helpers ||= [ WorkOnNodes.new ]
       end
@@ -12,6 +14,15 @@ module Gisele
           helpers.last.next_in_chain = helper
         end
         helpers << helper
+      end
+
+      ### instance methods
+
+      attr_reader :mainflow
+
+      def initialize(options = {})
+        @options  = options
+        @mainflow = options[:mainflow] || self
       end
 
       def call(node)
