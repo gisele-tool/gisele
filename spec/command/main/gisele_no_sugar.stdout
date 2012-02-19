@@ -125,8 +125,46 @@
                         ]
                     ],
                     [
-                        :task_call_st,
-                        "WaitAndSee"
+                        :case_st,
+                        [
+                            :var_ref,
+                            "curState"
+                        ],
+                        [
+                            :when_clause,
+                            [
+                                :bool_expr,
+                                [
+                                    :var_ref,
+                                    "somethingToDo"
+                                ]
+                            ],
+                            [
+                                :task_call_st,
+                                "DoSomething"
+                            ]
+                        ],
+                        [
+                            :when_clause,
+                            [
+                                :bool_expr,
+                                [
+                                    :var_ref,
+                                    "nothingToDo"
+                                ]
+                            ],
+                            [
+                                :task_call_st,
+                                "DoNothing"
+                            ]
+                        ],
+                        [
+                            :else_clause,
+                            [
+                                :task_call_st,
+                                "WaitAndSee"
+                            ]
+                        ]
                     ]
                 ]
             ]

@@ -55,10 +55,24 @@ grammar Gisele::Language::Syntax::Grammar
 
   rule explicit_statement
       if_st
+    | case_st
     | while_st
     | seq_st
     | par_st
     | task_call_st
+  end
+
+  rule case_st
+    ('case' spaces (var_ref spaces)?
+      (when_clause spaces)+
+      (else_clause spaces)?
+    'end')
+    <Gisele::Language::Syntax::CaseSt>
+  end
+
+  rule when_clause
+    ('when' spaces bool_expr spaces process_statement)
+    <Gisele::Language::Syntax::WhenClause>
   end
 
   rule if_st
