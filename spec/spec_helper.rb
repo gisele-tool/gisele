@@ -19,6 +19,10 @@ module SpecHelpers
     grammar.parse(text, :root => rule, :consume => consume)
   end
 
+  def ast(text, rule, consume = true)
+    parse(text, rule, consume).to_ast
+  end
+
   def fixtures_dir
     (Path.dir/:fixtures)
   end
