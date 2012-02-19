@@ -2,21 +2,61 @@
     :unit,
     [
         :task_def,
-        "Simple",
+        "Complete",
         [
             :task_signature,
             [
-                :fluent,
-                "diagKnown",
+                :trackvar,
+                "everyOneHappy",
                 [
                     :event_set,
-                    "Diagnosis:start"
+                    "FirstTask:start"
                 ],
                 [
-                    :event_set,
-                    "Treatment:end"
+                    :event_set
                 ],
                 nil
+            ],
+            [
+                :fluent,
+                "someoneHappy",
+                [
+                    :event_set,
+                    "DrinkBeer:start",
+                    "DrinkBeers:start"
+                ],
+                [
+                    :event_set,
+                    "DoNothingSpecial:end"
+                ],
+                false
+            ],
+            [
+                :task_def,
+                "DrinkBeers",
+                [
+                    :task_signature
+                ],
+                [
+                    :task_refinement,
+                    [
+                        :while_st,
+                        [
+                            :bool_expr,
+                            [
+                                :bool_not,
+                                [
+                                    :var_ref,
+                                    "drunk"
+                                ]
+                            ]
+                        ],
+                        [
+                            :task_call_st,
+                            "DrinkBeer"
+                        ]
+                    ]
+                ]
             ]
         ],
         [
@@ -24,42 +64,70 @@
             [
                 :seq_st,
                 [
-                    :case_st,
+                    :task_call_st,
+                    "FirstTask"
+                ],
+                [
+                    :if_st,
                     [
-                        :when_clause,
+                        :bool_expr,
                         [
-                            :bool_expr,
-                            [
-                                :bool_not,
-                                [
-                                    :var_ref,
-                                    "diagKnown"
-                                ]
-                            ]
-                        ],
-                        [
-                            :task_call_st,
-                            "Diagnosis"
+                            :var_ref,
+                            "everyoneHappy"
                         ]
                     ],
                     [
-                        :when_clause,
+                        :par_st,
                         [
-                            :bool_expr,
-                            [
-                                :var_ref,
-                                "diagKnown"
-                            ]
+                            :task_call_st,
+                            "MakeJoy"
                         ],
                         [
                             :task_call_st,
-                            "NoDiag"
+                            "DrinkBeers"
+                        ]
+                    ],
+                    [
+                        :else_clause,
+                        [
+                            :if_st,
+                            [
+                                :bool_expr,
+                                [
+                                    :var_ref,
+                                    "someoneHappy"
+                                ]
+                            ],
+                            [
+                                :task_call_st,
+                                "DrinkBeer"
+                            ],
+                            [
+                                :else_clause,
+                                [
+                                    :task_call_st,
+                                    "DoNothingSpecial"
+                                ]
+                            ]
                         ]
                     ]
                 ],
                 [
-                    :task_call_st,
-                    "Treatment"
+                    :while_st,
+                    [
+                        :bool_expr,
+                        [
+                            :bool_not,
+                            [
+                                :var_ref,
+                                "endOfTheDay"
+                            ]
+                        ]
+                    ],
+                    [
+                        :task_call_st,
+                        "WaitAndSee"
+                    ]
                 ]
             ]
         ]

@@ -1,1 +1,1 @@
-gisele --no-sugar --ast=ruby tasks/simple.gis
+gisele --no-sugar --ast=ruby tasks/complete.gis
