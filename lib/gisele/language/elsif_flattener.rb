@@ -3,10 +3,6 @@ module Gisele
     class ElsifFlattener < Rewriter
       alias :on_missing :copy_and_applyall
 
-      def initialize(parent = nil)
-        @parent = parent || self
-      end
-
       def on_if_st(node)
         condition, dost, *clauses = node.children
 
@@ -25,12 +21,12 @@ module Gisele
       def on_elsif_clause(node)
         base = \
           [:else_clause,
-           [:if_st, node[1], @parent.call(node[2])] ]
+           [:if_st, node[1], mainflow.call(node[2])] ]
         base = node(base, node.markers.dup)
       end
 
       def on_else_clause(node)
-        [:else_clause, @parent.call(node.last)]
+        [:else_clause, mainflow.call(node.last)]
       end
 
     end # class ElsifFlattener

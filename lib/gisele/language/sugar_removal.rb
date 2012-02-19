@@ -4,7 +4,7 @@ module Gisele
       alias :on_missing :copy_and_applyall
 
       def on_if_st(node)
-        IfToCase.new(self).call(node)
+        IfToCase.new(:mainflow => self).call(node)
       end
 
     end # class SugarRemoval

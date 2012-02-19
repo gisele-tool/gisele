@@ -3,15 +3,11 @@ module Gisele
     class IfToCase < Rewriter
       alias :on_missing :copy_and_applyall
 
-      def initialize(parent = nil)
-        @parent = parent || self
-      end
-
       def on_if_st(node)
         condition, dost, *clauses = node.children
 
         # create case_st with same markers as the if_st
-        when_clause = [:when_clause, condition, @parent.call(dost)]
+        when_clause = [:when_clause, condition, mainflow.call(dost)]
         when_clause = node(when_clause, node.markers.dup)
         base        = [:case_st, when_clause]
         base        = node(base, node.markers.dup)
@@ -37,7 +33,7 @@ module Gisele
         base = \
           [:when_clause,
             [:bool_expr, [:bool_and, condition, previous]],
-            @parent.call(dost) ]
+            mainflow.call(dost) ]
         node(base, node.markers.dup)
       end
 
@@ -48,7 +44,7 @@ module Gisele
         base = \
           [:when_clause,
             [:bool_expr, @condition],
-            @parent.call(dost)]
+            mainflow.call(dost)]
         node(base, node.markers.dup)
       end
 
