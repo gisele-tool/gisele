@@ -1,4 +1,10 @@
-# 0.4.0 / FIX ME
+# 0.4.0 / 2012-02-20
+
+* Major enhancement
+
+  * The grammar is going to be stable very soon now (expect backward compatible additions,
+    maybe). As an helper to work with the grammar, a YAML file describing the structure of
+    the AST can be found in lib/gisele/language/grammar.sexp.yml
 
 * Breaking changes
 
