@@ -3,6 +3,9 @@
 * Breaking changes
 
   * The :nop statement has been renamed :nop_st.
+  * The kind of the AST nodes for fluent and tracking variable definitions have been renamed
+    :fluent_def and :trackvar_def. This is actually a bugfix but that might break other code
+    relying on 0.3.0.
 
 # 0.3.0 / 2012-02-20
 
