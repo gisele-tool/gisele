@@ -1,3 +1,9 @@
+# 0.4.0 / FIX ME
+
+* Breaking changes
+
+  * The :nop statement has been renamed :nop_st.
+
 # 0.3.0 / 2012-02-20
 
 * Major enhancements
