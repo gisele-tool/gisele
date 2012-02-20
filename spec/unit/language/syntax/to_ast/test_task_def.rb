@@ -4,9 +4,9 @@ module Gisele::Language::Syntax
 
     it 'parses an explicit definition as expected' do
       expr = <<-EXPR.strip
-        task Task1 
-          fluent diagKnown {}, {} 
-          Task2 
+        task Task1
+          fluent diagKnown {}, {}
+          Task2
         end
       EXPR
       expected = \
@@ -18,8 +18,8 @@ module Gisele::Language::Syntax
 
     it 'uses :nop if no statement' do
       expr = <<-EXPR.strip
-        task Task1 
-          fluent diagKnown {}, {} 
+        task Task1
+          fluent diagKnown {}, {}
         end
       EXPR
       expected = \
@@ -31,7 +31,7 @@ module Gisele::Language::Syntax
 
     it 'uses :nop when empty' do
       expr = <<-EXPR.strip
-        task Task1 
+        task Task1
         end
       EXPR
       expected = \
