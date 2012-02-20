@@ -10,31 +10,15 @@ grammar Gisele::Language::Syntax::Grammar
   ### Task definitions
 
   rule task_def
-    explicit_task_def | implicit_task_def
+    ('task' spaces task_name spaces 
+      (some_def spaces)*
+      (explicit_statement spaces)?
+    'end')
+    <Gisele::Language::Syntax::TaskDef>
   end
 
-  rule explicit_task_def
-    ('task' spaces task_name spaces (task_signature spaces)? (task_refinement spaces)? 'end')
-    <Gisele::Language::Syntax::ExplicitTaskDef>
-  end
-
-  rule implicit_task_def
-    ('task' spaces task_name spaces (process_statement spaces)? 'end')
-    <Gisele::Language::Syntax::ImplicitTaskDef>
-  end
-
-  rule task_signature
-    (task_signature_element (spaces task_signature_element)*)
-    <Gisele::Language::Syntax::TaskSignature>
-  end
-
-  rule task_signature_element
+  rule some_def
     fluent_def | trackvar_def | task_def
-  end
-
-  rule task_refinement
-    ('refinement' spaces process_statement spaces 'end')
-    <Gisele::Language::Syntax::TaskRefinement>
   end
 
   ### Process statements

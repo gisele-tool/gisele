@@ -1,34 +1,34 @@
 #
-# This is a Gisele process for the Meeting Scheduler example, similar to what can be found 
-# in [Lam11]. The main difference between this model and the one defined there is the use 
+# This is a Gisele process for the Meeting Scheduler example, similar to what can be found
+# in [Lam11]. The main difference between this model and the one defined there is the use
 # of tracking variables. Tracking variables are introduced and explained in [Dam11].
 #
 # The Meeting Scheduler examplar [Fea97]
 #
-#     A meeting initiator issues a meeting request, specifying the expected participants and 
-#     the date range within which the meeting should take place. The scheduler then sends an 
-#     electronic invitation to each participant, requesting them to provide their date 
-#     constraints. 
-# 
-#     A date conflict occurs when no date can be found that fits all participant constraints. 
-#     In such case, the initiator may extend the date range or request some participants to 
-#     weaken their constraints; a new scheduling cycle is then required. Otherwise, the 
+#     A meeting initiator issues a meeting request, specifying the expected participants and
+#     the date range within which the meeting should take place. The scheduler then sends an
+#     electronic invitation to each participant, requesting them to provide their date
+#     constraints.
+#
+#     A date conflict occurs when no date can be found that fits all participant constraints.
+#     In such case, the initiator may extend the date range or request some participants to
+#     weaken their constraints; a new scheduling cycle is then required. Otherwise, the
 #     meeting is planned at a date meeting all constraints.
-# 
-#     A soft goal requires meetings to be scheduled as quickly as possible once initiated; 
-#     another one requires interactions with participants to be minimized. In the simplified 
-#     version considered here, only two scheduling cycles are allowed; the meeting is planned 
-#     after that. In such case, we will assume that the best date is chosen so as to maximize 
-#     the number of participants attending. We also ignore features like meeting cancellations, 
+#
+#     A soft goal requires meetings to be scheduled as quickly as possible once initiated;
+#     another one requires interactions with participants to be minimized. In the simplified
+#     version considered here, only two scheduling cycles are allowed; the meeting is planned
+#     after that. In such case, we will assume that the best date is chosen so as to maximize
+#     the number of participants attending. We also ignore features like meeting cancellations,
 #     meeting locations, etc.
 #
 # References
 #
-#   * [Dam11] Christophe Damas, Analyzing Multi-View Models of Software Systems, PhD thesis, 
+#   * [Dam11] Christophe Damas, Analyzing Multi-View Models of Software Systems, PhD thesis,
 #             University of Louvain, November 2011
-#   * [Fea97] M.S. Feather, S. Fickas, A. Finkelstein and A. van Lamsweerde, Requirements and 
+#   * [Fea97] M.S. Feather, S. Fickas, A. Finkelstein and A. van Lamsweerde, Requirements and
 #             Specification Exemplars, Automated Software Engineering, 1997
-#   * [Lam11] Bernard Lambeau, Synthesizing Multi-View Models of Software Systems, PhD thesis, 
+#   * [Lam11] Bernard Lambeau, Synthesizing Multi-View Models of Software Systems, PhD thesis,
 #             University of Louvain, November 2011
 #
 task MeetingScheduling
@@ -37,17 +37,17 @@ task MeetingScheduling
   # have been weakened or the date range extended.
   fluent secondCycle
     {WeakenConstraints:end, ExtendDateRange:end},
-    {InitiateMeeting:end} 
+    {InitiateMeeting:end}
   initially false
 
   # A date conflict may only occur when constraints are acquired or weakened. Being a tracking
   # variable and not fluent, we do not know the exact value of this variable when these tasks
   # occur.
-  trackvar dateConflict 
+  trackvar dateConflict
     {AcquireConstraints:end, WeakenConstraints:end}
   initially false
 
-  # The arbitrator decides to resolve a conflict during the Arbitrate task. The following 
+  # The arbitrator decides to resolve a conflict during the Arbitrate task. The following
   # definition does not capture the precise value of the variable but only that the value
   # can only change during Arbitrate.
   trackvar resolveByWeakening
@@ -55,7 +55,7 @@ task MeetingScheduling
   initially false
 
   # This is the task refinement
-  refinement 
+  seq
     InitiateMeeting
     AcquireConstraints
     while dateConflict and not(secondCycle)

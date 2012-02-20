@@ -1,4 +1,4 @@
-task_refinement:
+task_def:
   shape: circle
   style: filled
   fillcolor: black

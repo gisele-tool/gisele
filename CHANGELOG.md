@@ -16,6 +16,13 @@
 
 * Breaking changes
 
+  * The syntax and AST of a task definition has changed. The "refinement ... end" construct
+    has been removed and replaced by an explicit process statement. Accordingly, the nodes
+    task_refinement and task_signature have been removed as well. The AST signature of a task
+    definition is now as follows:
+
+        [:task_def, "TaskName", (fluent_def, trackvar_def, task_def)*, explicit_statement]
+
   * The grammar used to allow multiple task definitions inside the same .gis file.
     This has been changed; unit may only contain a single task_def.
 

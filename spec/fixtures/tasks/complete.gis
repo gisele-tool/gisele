@@ -14,7 +14,7 @@ task Complete
     end
   end
 
-  refinement
+  seq
     FirstTask
     if everyoneHappy
       par
