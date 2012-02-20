@@ -2,19 +2,19 @@ require 'spec_helper'
 module Gisele::Language::Syntax
   describe Grammar, 'task_def' do
 
-    it 'parses a simple explicit task definition' do
+    it 'parses a simple implicit task definition' do
       taskdef = <<-TASKDEF.strip
         task Process
-          refinement Diagnosis end
+          Diagnosis
         end
       TASKDEF
       parse(taskdef, :task_def).should eq(taskdef)
     end
 
-    it 'parses a simple implicit task definition' do
+    it 'allows any statement' do
       taskdef = <<-TASKDEF.strip
         task Process
-          Diagnosis
+          while true Diagnosis end
         end
       TASKDEF
       parse(taskdef, :task_def).should eq(taskdef)
@@ -25,7 +25,7 @@ module Gisele::Language::Syntax
         task Process
           fluent   diagKnown {Diagnosis:start}, {} initially false
           trackvar mplus     {Diagnosis:end}
-          refinement Diagnosis end
+          Diagnosis
         end
       TASKDEF
       parse(taskdef, :task_def).should eq(taskdef)
