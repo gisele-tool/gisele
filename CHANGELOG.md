@@ -1,11 +1,9 @@
-# 0.3.0 / FIX ME
+# 0.3.0 / 2012-02-20
 
 * Major enhancements
 
-  * The grammar now allows implicit refinements for tasks that do not define fluents and
-    tracking variables. In that case, "..." may be used in place of "refinement ... end".
-    The resulting AST will always contain an empty signature and the :task_refinement
-    node (syntactic sugar, that is).
+  * The ugly "refinement ... end" construction has been removed. See info in the breaking
+    changes section below.
   * The grammar now allows a task definition to contain the definition of sub tasks. The
     idiomatic place is after fluent and trackvar definitions and before the refinement.
 
