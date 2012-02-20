@@ -41,7 +41,4 @@ end # module Gisele
 require_relative 'language/syntax'
 require_relative 'language/ast'
 require_relative 'language/rewriter'
-require_relative 'language/elsif_flattener'
-require_relative 'language/if_to_case'
-require_relative 'language/sugar_removal'
-require_relative 'language/to_graph'
+require_relative 'language/processors'

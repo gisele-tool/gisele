@@ -2,7 +2,7 @@ require_relative 'syntax/node'
 module Gisele
   module Language
     module Syntax
-      Citrus.load(File.expand_path('../syntax/grammar', __FILE__))
+      Citrus.load(File.expand_path('../grammar', __FILE__))
 
       def parse(input, options = {})
         source = parsing_source(input)
