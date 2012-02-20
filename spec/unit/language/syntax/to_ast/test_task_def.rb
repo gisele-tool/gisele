@@ -16,7 +16,7 @@ module Gisele::Language::Syntax
       ast(expr, :task_def).should eq(expected)
     end
 
-    it 'uses :nop if no statement' do
+    it 'uses :nop_st if no statement' do
       expr = <<-EXPR.strip
         task Task1
           fluent diagKnown {}, {}
@@ -25,18 +25,18 @@ module Gisele::Language::Syntax
       expected = \
         [:task_def, "Task1",
           [:fluent, "diagKnown", [:event_set], [:event_set], nil],
-          [:nop]]
+          [:nop_st]]
       ast(expr, :task_def).should eq(expected)
     end
 
-    it 'uses :nop when empty' do
+    it 'uses :nop_st when empty' do
       expr = <<-EXPR.strip
         task Task1
         end
       EXPR
       expected = \
         [:task_def, "Task1",
-          [:nop]]
+          [:nop_st]]
       ast(expr, :task_def).should eq(expected)
     end
 

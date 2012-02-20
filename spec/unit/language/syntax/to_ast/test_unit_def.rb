@@ -8,7 +8,7 @@ module Gisele::Language::Syntax
       UNIT
       expected = \
         [:unit_def,
-          [:task_def, "Task1", [:nop]]]
+          [:task_def, "Task1", [:nop_st]]]
       ast(expr, :unit_def).should eq(expected)
     end
 
@@ -19,8 +19,8 @@ module Gisele::Language::Syntax
       UNIT
       expected = \
         [:unit_def,
-          [:task_def, "Task1", [:nop]],
-          [:task_def, "Task2", [:nop]] ]
+          [:task_def, "Task1", [:nop_st]],
+          [:task_def, "Task2", [:nop_st]] ]
       ast(expr, :unit_def).should eq(expected)
     end
 

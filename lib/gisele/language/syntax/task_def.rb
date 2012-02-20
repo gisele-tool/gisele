@@ -8,7 +8,7 @@ module Gisele
           name  = captures[:task_name].first.strip
           defs  = captures[:some_def].map{|x| x.to_ast}
           ref   = captures[:explicit_statement].map{|x| x.to_ast}.first
-          ref   = [:nop] unless ref
+          ref   = [:nop_st] unless ref
           [:task_def, name] + defs + [ref]
         end
 
