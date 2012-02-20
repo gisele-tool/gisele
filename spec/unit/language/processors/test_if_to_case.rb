@@ -7,8 +7,12 @@ module Gisele::Language
     end
 
     def rewrite(ast)
-      IfToCase.new.call(ast)
+      @rewrited = IfToCase.new.call(ast)
     end
+
+    after{
+      (sexp_grammar[:case_st] === @rewrited).should be_true
+    }
 
     it 'rewrites single if correctly' do
       source   = ast("if goodCond Task1 end")
@@ -81,12 +85,6 @@ module Gisele::Language
             [:bool_expr, [:var_ref, "goodCond"]],
             [:task_call_st, "Task2"] ] ]
       rewrite(source).should eq(expected)
-    end
-
-    it 'recurse on other nodes' do
-      if_st = ast("if goodCond Task1 end")
-      rw_st = rewrite(if_st)
-      rewrite([:unit, if_st]).should eq([:unit, rw_st])
     end
 
     it 'keeps traceability markers on a single if' do

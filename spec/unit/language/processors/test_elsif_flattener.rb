@@ -7,8 +7,12 @@ module Gisele::Language
     end
 
     def rewrite(ast)
-      ElsifFlattener.new.call(ast)
+      @rewrited = ElsifFlattener.new.call(ast)
     end
+
+    after{
+      (sexp_grammar[:if_st] === @rewrited).should be_true
+    }
 
     it 'rewrites a single if correctly' do
       source = ast("if goodCond Task1 end")
