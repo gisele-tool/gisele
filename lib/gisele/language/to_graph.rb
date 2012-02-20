@@ -11,9 +11,12 @@ module Gisele
       def on_task_def(node)
         @graph = Yargi::Digraph.new
 
+        entry, exit = add_vertex(node), add_vertex(node)
+
         # flatten all elsif
-        flattener = ElsifFlattener.new
-        call(flattener.call(node.last))
+        c_entry, c_exit = call(ElsifFlattener.new.call(node.last))
+        connect(entry, c_entry)
+        connect(c_exit, exit)
 
         @graph.vertices(Connector).each do |vertex|
           next unless vertex.out_edges.size == 1
@@ -23,14 +26,6 @@ module Gisele
         end
 
         @graph
-      end
-
-      def on_task_refinement(node)
-        entry, exit = add_vertex(node), add_vertex(node)
-        c_entry, c_exit = call(node.last)
-        connect(entry, c_entry)
-        connect(c_exit, exit)
-        [entry, exit]
       end
 
       def on_seq_st(node)
