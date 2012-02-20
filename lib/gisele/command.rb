@@ -79,8 +79,10 @@ module Gisele
     end
 
     def print_graph(ast, option)
-      graph = Gisele::Language::ToGraph.new.call(ast)
-      puts graph.to_dot
+      graphs = Gisele::Language::ToGraph.new.call(ast)
+      graphs.each do |graph|
+        puts graph.to_dot
+      end
     end
 
 end # class Command

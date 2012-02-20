@@ -3,10 +3,12 @@ module Gisele
     class ToGraph < Rewriter
       module Connector; end
 
-      def recurse_on_last(node)
-        call(node.last)
+      def on_unit_def(node)
+        node.
+          children.
+          select{|n| n.first == :task_def}.
+          map{|taskdef| call(taskdef) }
       end
-      alias :on_unit_def :recurse_on_last
 
       def on_task_def(node)
         @graph = Yargi::Digraph.new
