@@ -12,9 +12,7 @@ describe "The examples" do
       end
 
       it 'respects the SexpGrammar' do
-        pending{
-          (Gisele::Language::SEXP_GRAMMAR === ast).should be_true
-        }
+        (Gisele::Language::SEXP_GRAMMAR === ast).should be_true
       end
 
     end

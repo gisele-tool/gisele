@@ -21,9 +21,9 @@ module SpecHelpers
 
   def ast(text, rule, consume = true)
     ast = parse(text, rule, consume).to_ast
-    # unless Gisele::Language::SEXP_GRAMMAR[rule] === ast
-    #   raise "expected #{ast} to match #{rule} (#{text})"
-    # end
+    unless Gisele::Language::SEXP_GRAMMAR[rule] === ast
+      raise "expected #{ast} to match #{rule} (#{text})"
+    end
     ast
   end
 
