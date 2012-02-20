@@ -1,0 +1,80 @@
+### units and tasks
+unit_def:
+  - [task_def+]
+task_def:
+  - [task_name, some_def*, statement]
+some_def:
+  - fluent_def
+  - trackvar_def
+  - task_def
+### variables
+fluent_def:
+  - [var_name, event_set, event_set, initially]
+trackvar_def:
+  - [var_name, event_set, event_set, initially]
+event_set:
+  - [event*]
+event:
+  - event_name
+  - task_event_name
+var_ref:
+  - [var_name]
+### statements
+statement:
+  - if_st
+  - case_st
+  - while_st
+  - seq_st
+  - par_st
+  - task_call_st
+  - nop_st
+if_st:
+  - [bool_expr, statement, elsif_clause*, "else_clause?"]
+case_st:
+  - [[var_ref, ~], when_clause+, "else_clause?"]
+while_st:
+  - [bool_expr, statement]
+seq_st:
+  - [statement+]
+par_st:
+  - [statement+]
+task_call_st:
+  - [task_name]
+nop_st:
+  - []
+### clauses
+elsif_clause:
+  - [bool_expr, statement]
+else_clause:
+  - [statement]
+when_clause:
+  - [bool_expr, statement]
+### boolean expressions
+bool_expr:
+  - [bool_expression]
+bool_expression:
+  - bool_or
+  - bool_and
+  - bool_not
+  - var_ref
+  - bool_lit
+bool_or:
+  - [bool_expression, bool_expression]
+bool_and:
+  - [bool_expression, bool_expression]
+bool_not:
+  - [bool_expression]
+bool_lit:
+  - [ boolean_literal  ]
+boolean_literal:
+  - true
+  - false
+### terminals
+task_name:       !ruby/regexp /^[A-Z][A-Za-z0-9_]*$/
+var_name:        !ruby/regexp /^[a-z][A-Za-z0-9_]*$/
+event_name:      !ruby/regexp /^[a-z][a-z0-9_]*$/
+task_event_name: !ruby/regexp /^[A-Z][A-Za-z0-9_]*:(start|end)$/
+initially:
+  - true
+  - false
+  - ~

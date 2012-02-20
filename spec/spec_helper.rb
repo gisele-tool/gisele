@@ -20,7 +20,11 @@ module SpecHelpers
   end
 
   def ast(text, rule, consume = true)
-    parse(text, rule, consume).to_ast
+    ast = parse(text, rule, consume).to_ast
+    # unless Gisele::Language::SEXP_GRAMMAR[rule] === ast
+    #   raise "expected #{ast} to match #{rule} (#{text})"
+    # end
+    ast
   end
 
   def fixtures_dir

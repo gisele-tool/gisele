@@ -73,6 +73,11 @@ module Gisele
           attrs.merge(:label => label)
         end
 
+        # Checks validity over the definition
+        def ===(sexp)
+          SEXP_GRAMMAR[rule_name] === sexp
+        end
+
       end # module Node
     end # module AST
   end # module Language
