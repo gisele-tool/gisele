@@ -10,7 +10,7 @@ module Gisele
           term       = [:event_set] unless term
           initval    = captures[:initially_def].first
           initval    = (initval && !initval.empty?) ? initval.value : nil
-          [:trackvar, name, init, term, initval]
+          [:trackvar_def, name, init, term, initval]
         end
 
       end # module TrackvarDef

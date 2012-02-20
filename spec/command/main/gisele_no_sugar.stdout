@@ -4,7 +4,7 @@
         :task_def,
         "Complete",
         [
-            :trackvar,
+            :trackvar_def,
             "everyOneHappy",
             [
                 :event_set,
@@ -16,7 +16,7 @@
             nil
         ],
         [
-            :fluent,
+            :fluent_def,
             "someoneHappy",
             [
                 :event_set,

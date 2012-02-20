@@ -4,7 +4,7 @@
         :task_def,
         "Simple",
         [
-            :fluent,
+            :fluent_def,
             "diagKnown",
             [
                 :event_set,

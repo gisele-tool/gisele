@@ -4,7 +4,7 @@ module Gisele::Language::Syntax
 
     it 'converts tracking variable definitions as expected' do
       defn     = "trackvar mplus {Diagnosis:start}"
-      expected = [:trackvar,
+      expected = [:trackvar_def,
                    "mplus",
                    [:event_set, "Diagnosis:start"],
                    [:event_set],
@@ -14,7 +14,7 @@ module Gisele::Language::Syntax
 
     it 'supports obsolete events and initial value' do
       defn     = "trackvar mplus {Diagnosis:start}, {Treatment:end} initially true"
-      expected = [:trackvar,
+      expected = [:trackvar_def,
                    "mplus",
                    [:event_set, "Diagnosis:start"],
                    [:event_set, "Treatment:end"],

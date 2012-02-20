@@ -9,7 +9,7 @@ module Gisele
           init, term = captures[:event_set].map{|x| x.to_ast}
           initval    = captures[:initially_def].first
           initval    = (initval && !initval.empty?) ? initval.value : nil
-          [:fluent, name, init, term, initval]
+          [:fluent_def, name, init, term, initval]
         end
 
       end # module FluentDef

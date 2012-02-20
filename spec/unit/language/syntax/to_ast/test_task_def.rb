@@ -11,7 +11,7 @@ module Gisele::Language::Syntax
       EXPR
       expected = \
         [:task_def, "Task1",
-          [:fluent, "diagKnown", [:event_set], [:event_set], nil],
+          [:fluent_def, "diagKnown", [:event_set], [:event_set], nil],
           [:task_call_st, "Task2"]]
       ast(expr, :task_def).should eq(expected)
     end
@@ -24,7 +24,7 @@ module Gisele::Language::Syntax
       EXPR
       expected = \
         [:task_def, "Task1",
-          [:fluent, "diagKnown", [:event_set], [:event_set], nil],
+          [:fluent_def, "diagKnown", [:event_set], [:event_set], nil],
           [:nop_st]]
       ast(expr, :task_def).should eq(expected)
     end

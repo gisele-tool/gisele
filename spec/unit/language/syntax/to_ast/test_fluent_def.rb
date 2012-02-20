@@ -4,7 +4,7 @@ module Gisele::Language::Syntax
 
     it 'converts fluent definitions as expected' do
       defn     = "fluent diagKnown {Diagnosis:start, diagnosis}, {Treatment:end} initially false"
-      expected = [:fluent,
+      expected = [:fluent_def,
                    "diagKnown",
                    [:event_set, "Diagnosis:start", "diagnosis"],
                    [:event_set, "Treatment:end"],
@@ -14,7 +14,7 @@ module Gisele::Language::Syntax
 
     it 'does not require the initial value' do
       defn     = "fluent diagKnown {Diagnosis:start, diagnosis}, {Treatment:end}"
-      expected = [:fluent,
+      expected = [:fluent_def,
                    "diagKnown",
                    [:event_set, "Diagnosis:start", "diagnosis"],
                    [:event_set, "Treatment:end"],
