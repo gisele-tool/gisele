@@ -1,6 +1,10 @@
 task Simple
-  fluent diagKnown {Diagnosis:start}, {Treatment:end}
-  refinement
+
+  fluent diagKnown
+    {Diagnosis:start},
+    {Treatment:end}
+
+  seq
     if not(diagKnown)
       Diagnosis
     else

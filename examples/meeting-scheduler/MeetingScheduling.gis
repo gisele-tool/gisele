@@ -55,7 +55,7 @@ task MeetingScheduling
   initially false
 
   # This is the task refinement
-  refinement 
+  seq
     InitiateMeeting
     AcquireConstraints
     while dateConflict and not(secondCycle)

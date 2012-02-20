@@ -33,34 +33,30 @@ task RectalCancerPathway
     fluent extensionKnown
       {SpreadEvaluation:end}, {}
 
-    refinement
-      while not(diagKnown and extensionKnown)
-        Consultation
-        if diagKnown
-          SpreadEvaluation
-        else
-          EndoBio
-        end
+    while not(diagKnown and extensionKnown)
+      Consultation
+      if diagKnown
+        SpreadEvaluation
+      else
+        EndoBio
       end
     end
 
   end # Diagnosis
 
   # main task refinement
-  refinement
-    if emergency
-      Emergency
-      Surgery
-      PostTreatment
-    else
-      Diagnosis
-      if cancerConfirmed
-        StaffMeeting
-        if surgeryEnvisioned
-          PreTreatment
-          Surgery
-          PostTreatment
-        end
+  if emergency
+    Emergency
+    Surgery
+    PostTreatment
+  else
+    Diagnosis
+    if cancerConfirmed
+      StaffMeeting
+      if surgeryEnvisioned
+        PreTreatment
+        Surgery
+        PostTreatment
       end
     end
   end
