@@ -8,4 +8,5 @@ task Simple
     end
     Treatment
   end
+
 end
