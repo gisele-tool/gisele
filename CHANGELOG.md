@@ -24,7 +24,7 @@
     task_refinement and task_signature have been removed as well. The AST signature of a task
     definition is now as follows:
 
-          [:task_def, "TaskName", (fluent_def, trackvar_def, task_def)*, explicit_statement]
+            [:task_def, "TaskName", (fluent_def, trackvar_def, task_def)*, explicit_statement]
 
 # 0.2.0 / 2012-02-17
 
@@ -65,20 +65,20 @@
 
   * The following syntax nodes have been renamed:
 
-          :varref     -> :var_ref
-          :or         -> :bool_or
-          :and        -> :bool_and
-          :not        -> :bool_not
-          :if         -> :if_st
-          :else       -> :else_clause
-          :elsif      -> :elsif_clause
-          :while      -> :while_st
-          :seq        -> :seq_st
-          :par        -> :par_st
-          :task_call  -> :task_call_st
-          :task       -> :task_def
-          :signature  -> :task_signature
-          :refinement -> :task_refinement
+            :varref     -> :var_ref
+            :or         -> :bool_or
+            :and        -> :bool_and
+            :not        -> :bool_not
+            :if         -> :if_st
+            :else       -> :else_clause
+            :elsif      -> :elsif_clause
+            :while      -> :while_st
+            :seq        -> :seq_st
+            :par        -> :par_st
+            :task_call  -> :task_call_st
+            :task       -> :task_def
+            :signature  -> :task_signature
+            :refinement -> :task_refinement
 
 # 0.0.1 / 2012-02-16
 
