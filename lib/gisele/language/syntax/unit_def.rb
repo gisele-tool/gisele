@@ -1,14 +1,14 @@
 module Gisele
   module Language
     module Syntax
-      module Unit
+      module UnitDef
         include Node
 
         def _to_ast
-          [:unit] + captures[:task_def].map{|x| x.to_ast}
+          [:unit_def] + captures[:task_def].map{|x| x.to_ast}
         end
 
-      end # module Unit
+      end # module UnitDef
     end # module Syntax
   end # module Language
 end # module Gisele

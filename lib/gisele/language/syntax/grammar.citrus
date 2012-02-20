@@ -2,9 +2,9 @@ grammar Gisele::Language::Syntax::Grammar
 
   ### Units
 
-  rule unit
-    (spacing task_def spacing)
-    <Gisele::Language::Syntax::Unit>
+  rule unit_def
+    (spacing task_def (spaces task_def)* spacing)
+    <Gisele::Language::Syntax::UnitDef>
   end
 
   ### Task definitions

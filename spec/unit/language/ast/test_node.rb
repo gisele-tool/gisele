@@ -31,24 +31,24 @@ module Gisele::Language::AST
     describe 'copy' do
 
       it 'collects block results ala `inject`' do
-        source = node([:unit, "world", "gisele"])
+        source = node([:unit_def, "world", "gisele"])
         target = source.copy do |memo,child|
           memo << child.upcase
         end
-        target.should be_a(Unit)
-        target.should eq([:unit, "WORLD", "GISELE"])
+        target.should be_a(UnitDef)
+        target.should eq([:unit_def, "WORLD", "GISELE"])
       end
 
       it 'returns a real equal copy when no children' do
-        source = node([:unit])
+        source = node([:unit_def])
         target = source.copy do |memo,child| end
         target.should eq(source)
         target.object_id.should_not eq(source.object_id)
-        target.should be_a(Unit)
+        target.should be_a(UnitDef)
       end
 
       it 'keeps the markers unchanged' do
-        node = node([:unit], {:hello => "World"})
+        node = node([:unit_def], {:hello => "World"})
         copy = node.copy do |memo,child| end
         copy.markers.should eq({:hello => "World"})
         copy.markers.object_id.should_not eq(node.markers.object_id)
@@ -59,18 +59,18 @@ module Gisele::Language::AST
     describe 'dup' do
 
       it 'duplicates the underlying array' do
-        arr = [:unit, "etc."]
+        arr = [:unit_def, "etc."]
         node(arr).dup.should eq(arr)
       end
 
       it 'ensures duplicated array is still a node' do
-        arr = [:unit, "etc."]
-        node(arr).dup.should be_a(Unit)
+        arr = [:unit_def, "etc."]
+        node(arr).dup.should be_a(UnitDef)
         node(arr).dup.should be_a(Node)
       end
 
       it 'keeps the markers unchanged' do
-        node = node([:unit, "etc."], {:hello => "World"})
+        node = node([:unit_def, "etc."], {:hello => "World"})
         copy = node.dup
         copy.markers.should eq({:hello => "World"})
         copy.markers.object_id.should_not eq(node.markers.object_id)
