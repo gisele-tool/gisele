@@ -6,7 +6,7 @@ module Gisele
       def recurse_on_last(node)
         call(node.last)
       end
-      alias :on_unit :recurse_on_last
+      alias :on_unit_def :recurse_on_last
 
       def on_task_def(node)
         @graph = Yargi::Digraph.new

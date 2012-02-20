@@ -1,10 +1,10 @@
 module Gisele
   module Language
     module AST
-      module Unit
+      module UnitDef
         include Node
 
-      end # module Node
+      end # module UnitDef
     end # module AST
   end # module Language
 end # module Gisele

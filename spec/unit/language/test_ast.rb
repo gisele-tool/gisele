@@ -5,13 +5,13 @@ module Gisele::Language
     describe 'ast' do
 
       it 'returns a node' do
-        node = [:unit].extend(AST::Node)
+        node = [:unit_def].extend(AST::Node)
         AST.node(node).object_id.should eq(node.object_id)
       end
 
       it 'coerces an array' do
-        AST.node([:unit]).should eq([:unit])
-        AST.node([:unit]).should be_a(AST::Unit)
+        AST.node([:unit_def]).should eq([:unit_def])
+        AST.node([:unit_def]).should be_a(AST::UnitDef)
       end
 
       it 'falls back to Node' do
@@ -20,7 +20,7 @@ module Gisele::Language
       end
 
       it 'applies coercions recursively' do
-        source = [:unit, [:hello, "world"]]
+        source = [:unit_def, [:hello, "world"]]
         AST.node(source).should eq(source)
         AST.node(source).last.should be_a(AST::Node)
       end

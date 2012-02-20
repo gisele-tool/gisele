@@ -6,7 +6,7 @@ module Gisele::Language::Syntax
       expr = <<-UNIT.strip
         task Task1 end
       UNIT
-      parse(expr, :unit).should eq(expr)
+      parse(expr, :unit_def).should eq(expr)
     end
 
     it 'accepts multiple task definitions' do
@@ -14,7 +14,7 @@ module Gisele::Language::Syntax
         task Task1 end
         task Task2 end
       UNIT
-      parse(expr, :unit).should eq(expr)
+      parse(expr, :unit_def).should eq(expr)
     end
 
     it 'allows trailing spaces' do
@@ -22,7 +22,7 @@ module Gisele::Language::Syntax
         task Task1 end
         task Task2 end
       UNIT
-      parse(expr, :unit).should eq(expr)
+      parse(expr, :unit_def).should eq(expr)
     end
 
   end

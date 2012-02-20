@@ -40,7 +40,7 @@ module Gisele::Language
           parsed = Syntax.ast(file)
           parsed.should be_a(Array)
           parsed.should be_a(AST::Node)
-          parsed.first.should eq(:unit)
+          parsed.first.should eq(:unit_def)
           if (astfile = file.sub_ext(".ast")).exist?
             parsed.should eq(Kernel::eval(astfile.read, TOPLEVEL_BINDING, astfile.to_s))
           end
