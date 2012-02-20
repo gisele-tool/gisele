@@ -132,6 +132,7 @@ Gem::Specification.new do |s|
   s.add_dependency("quickl", "~> 0.4.3")
   s.add_dependency("awesome_print", "~> 1.0")
   s.add_dependency("yargi", "~> 0.2.0")
+  s.add_dependency("sexp_grammar", "~> 0.1.0")
 
   # The version of ruby required by this gem
   #
