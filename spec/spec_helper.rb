@@ -21,7 +21,7 @@ module SpecHelpers
 
   def ast(text, rule, consume = true)
     ast = parse(text, rule, consume).to_ast
-    unless Gisele::Language::SEXP_GRAMMAR[rule] === ast
+    unless sexp_grammar[rule] === ast
       raise "expected #{ast} to match #{rule} (#{text})"
     end
     ast
@@ -33,6 +33,10 @@ module SpecHelpers
 
   def fixture_files(glob)
     fixtures_dir.glob(glob)
+  end
+
+  def sexp_grammar
+    Gisele::Language::SEXP_GRAMMAR
   end
 
   def simple_ast
