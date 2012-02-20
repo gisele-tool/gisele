@@ -24,6 +24,28 @@ task RectalCancerPathway
     {StaffMeeting:end}
   initially false
 
+  # The diagnosis task
+  task Diagnosis
+
+    fluent diagKnown
+      {EndoBio:end}, {}
+
+    fluent extensionKnown
+      {SpreadEvaluation:end}, {}
+
+    refinement
+      while not(diagKnown and extensionKnown)
+        Consultation
+        if diagKnown
+          SpreadEvaluation
+        else
+          EndoBio
+        end
+      end
+    end
+
+  end # Diagnosis
+
   # main task refinement
   refinement
     if emergency
