@@ -3,7 +3,7 @@ module Gisele
 
     require 'yaml'
     DOT_ATTRIBUTES = YAML.load_file(Path.dir/"language/grammar.dot.yml")
-    SEXP_GRAMMAR   = SexpGrammar.load Path.dir/"language/grammar.sexp.yml"
+    SEXP_GRAMMAR   = Sexpr.load Path.dir/"language/grammar.sexp.yml"
 
     RESERVED_WORDS = [
       "if",
