@@ -6,7 +6,7 @@ group :runtime do
   gem "quickl", "~> 0.4.3"
   gem "awesome_print", "~> 1.0"
   gem "yargi", "~> 0.2.0"
-  gem "sexp_grammar", "~> 0.1.0"
+  gem "sexpr", "~> 0.4.0"
 end
 
 group :development do
