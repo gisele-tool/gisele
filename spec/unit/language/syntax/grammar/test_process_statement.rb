@@ -1,5 +1,5 @@
 require 'spec_helper'
-module Gisele::Language::Syntax
+module Gisele::Language
   describe Grammar, 'process_statement' do
 
     it 'parses a simple process statement' do

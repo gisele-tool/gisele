@@ -1,5 +1,5 @@
 require 'spec_helper'
-module Gisele::Language::Syntax
+module Gisele::Language
   describe Grammar, 'bool_expr' do
 
     it 'parses single variable references' do

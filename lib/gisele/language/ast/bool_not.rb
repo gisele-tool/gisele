@@ -5,7 +5,7 @@ module Gisele
         include Node
 
         def label
-          markers[:match] ? markers[:match].to_s : "not(#{last.label})"
+          (citrus_match && citrus_match.to_s) || "not(#{last.label})"
         end
 
       end # module BoolNot

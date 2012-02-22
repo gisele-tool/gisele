@@ -5,7 +5,7 @@ module Gisele
         include Node
 
         def label
-          markers[:match] ? markers[:match].to_s : "(#{self[1].label} or #{self[2].label})"
+          (citrus_match && citrus_match.to_s) || "(#{self[1].label} or #{self[2].label})"
         end
 
       end # module BoolOr

@@ -1,5 +1,5 @@
 require 'spec_helper'
-module Gisele::Language::Syntax
+module Gisele::Language
   describe Grammar, 'if_st' do
 
     it 'parses a single if statement' do

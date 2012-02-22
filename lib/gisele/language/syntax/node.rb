@@ -4,7 +4,11 @@ module Gisele
       module Node
 
         def to_ast
-          Language::AST.node(_to_ast, {:match => self})
+          Language::sexpr(value, {:citrus_match => self})
+        end
+        
+        def value
+          _to_ast
         end
 
       end # module Node

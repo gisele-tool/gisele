@@ -1,22 +1,24 @@
 module Gisele
   module Language
-    class ToGraph < Rewriter
+    class ToGraph < Sexpr::Rewriter
+      grammar Language
+
       module Connector; end
 
-      def on_unit_def(node)
-        node.
-          children.
+      def on_unit_def(sexpr)
+        sexpr.
+          sexpr_body.
           select{|n| n.first == :task_def}.
           map{|taskdef| call(taskdef) }
       end
 
-      def on_task_def(node)
+      def on_task_def(sexpr)
         @graph = Yargi::Digraph.new
 
-        entry, exit = add_vertex(node), add_vertex(node)
+        entry, exit = add_vertex(sexpr), add_vertex(sexpr)
 
         # flatten all elsif
-        c_entry, c_exit = call(ElsifFlattener.new.call(node.last))
+        c_entry, c_exit = call(ElsifFlattener.new.call(sexpr.last))
         connect(entry, c_entry)
         connect(c_exit, exit)
 
@@ -30,10 +32,10 @@ module Gisele
         @graph
       end
 
-      def on_seq_st(node)
-        mine    = entry_and_exit(node)
+      def on_seq_st(sexpr)
+        mine    = entry_and_exit(sexpr)
         current = mine.first
-        node.children.each do |child|
+        sexpr.sexpr_body.each do |child|
           c_entry, c_exit = call(child)
           connect(current, c_entry)
           current = c_exit
@@ -42,9 +44,9 @@ module Gisele
         mine
       end
 
-      def on_par_st(node)
-        entry, exit = add_vertex(node), add_vertex(node)
-        node.children.each do |child|
+      def on_par_st(sexpr)
+        entry, exit = add_vertex(sexpr), add_vertex(sexpr)
+        sexpr.sexpr_body.each do |child|
           c_entry, c_exit = call(child)
           connect(entry, c_entry)
           connect(c_exit, exit)
@@ -52,35 +54,35 @@ module Gisele
         [entry, exit]
       end
 
-      def on_if_st(node)
-        cond, then_clause, else_clause, = node.children
+      def on_if_st(sexpr)
+        cond, then_clause, else_clause, = sexpr.sexpr_body
 
-        entry, exit = entry_and_exit(node)
+        entry, exit = entry_and_exit(sexpr)
 
-        diamond = add_vertex(node)
+        diamond = add_vertex(sexpr)
         connect(entry, diamond)
 
         c_entry, c_exit = call(then_clause)
-        connect(diamond, c_entry, true_ast_node)
+        connect(diamond, c_entry, true_ast_sexpr)
         connect(c_exit, exit)
 
         if else_clause
           c_entry, c_exit = call(else_clause.last)
-          connect(diamond, c_entry, false_ast_node)
+          connect(diamond, c_entry, false_ast_sexpr)
           connect(c_exit, exit)
         else
-          connect(diamond, exit, false_ast_node)
+          connect(diamond, exit, false_ast_sexpr)
         end
 
         [entry, exit]
       end
 
-      def on_case_st(node)
-        cond, *clauses = node.children
+      def on_case_st(sexpr)
+        cond, *clauses = sexpr.sexpr_body
 
-        entry, exit = entry_and_exit(node)
+        entry, exit = entry_and_exit(sexpr)
 
-        diamond = add_vertex(node)
+        diamond = add_vertex(sexpr)
         connect(entry, diamond)
 
         clauses.each do |clause|
@@ -93,26 +95,26 @@ module Gisele
       end
 
 
-      def on_while_st(node)
-        cond, dost, = node.children
+      def on_while_st(sexpr)
+        cond, dost, = sexpr.sexpr_body
 
-        entry, exit = entry_and_exit(node)
+        entry, exit = entry_and_exit(sexpr)
 
-        diamond = add_vertex(node)
+        diamond = add_vertex(sexpr)
         connect(entry, diamond)
 
-        c_entry, c_exit = call(node.last)
+        c_entry, c_exit = call(sexpr.last)
 
-        connect(diamond, exit,    false_ast_node)
-        connect(diamond, c_entry, true_ast_node)
+        connect(diamond, exit,    false_ast_sexpr)
+        connect(diamond, c_entry, true_ast_sexpr)
         connect(c_exit, diamond)
 
         [entry, exit]
       end
 
-      def on_task_call_st(node)
-        entry, exit = entry_and_exit(node)
-        task = add_vertex(node)
+      def on_task_call_st(sexpr)
+        entry, exit = entry_and_exit(sexpr)
+        task = add_vertex(sexpr)
         connect(entry, task)
         connect(task, exit)
         [entry, exit]
@@ -120,25 +122,29 @@ module Gisele
 
       private
 
-      def add_vertex(node)
-        @graph.add_vertex(node.dot_attributes)
+      def add_vertex(sexpr)
+        if sexpr.respond_to?(:dot_attributes)
+          @graph.add_vertex(sexpr.dot_attributes)
+        else
+          @graph.add_vertex({})
+        end
       end
 
-      def entry_and_exit(node, tag = Connector)
+      def entry_and_exit(sexpr, tag = Connector)
         @graph.add_n_vertices(2, tag)
       end
 
-      def connect(source, target, node = nil)
-        marks = node.nil? ? {} : node.dot_attributes
+      def connect(source, target, sexpr = nil)
+        marks = sexpr.nil? ? {} : sexpr.dot_attributes
         @graph.connect(source, target, marks)
       end
 
-      def false_ast_node
-        Syntax.ast("false", :root => :bool_expr)
+      def false_ast_sexpr
+        sexpr(parse("false", :root => :bool_expr))
       end
 
-      def true_ast_node
-        Syntax.ast("true", :root => :bool_expr)
+      def true_ast_sexpr
+        sexpr(parse("true", :root => :bool_expr))
       end
 
     end # class SugarRemoval

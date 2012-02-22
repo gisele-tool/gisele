@@ -3,7 +3,7 @@ module Gisele::Language
   describe IfToCase do
 
     def ast(source)
-      Syntax.ast(source.strip, :root => :if_st)
+      Gisele.ast(Gisele.parse(source.strip, :root => :if_st))
     end
 
     def rewrite(ast)
@@ -90,15 +90,15 @@ module Gisele::Language
     it 'keeps traceability markers on a single if' do
       if_st = ast("if goodCond Task1 end")
       rw_st = rewrite(if_st)
-      rw_st.markers.should eq(if_st.markers)
-      rw_st.last.markers.should eq(if_st.markers)
+      rw_st.tracking_markers.should eq(if_st.tracking_markers)
+      rw_st.last.tracking_markers.should eq(if_st.tracking_markers)
     end
 
     it 'keeps traceability markers when a else if present' do
       if_st = ast("if goodCond Task1 else Task2 end")
       rw_st = rewrite(if_st)
-      rw_st.markers.should eq(if_st.markers)
-      rw_st.last.markers.should eq(if_st.last.markers)
+      rw_st.tracking_markers.should eq(if_st.tracking_markers)
+      rw_st.last.tracking_markers.should eq(if_st.last.tracking_markers)
     end
 
   end

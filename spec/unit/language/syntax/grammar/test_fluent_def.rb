@@ -1,5 +1,5 @@
 require 'spec_helper'
-module Gisele::Language::Syntax
+module Gisele::Language
   describe Grammar, 'fluent_def' do
 
     it 'parses valid fluent definitions' do

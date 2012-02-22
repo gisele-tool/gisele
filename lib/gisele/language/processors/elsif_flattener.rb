@@ -1,13 +1,13 @@
 module Gisele
   module Language
-    class ElsifFlattener < Rewriter
-      alias :on_missing :copy_and_applyall
+    class ElsifFlattener < Sexpr::Rewriter
+      grammar Language
 
-      def on_if_st(node)
-        condition, dost, *clauses = node.children
+      def on_if_st(sexpr)
+        condition, dost, *clauses = sexpr.sexpr_body
 
         base = [:if_st, condition, dost]
-        base = node(base, node.markers.dup)
+        base = sexpr(base, sexpr.tracking_markers)
 
         clauses.inject base do |cur_if, clause|
           rw_clause = call(clause)
@@ -18,16 +18,18 @@ module Gisele
         base
       end
 
-      def on_elsif_clause(node)
+      def on_elsif_clause(sexpr)
         base = \
           [:else_clause,
-           [:if_st, node[1], mainflow.call(node[2])] ]
-        base = node(base, node.markers.dup)
+           [:if_st, sexpr[1], main_processor.call(sexpr[2])] ]
+        base = sexpr(base, sexpr.tracking_markers)
       end
 
-      def on_else_clause(node)
-        [:else_clause, mainflow.call(node.last)]
+      def on_else_clause(sexpr)
+        [:else_clause, main_processor.call(sexpr.last)]
       end
+
+      alias :on_missing :copy_and_apply
 
     end # class ElsifFlattener
   end # module Language

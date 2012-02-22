@@ -1,5 +1,5 @@
 require 'spec_helper'
-module Gisele::Language::Syntax
+module Gisele::Language
   describe Grammar, 'spaces' do
 
     it 'parses all kind of spaces' do

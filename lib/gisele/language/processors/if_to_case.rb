@@ -1,16 +1,16 @@
 module Gisele
   module Language
-    class IfToCase < Rewriter
-      alias :on_missing :copy_and_applyall
+    class IfToCase < Sexpr::Rewriter
+      grammar Language
 
-      def on_if_st(node)
-        condition, dost, *clauses = node.children
+      def on_if_st(sexpr)
+        condition, dost, *clauses = sexpr.sexpr_body
 
         # create case_st with same markers as the if_st
-        when_clause = [:when_clause, condition, mainflow.call(dost)]
-        when_clause = node(when_clause, node.markers.dup)
+        when_clause = [:when_clause, condition, main_processor.call(dost)]
+        when_clause = sexpr(when_clause, sexpr.tracking_markers)
         base        = [:case_st, nil, when_clause]
-        base        = node(base, node.markers.dup)
+        base        = sexpr(base, sexpr.tracking_markers)
 
         # this is the condition for elsif clauses
         @condition = negate(condition.last)
@@ -21,8 +21,8 @@ module Gisele
         end
       end
 
-      def on_elsif_clause(node)
-        condition, dost, = node.children
+      def on_elsif_clause(sexpr)
+        condition, dost, = sexpr.sexpr_body
 
         # install new conditions for me and next elsif clauses
         condition = condition.last
@@ -33,25 +33,27 @@ module Gisele
         base = \
           [:when_clause,
             [:bool_expr, [:bool_and, condition, previous]],
-            mainflow.call(dost) ]
-        node(base, node.markers.dup)
+            main_processor.call(dost) ]
+        sexpr(base, sexpr.tracking_markers)
       end
 
-      def on_else_clause(node)
-        dost, = node.children
+      def on_else_clause(sexpr)
+        dost, = sexpr.sexpr_body
 
         # convert else to when and keep the markers
         base = \
           [:when_clause,
             [:bool_expr, @condition],
-            mainflow.call(dost)]
-        node(base, node.markers.dup)
+            main_processor.call(dost)]
+        sexpr(base, sexpr.tracking_markers)
       end
+
+      alias :on_missing :copy_and_apply
 
       private
 
       def negate(cond)
-        if cond.rule_name == :bool_not
+        if cond.first == :bool_not
           cond.last
         else
           [:bool_not, cond]

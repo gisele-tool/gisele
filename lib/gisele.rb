@@ -6,15 +6,14 @@ require_relative 'gisele/errors'
 #
 module Gisele
 
-  def parse(input)
-    Language::Syntax::parse(input)
+  def parse(*args)
+    Language::parse(*args)
   end
-  module_function :parse
 
-  def ast(input)
-    Language::Syntax::ast(input)
+  def ast(*args)
+    Language::sexpr(*args)
   end
-  module_function :ast
 
+  extend(self)
 end # module Gisele
 require_relative 'gisele/language'

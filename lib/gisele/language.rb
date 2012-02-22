@@ -1,6 +1,16 @@
 module Gisele
   Language = Sexpr.load Path.dir/"language/grammar.sexp.yml"
+
+  # force the loading of the citrus parser
+  require_relative 'language/syntax'
+  Language.parser.parser
+
   module Language
+
+    require_relative 'language/ast'
+    def tagging_reference
+      AST
+    end
 
     require 'yaml'
     DOT_ATTRIBUTES = YAML.load_file(Path.dir/"language/grammar.dot.yml")
@@ -28,7 +38,4 @@ module Gisele
 
   end # module Language
 end # module Gisele
-require_relative 'language/syntax'
-require_relative 'language/ast'
-require_relative 'language/rewriter'
 require_relative 'language/processors'

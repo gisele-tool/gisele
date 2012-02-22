@@ -3,7 +3,7 @@ module Gisele::Language
   describe ElsifFlattener do
 
     def ast(source)
-      Syntax.ast(source.strip, :root => :if_st)
+      Gisele.ast(Gisele.parse(source.strip, :root => :if_st))
     end
 
     def rewrite(ast)

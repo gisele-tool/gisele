@@ -5,7 +5,7 @@ module Gisele
         include Node
 
         def label
-          markers[:match] ? markers[:match].to_s : last.label
+          (citrus_match && citrus_match.to_s) || last.label
         end
 
       end # module BoolExpr

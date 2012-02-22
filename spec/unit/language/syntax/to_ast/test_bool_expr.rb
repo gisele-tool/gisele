@@ -2,6 +2,11 @@ require 'spec_helper'
 module Gisele::Language::Syntax
   describe BoolExpr, "to_ast" do
 
+    it 'is correctly extended by Sexpr' do
+      ast("true", :bool_expr).should be_a(Gisele::Language::AST::BoolExpr)
+      ast("true", :bool_expr).should respond_to(:dot_attributes)
+    end
+
     it 'returns expected ast on simple expressions' do
       expected = \
         [:bool_expr, [:bool_and, [:var_ref, "diagKnown"], [:var_ref, "platLow"]]]
