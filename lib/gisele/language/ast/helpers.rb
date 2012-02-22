@@ -32,7 +32,7 @@ module Gisele
         end
 
         def ast_module(node)
-          modname = Language.rule2mod(node.first)
+          modname = Language.rule2modname(node.first)
           AST.const_get(modname) rescue Node
         end
 
