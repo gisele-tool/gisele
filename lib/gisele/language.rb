@@ -1,9 +1,9 @@
 module Gisele
+  Language = Sexpr.load Path.dir/"language/grammar.sexp.yml"
   module Language
 
     require 'yaml'
     DOT_ATTRIBUTES = YAML.load_file(Path.dir/"language/grammar.dot.yml")
-    SEXP_GRAMMAR   = Sexpr.load Path.dir/"language/grammar.sexp.yml"
 
     RESERVED_WORDS = [
       "if",

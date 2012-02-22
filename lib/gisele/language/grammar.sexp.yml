@@ -1,3 +1,5 @@
+parser:
+  grammar.citrus
 rules:
   ### units and tasks
   unit_def:

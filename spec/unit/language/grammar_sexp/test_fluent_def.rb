@@ -2,7 +2,7 @@ require 'spec_helper'
 module Gisele::Language
   describe "the Sexp grammar", "fluent_def" do
 
-    let(:g){ SEXP_GRAMMAR }
+    let(:g){ Gisele::Language }
 
     it 'matches an fluent with initial value' do
       fluent = [:fluent_def, "name", [:event_set, "start"], [:event_set, "stop"], true]

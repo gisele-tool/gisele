@@ -36,7 +36,7 @@ module SpecHelpers
   end
 
   def sexp_grammar
-    Gisele::Language::SEXP_GRAMMAR
+    Gisele::Language
   end
 
   def simple_ast

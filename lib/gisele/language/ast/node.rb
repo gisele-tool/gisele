@@ -75,7 +75,7 @@ module Gisele
 
         # Checks validity over the definition
         def ===(sexp)
-          SEXP_GRAMMAR[rule_name] === sexp
+          Language[rule_name] === sexp
         end
 
       end # module Node
