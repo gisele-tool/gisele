@@ -6,7 +6,7 @@ module Gisele
         def to_ast
           Language::sexpr(value, {:citrus_match => self})
         end
-        
+
         def value
           _to_ast
         end

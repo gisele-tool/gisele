@@ -15,4 +15,3 @@ module Gisele::Language
 
   end
 end
-

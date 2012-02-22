@@ -14,7 +14,7 @@ This project requires an installation of ruby >= 1.9.2. Then,
     gem install gisele
     gisele --help
 
-For contributors (UCLouvain students, in particular), please consider the following 
+For contributors (UCLouvain students, in particular), please consider the following
 scenario:
 
     gem install bundler --pre
@@ -26,5 +26,5 @@ scenario:
 
 ## Contributing
 
-Gisele is distributed under a MIT license. The common github workflow (fork/pull request) 
+Gisele is distributed under a MIT license. The common github workflow (fork/pull request)
 applies. Please take contact with Bernard Lambeau with any question.

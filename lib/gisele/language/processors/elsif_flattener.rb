@@ -34,4 +34,3 @@ module Gisele
     end # class ElsifFlattener
   end # module Language
 end # module Gisele
-
