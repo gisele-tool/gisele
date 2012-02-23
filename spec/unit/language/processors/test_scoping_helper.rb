@@ -19,10 +19,6 @@ module Gisele::Language
     end
     let(:rw){ rw_class.new }
 
-    it 'does not install itself to ToGraph' do
-      ToGraph.helpers.any?{|x| ScopingHelper===x}.should be_false
-    end
-
     it 'installs the methods on the rewriter' do
       rw.respond_to?(:scope_stack).should be_true
     end
