@@ -1,13 +1,21 @@
 module Gisele
+
+  # Load the Language through Sexpr
   Language = Sexpr.load Path.dir/"language/grammar.sexp.yml"
 
-  # force the loading of the citrus parser
-  require_relative 'language/syntax'
+  # Load syntax nodes, abstract syntax nodes, and processors
+  require_relative 'language/syntax/node'
+  require_relative 'language/ast/node'
+  require_relative 'language/processors'
+
+  # Force loading the Citrus parser now
   Language.parser.parser
 
   module Language
 
-    require_relative 'language/ast'
+    # By default, Sexpr will find for abstract nodes under Language itself. We
+    # override that behavior here and let it know that the AST module is the
+    # parent of all ast nodes.
     def tagging_reference
       AST
     end
@@ -38,4 +46,3 @@ module Gisele
 
   end # module Language
 end # module Gisele
-require_relative 'language/processors'
