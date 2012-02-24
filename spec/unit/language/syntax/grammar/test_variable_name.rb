@@ -2,6 +2,27 @@ require 'spec_helper'
 module Gisele::Language
   describe Grammar, 'variable_name' do
 
+    RESERVED_WORDS = [
+      "if",
+      "else",
+      "elsif",
+      "when",
+      "while",
+      "seq",
+      "par",
+      "task",
+      "refinement",
+      "fluent",
+      "trackvar",
+      "initially",
+      "end",
+      "not",
+      "or",
+      "and",
+      "true",
+      "false"
+    ]
+
     it 'parses correct variable names' do
       parse('a',         :variable_name).should eq('a')
       parse('diagnosis', :variable_name).should eq('diagnosis')
@@ -9,7 +30,7 @@ module Gisele::Language
     end
 
     it 'does not allow reserved words' do
-      Gisele::Language::RESERVED_WORDS.each do |word|
+      RESERVED_WORDS.each do |word|
         lambda{
           parse(word.to_s + " ", :variable_name)
         }.should raise_error(Citrus::ParseError)
