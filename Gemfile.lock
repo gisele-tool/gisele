@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/blambeau/sexpr.git
-  revision: 4f234e9d3c9834d570692703c7097751a6c2ac3a
+  revision: 7457bd5ea071311f58cc5ae3e959a988540a6bdb
   specs:
     sexpr (0.4.0)
 

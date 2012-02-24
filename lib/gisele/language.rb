@@ -20,6 +20,12 @@ module Gisele
       AST
     end
 
+    # The tagging function (from s-expr kind to AST module) is not complete so far.
+    # This allows us to at least include the AST:Node module in all s-expressions.
+    def default_tagging_module
+      AST::Node
+    end
+
     require 'yaml'
     DOT_ATTRIBUTES = YAML.load_file(Path.dir/"language/grammar.dot.yml")
 
