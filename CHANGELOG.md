@@ -1,3 +1,16 @@
+# 0.5.0 / FIX ME
+
+* Major enhancements
+
+  * All s-expression tools have been moved to a separated project called `Sexpr` (see
+    https://github.com/blambeau/sexpr). This implies a lot of changes here, but mostly
+    to private APIs. In particular, the commandline tool and the language grammar have not
+    changed.
+
+* Breaking changes
+
+  * `ToGraph` has been moved under `Gisele::Compiling` instead of `Gisele::Language`.
+
 # 0.4.0 / 2012-02-20
 
 * Major enhancements
