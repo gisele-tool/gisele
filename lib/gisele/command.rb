@@ -45,6 +45,10 @@ module Gisele
              'Compile as a workflow graph (dot)') do |value|
         @compile_mode = [:graph, (value || "dot").to_sym]
       end
+      opt.on('--glts=[MODE]',
+             'Compile as guarded labeled transition system (dot)') do |value|
+        @compile_mode = [:glts, (value || "dot").to_sym]
+      end
 
       opt.on_tail('--help', "Show this help message") do
         raise Quickl::Help
@@ -80,6 +84,13 @@ module Gisele
       graphs = Gisele::Compiling::ToGraph.call(ast)
       graphs.each do |graph|
         puts graph.to_dot
+      end
+    end
+
+    def compile_glts(ast, option)
+      glts = Gisele::Compiling::ToGlts.call(ast)
+      glts.each do |g|
+        puts g.to_dot(&Gisele::Compiling::ToGlts::DOT_REWRITER)
       end
     end
 
