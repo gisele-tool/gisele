@@ -7,7 +7,7 @@ module Gisele::Language
     end
 
     def rewrite(ast)
-      @rewrited = IfToCase.new.call(ast)
+      @rewrited = IfToCase.call(ast)
     end
 
     after{

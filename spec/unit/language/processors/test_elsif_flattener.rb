@@ -7,7 +7,7 @@ module Gisele::Language
     end
 
     def rewrite(ast)
-      @rewrited = ElsifFlattener.new.call(ast)
+      @rewrited = ElsifFlattener.call(ast)
     end
 
     after{

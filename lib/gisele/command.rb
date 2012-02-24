@@ -59,7 +59,7 @@ module Gisele
       end
 
       ast = Gisele.ast(file)
-      ast = Language::SugarRemoval.new.call(ast) unless @sugar
+      ast = Language::SugarRemoval.call(ast) unless @sugar
 
       print_ast(ast, @print_ast) if @print_ast
       print_graph(ast, @print_graph) if @print_graph
@@ -78,7 +78,7 @@ module Gisele
     end
 
     def print_graph(ast, option)
-      graphs = Gisele::Language::ToGraph.new.call(ast)
+      graphs = Gisele::Language::ToGraph.call(ast)
       graphs.each do |graph|
         puts graph.to_dot
       end
