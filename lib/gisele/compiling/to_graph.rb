@@ -1,10 +1,10 @@
 module Gisele
-  module Language
+  module Compiling
     class ToGraph < Sexpr::Rewriter
       grammar Language
 
       # We do not support the elsif syntactic sugar here; rewrite it as 'else if'.
-      use ElsifFlattener
+      use Language::ElsifFlattener
 
       # This is a marker for the graph nodes we can remove later.
       module Connector; end
@@ -151,6 +151,6 @@ module Gisele
         sexpr(parse("true", :root => :bool_expr))
       end
 
-    end # class SugarRemoval
-  end # module Language
+    end # class ToGraph
+  end # module Compiling
 end # module Gisele

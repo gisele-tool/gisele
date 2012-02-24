@@ -14,6 +14,11 @@ module Gisele
     Language::sexpr(*args)
   end
 
+  def sexpr(*args)
+    Language::sexpr(*args)
+  end
+
   extend(self)
 end # module Gisele
 require_relative 'gisele/language'
+require_relative 'gisele/compiling'
