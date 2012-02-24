@@ -10,6 +10,10 @@
 * Breaking changes
 
   * `ToGraph` has been moved under `Gisele::Compiling` instead of `Gisele::Language`.
+  * `Language::AST::Node#dot_attributes` has been removed as it is very specific to the
+    ToGraph compiler and not a language construction.
+  * In the same vein, language/grammar.dot.yml -> compiling/to_graph.yml
+  * Also, `Language::DOT_ATTRIBUTES` -> `Compiling::ToGraph::DOT_ATTRIBUTES`
 
 # 0.4.0 / 2012-02-20
 

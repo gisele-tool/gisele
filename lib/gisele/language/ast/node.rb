@@ -12,12 +12,6 @@ module Gisele
           ""
         end
 
-        # Returns attributes to use for dot printing
-        def dot_attributes
-          attrs = Language::DOT_ATTRIBUTES[first.to_s] || {}
-          attrs.merge(:label => label)
-        end
-
         # Checks validity over the definition
         def ===(sexp)
           Language[rule_name] === sexp

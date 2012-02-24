@@ -1,3 +1,4 @@
+require 'yaml'
 module Gisele
 
   # Load the Language through Sexpr
@@ -25,9 +26,6 @@ module Gisele
     def default_tagging_module
       AST::Node
     end
-
-    require 'yaml'
-    DOT_ATTRIBUTES = YAML.load_file(Path.dir/"language/grammar.dot.yml")
 
   end # module Language
 end # module Gisele

@@ -4,7 +4,6 @@ module Gisele::Language::Syntax
 
     it 'is correctly extended by Sexpr' do
       ast("true", :bool_expr).should be_a(Gisele::Language::AST::BoolExpr)
-      ast("true", :bool_expr).should respond_to(:dot_attributes)
     end
 
     it 'returns expected ast on simple expressions' do

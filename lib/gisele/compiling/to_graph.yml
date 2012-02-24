@@ -1,0 +1,20 @@
+graphviz:
+  task_def:
+    shape: circle
+    style: filled
+    fillcolor: black
+    fixed: true
+    width: 0.1
+  task_call_st:
+    shape: box
+  while_st:
+    shape: diamond
+  if_st:
+    shape: diamond
+  case_st:
+    shape: diamond
+  par_st:
+    shape: box
+    height: 0.1
+    style: filled
+    fillcolor: black

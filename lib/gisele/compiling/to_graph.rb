@@ -125,11 +125,7 @@ module Gisele
       private
 
       def add_vertex(sexpr)
-        if sexpr.respond_to?(:dot_attributes)
-          @graph.add_vertex(sexpr.dot_attributes)
-        else
-          @graph.add_vertex({})
-        end
+        @graph.add_vertex(dot_attributes(sexpr))
       end
 
       def entry_and_exit(sexpr, tag = Connector)
@@ -137,8 +133,7 @@ module Gisele
       end
 
       def connect(source, target, sexpr = nil)
-        marks = sexpr.nil? ? {} : sexpr.dot_attributes
-        @graph.connect(source, target, marks)
+        @graph.connect(source, target, dot_attributes(sexpr))
       end
 
       def false_ast_sexpr
@@ -147,6 +142,17 @@ module Gisele
 
       def true_ast_sexpr
         sexpr(parse("true", :root => :bool_expr))
+      end
+
+      DOT_ATTRIBUTES = YAML.load_file(Path.dir/"to_graph.yml")
+      def dot_attributes(sexpr)
+        if Sexpr===sexpr
+          attrs = DOT_ATTRIBUTES["graphviz"][sexpr.first.to_s] || {}
+          attrs = attrs.merge(:label => sexpr.label) if sexpr.respond_to?(:label)
+          attrs
+        else
+          {} # sometimes, sexpr is simply nil
+        end
       end
 
     end # class ToGraph
