@@ -1,6 +1,6 @@
 # 0.4.0 / 2012-02-20
 
-* Major enhancement
+* Major enhancements
 
   * The grammar is going to be stable very soon now (expect backward compatible additions,
     maybe). As an helper to work with the grammar, a YAML file describing the structure of
@@ -9,9 +9,9 @@
 * Breaking changes
 
   * The :nop statement has been renamed :nop_st.
-  * The kind of the AST nodes for fluent and tracking variable definitions have been renamed
-    :fluent_def and :trackvar_def. This is actually a bugfix but that might break other code
-    relying on 0.3.0.
+  * The kind of the AST nodes for fluent and tracking variable definitions have been
+    renamed :fluent_def and :trackvar_def. This is actually a bugfix but that might break
+    other code relying on 0.3.0.
 
 # 0.3.0 / 2012-02-20
 
@@ -24,8 +24,8 @@
 
 * Minor enhancements
 
-  * The --graph option now outputs one graph for each task_def in the unit. Previously only
-    the graph of the last task definition was printed.
+  * The --graph option now outputs one graph for each task_def in the unit. Previously
+    only the graph of the last task definition was printed.
 
 * Bugfixes
 
@@ -34,10 +34,10 @@
 
 * Breaking changes
 
-  * The syntax and AST of a task definition has changed. The "refinement ... end" construct
-    has been removed and replaced by an explicit process statement. Accordingly, the nodes
-    task_refinement and task_signature have been removed as well. The AST signature of a task
-    definition is now as follows:
+  * The syntax and AST of a task definition has changed. The "refinement ... end"
+    construct has been removed and replaced by an explicit process statement. Accordingly,
+    the nodes task_refinement and task_signature have been removed as well. The AST
+    signature of a task definition is now as follows:
 
             [:task_def, "TaskName", (fluent_def, trackvar_def, task_def)*, explicit_statement]
 
@@ -52,9 +52,9 @@
 
   * Boolean literals (true, false) are now explicitly represented in boolean expressions,
     under a :bool_lit AST node.
-  * All statements and clauses relying on boolean conditions (if_st, while_st, elsif_clause,
-    when_clause) have now an explicit :bool_expr node as first child. Previously, a subnode
-    of the boolean grammar was used.
+  * All statements and clauses relying on boolean conditions (if_st, while_st,
+    elsif_clause, when_clause) have now an explicit :bool_expr node as first child.
+    Previously, a subnode of the boolean grammar was used.
 
 # 0.1.0 / 2012-02-17
 
