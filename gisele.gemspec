@@ -133,6 +133,7 @@ Gem::Specification.new do |s|
   s.add_dependency("awesome_print", "~> 1.0")
   s.add_dependency("yargi", "~> 0.2.0")
   s.add_dependency("sexpr", "~> 0.4.0")
+  s.add_dependency("stamina-core", "~> 0.5.1")
 
   # The version of ruby required by this gem
   #

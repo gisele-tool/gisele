@@ -7,6 +7,7 @@ group :runtime do
   gem "awesome_print", "~> 1.0"
   gem "yargi", "~> 0.2.0"
   gem "sexpr", :git => "git://github.com/blambeau/sexpr.git"
+  gem "stamina-core", "~> 0.5.1"
 end
 
 group :development do
