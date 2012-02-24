@@ -3,13 +3,17 @@ module Gisele
     class ToGraph < Sexpr::Rewriter
       grammar Language
 
+      # We do not support the elsif syntactic sugar here; rewrite it as 'else if'.
+      use ElsifFlattener
+
+      # This is a marker for the graph nodes we can remove later.
       module Connector; end
 
       def on_unit_def(sexpr)
         sexpr.
           sexpr_body.
           select{|n| n.first == :task_def}.
-          map{|taskdef| call(taskdef) }
+          map{|taskdef| apply(taskdef) }
       end
 
       def on_task_def(sexpr)
@@ -18,7 +22,7 @@ module Gisele
         entry, exit = add_vertex(sexpr), add_vertex(sexpr)
 
         # flatten all elsif
-        c_entry, c_exit = call(ElsifFlattener.new.call(sexpr.last))
+        c_entry, c_exit = apply(sexpr.last)
         connect(entry, c_entry)
         connect(c_exit, exit)
 
@@ -36,7 +40,7 @@ module Gisele
         mine    = entry_and_exit(sexpr)
         current = mine.first
         sexpr.sexpr_body.each do |child|
-          c_entry, c_exit = call(child)
+          c_entry, c_exit = apply(child)
           connect(current, c_entry)
           current = c_exit
         end
@@ -47,7 +51,7 @@ module Gisele
       def on_par_st(sexpr)
         entry, exit = add_vertex(sexpr), add_vertex(sexpr)
         sexpr.sexpr_body.each do |child|
-          c_entry, c_exit = call(child)
+          c_entry, c_exit = apply(child)
           connect(entry, c_entry)
           connect(c_exit, exit)
         end
@@ -62,12 +66,12 @@ module Gisele
         diamond = add_vertex(sexpr)
         connect(entry, diamond)
 
-        c_entry, c_exit = call(then_clause)
+        c_entry, c_exit = apply(then_clause)
         connect(diamond, c_entry, true_ast_sexpr)
         connect(c_exit, exit)
 
         if else_clause
-          c_entry, c_exit = call(else_clause.last)
+          c_entry, c_exit = apply(else_clause.last)
           connect(diamond, c_entry, false_ast_sexpr)
           connect(c_exit, exit)
         else
@@ -86,7 +90,7 @@ module Gisele
         connect(entry, diamond)
 
         clauses.each do |clause|
-          c_entry, c_exit = call(clause.last)
+          c_entry, c_exit = apply(clause.last)
           connect(diamond, c_entry, clause)
           connect(c_exit, exit)
         end
@@ -103,7 +107,7 @@ module Gisele
         diamond = add_vertex(sexpr)
         connect(entry, diamond)
 
-        c_entry, c_exit = call(sexpr.last)
+        c_entry, c_exit = apply(sexpr.last)
 
         connect(diamond, exit,    false_ast_sexpr)
         connect(diamond, c_entry, true_ast_sexpr)

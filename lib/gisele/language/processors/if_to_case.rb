@@ -7,7 +7,7 @@ module Gisele
         condition, dost, *clauses = sexpr.sexpr_body
 
         # create case_st with same markers as the if_st
-        when_clause = [:when_clause, condition, main_processor.call(dost)]
+        when_clause = [:when_clause, condition, apply(dost)]
         when_clause = sexpr(when_clause, sexpr.tracking_markers)
         base        = [:case_st, nil, when_clause]
         base        = sexpr(base, sexpr.tracking_markers)
@@ -17,7 +17,7 @@ module Gisele
 
         # make injection now
         clauses.inject base do |memo,clause|
-          memo << call(clause)
+          memo << apply(clause)
         end
       end
 
@@ -33,7 +33,7 @@ module Gisele
         base = \
           [:when_clause,
             [:bool_expr, [:bool_and, condition, previous]],
-            main_processor.call(dost) ]
+            apply(dost) ]
         sexpr(base, sexpr.tracking_markers)
       end
 
@@ -44,7 +44,7 @@ module Gisele
         base = \
           [:when_clause,
             [:bool_expr, @condition],
-            main_processor.call(dost)]
+            apply(dost)]
         sexpr(base, sexpr.tracking_markers)
       end
 

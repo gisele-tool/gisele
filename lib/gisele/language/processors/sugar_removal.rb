@@ -3,11 +3,14 @@ module Gisele
     class SugarRemoval < Sexpr::Rewriter
       grammar Language
 
-      def on_if_st(sexpr)
-        ElsifFlattener.new(:main_processor => self).call(sexpr)
-      end
+      # (elsif ... -> else if ...)
+      use ElsifFlattener
 
-      alias :on_missing :copy_and_apply
+      def apply(sexpr)
+        # all is already done by preprocessors so that we can simply return
+        # the s-expression.
+        sexpr
+      end
 
     end # class SugarRemoval
   end # module Language
