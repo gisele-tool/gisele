@@ -70,8 +70,7 @@ module Gisele
     def print_ast(ast, option)
       require 'awesome_print'
       options = case option
-                when :ruby
-                  {index: false, plain: true}
+                when :ruby then {index: false, plain: true}
                 else
                   {}
                 end
