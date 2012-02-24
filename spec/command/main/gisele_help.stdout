@@ -6,9 +6,9 @@ SYNOPSIS
   gisele [--ast | --graph] PROCESS_FILE
 
 OPTIONS
-      --ast=[MODE]                 Prints the process abstract syntax tree (debug,ruby)
       --no-sugar                   Apply syntactic sugar removal
-      --graph=[MODE]               Converts and print a graph (dot)
+      --ast=[MODE]                 Compile as an abstract syntax tree (debug,ruby)
+      --graph=[MODE]               Compile as a workflow graph (dot)
       --help                       Show this help message
       --version                    Show version and exit
 
