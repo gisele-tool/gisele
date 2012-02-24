@@ -20,8 +20,6 @@ module Gisele
         @graph = Yargi::Digraph.new
 
         entry, exit = add_vertex(sexpr), add_vertex(sexpr)
-
-        # flatten all elsif
         c_entry, c_exit = apply(sexpr.last)
         connect(entry, c_entry)
         connect(c_exit, exit)
