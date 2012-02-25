@@ -6,6 +6,9 @@
     https://github.com/blambeau/sexpr). This implies a lot of changes here, but mostly
     to private APIs. In particular, the commandline tool and the language grammar have not
     changed.
+  * A --glts option has been added to the gisele commandline tool, that outputs a guarded
+    labeled transition system. The option follows the g-hMSC -> g-LTS semantics defined
+    in [Dam09, Lam11].
 
 * Breaking changes
 
