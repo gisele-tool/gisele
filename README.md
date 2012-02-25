@@ -1,5 +1,8 @@
 # Gisele
 
+[![Build Status](https://secure.travis-ci.org/blambeau/gisele.png)](http://travis-ci.org/blambeau/gisele)
+[![Dependency Status](https://gemnasium.com/blambeau/gisele.png)](https://gemnasium.com/blambeau/gisele)
+
 Gisele is a Process Analyzer Toolset
 
 ## Description
