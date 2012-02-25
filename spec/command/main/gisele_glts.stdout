@@ -1,10 +1,10 @@
 digraph G {
   graph [rankdir="LR"];
   0 [color="black" fillcolor="green" shape="circle" style="filled"];
-  6 [color="black" fillcolor="white" shape="circle" style="filled"];
-  4 [color="black" fillcolor="white" shape="circle" style="filled"];
-  5 [color="black" fillcolor="white" shape="circle" style="filled"];
   2 [color="black" fillcolor="white" shape="circle" style="filled"];
+  4 [color="black" fillcolor="white" shape="circle" style="filled"];
+  6 [color="black" fillcolor="white" shape="circle" style="filled"];
+  5 [color="black" fillcolor="white" shape="circle" style="filled"];
   7 [color="black" fillcolor="white" shape="circle" style="filled"];
   9 [color="black" fillcolor="white" shape="circle" style="filled"];
   10 [color="black" fillcolor="white" shape="circle" style="filled"];

@@ -6,13 +6,13 @@ group :runtime do
   gem "quickl", "~> 0.4.3"
   gem "awesome_print", "~> 1.0"
   gem "yargi", "~> 0.2.0"
-  gem "sexpr", :git => "git://github.com/blambeau/sexpr.git"
-  gem "stamina-core", :git => "git://github.com/blambeau/stamina.git"
+  gem "sexpr", "~> 0.5.0"
+  gem "stamina-core", "~> 0.5.3"
 end
 
 group :development do
   gem "rake", "~> 0.9.2"
   gem "bundler", "~> 1.0"
-  gem "rspec", "~> 2.8.0"
+  gem "rspec", "~> 2.8"
   gem "wlang", "~> 0.10.2"
 end

@@ -125,15 +125,15 @@ Gem::Specification.new do |s|
   #
   s.add_development_dependency("rake", "~> 0.9.2")
   s.add_development_dependency("bundler", "~> 1.0")
-  s.add_development_dependency("rspec", "~> 2.8.0")
+  s.add_development_dependency("rspec", "~> 2.8")
   s.add_development_dependency("wlang", "~> 0.10.2")
   s.add_dependency("citrus", "~> 2.4")
   s.add_dependency("epath", "~> 0.0.1")
   s.add_dependency("quickl", "~> 0.4.3")
   s.add_dependency("awesome_print", "~> 1.0")
   s.add_dependency("yargi", "~> 0.2.0")
-  s.add_dependency("sexpr", "~> 0.4.0")
-  s.add_dependency("stamina-core", "~> 0.5.1")
+  s.add_dependency("sexpr", "~> 0.5.0")
+  s.add_dependency("stamina-core", "~> 0.5.3")
 
   # The version of ruby required by this gem
   #
