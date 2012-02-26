@@ -1,4 +1,4 @@
-# 0.5.0 / FIX ME
+# 0.5.0 / 2012-02-26
 
 * Major enhancements
 
