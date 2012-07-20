@@ -1,3 +1,7 @@
+# 0.5.1 / 2012-07-20
+
+* Extracted the language part in a separate gisele-language gem.
+
 # 0.5.0 / 2012-02-26
 
 * Major enhancements

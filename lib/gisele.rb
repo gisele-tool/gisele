@@ -6,19 +6,6 @@ require_relative 'gisele/errors'
 #
 module Gisele
 
-  def parse(*args)
-    Language::parse(*args)
-  end
-
-  def ast(*args)
-    Language::sexpr(*args)
-  end
-
-  def sexpr(*args)
-    Language::sexpr(*args)
-  end
-
   extend(self)
 end # module Gisele
-require_relative 'gisele/language'
 require_relative 'gisele/compiling'
