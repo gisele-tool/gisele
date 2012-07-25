@@ -88,10 +88,13 @@ module Gisele
     end
 
     def compile_glts(ast, option)
-      glts = Gisele::Compiling::ToGlts.call(ast)
+      session = Analysis::Compiling::Ast2Session.call(ast)
+      glts    = Analysis::Compiling::Ast2Glts.call(session, ast)
       glts.each do |g|
-        puts g.to_dot(&Gisele::Compiling::ToGlts::DOT_REWRITER)
+        puts g.to_dot
       end
+    ensure
+      session.close if session
     end
 
 end # class Command

@@ -18,4 +18,8 @@ module Gisele
   class UnexpectedNodeError < InternalError
   end
 
+  # Raised when a variable is not known.
+  class NoSuchVariableError < Error
+  end
+
 end # module Gisele
