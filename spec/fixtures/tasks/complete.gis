@@ -1,12 +1,16 @@
 task Complete
 
-  trackvar everyOneHappy
+  trackvar everyoneHappy
     {FirstTask:start}
 
   fluent someoneHappy
     {DrinkBeer:start, DrinkBeers:start},
     {DoNothingSpecial:end}
   initially false
+
+  trackvar endOfTheDay   {}
+  trackvar somethingToDo {}
+  trackvar nothingToDo   {}
 
   task DrinkBeers
     while not(drunk)

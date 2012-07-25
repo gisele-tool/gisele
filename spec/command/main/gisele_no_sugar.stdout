@@ -5,7 +5,7 @@
         "Complete",
         [
             :trackvar_def,
-            "everyOneHappy",
+            "everyoneHappy",
             [
                 :event_set,
                 "FirstTask:start"
@@ -28,6 +28,39 @@
                 "DoNothingSpecial:end"
             ],
             false
+        ],
+        [
+            :trackvar_def,
+            "endOfTheDay",
+            [
+                :event_set
+            ],
+            [
+                :event_set
+            ],
+            nil
+        ],
+        [
+            :trackvar_def,
+            "somethingToDo",
+            [
+                :event_set
+            ],
+            [
+                :event_set
+            ],
+            nil
+        ],
+        [
+            :trackvar_def,
+            "nothingToDo",
+            [
+                :event_set
+            ],
+            [
+                :event_set
+            ],
+            nil
         ],
         [
             :task_def,
