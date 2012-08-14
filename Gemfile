@@ -9,6 +9,7 @@ group :runtime do
   gem "gisele-analysis", :path => "../gisele-analysis"
   gem "cudd-rb", :path => "../cudd-rb"
   gem "stamina-core", :path => "../stamina"
+  gem "alf", :path => "../alf"
 end
 
 group :development do

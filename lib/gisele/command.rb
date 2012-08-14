@@ -97,7 +97,15 @@ module Gisele
       glts    = Analysis::Compiling::Ast2Glts.call(session, ast)
       glts    = glts.map(&:determinize) if @determinize
       glts.each do |g|
-        puts g.to_dot
+        case mode
+        when :dot      then puts g.to_dot
+        when :ruby     then puts g.to_ruby_literal
+        when :relation then puts g.to_relation.to_ruby_literal
+        when :text     then puts g.to_relation.to_text
+        when :rash     then puts g.to_relation.to_rash
+        else
+          raise "Unrecognized --glts output mode `mode`"
+        end
       end
     ensure
       session.close if session
