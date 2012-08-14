@@ -50,6 +50,11 @@ module Gisele
         @compile_mode = [:glts, (value || "dot").to_sym]
       end
 
+      opt.on('-d', '--deterministic',
+             'Determinize gtls output?') do
+        @determinize = true
+      end
+
       opt.on_tail('--help', "Show this help message") do
         raise Quickl::Help
       end
@@ -87,9 +92,10 @@ module Gisele
       end
     end
 
-    def compile_glts(ast, option)
+    def compile_glts(ast, mode)
       session = Analysis::Compiling::Ast2Session.call(ast)
       glts    = Analysis::Compiling::Ast2Glts.call(session, ast)
+      glts    = glts.map(&:determinize) if @determinize
       glts.each do |g|
         puts g.to_dot
       end
