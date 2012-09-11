@@ -86,7 +86,7 @@ module Gisele
     end
 
     def compile_graph(ast, option)
-      graphs = Gisele::Compiling::ToGraph.call(ast)
+      graphs = Analysis::Compiling::Ast2Graph.call(ast)
       graphs.each do |graph|
         puts graph.to_dot
       end

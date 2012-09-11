@@ -8,4 +8,3 @@ module Gisele
 
   extend(self)
 end # module Gisele
-require_relative 'gisele/compiling'

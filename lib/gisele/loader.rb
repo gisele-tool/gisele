@@ -1,7 +1,6 @@
 require "path"
 require "quickl"
 require "awesome_print"
-require "yargi"
 require "stamina-core"
 require "gisele-language"
 require "gisele-analysis"

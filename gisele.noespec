@@ -25,6 +25,7 @@ variables:
     - {name: quickl,          version: "~> 0.4.3",  groups: [runtime]}
     - {name: awesome_print,   version: "~> 1.0",    groups: [runtime]}
     - {name: yargi,           version: "~> 0.2.0",  groups: [runtime]}
+    - {name: alf,             version: "~> 0.13.0", groups: [runtime]}
     - {name: stamina-core,    version: "~> 0.6.0",  groups: [runtime]}
     - {name: gisele-language, version: "~> 0.5.0",  groups: [runtime]}
     - {name: gisele-analysis, version: "~> 0.1.0",  groups: [runtime]}
