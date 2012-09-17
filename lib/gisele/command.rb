@@ -54,6 +54,14 @@ module Gisele
              'Determinize gtls output?') do
         @determinize = true
       end
+      opt.on('-e', '--explicit',
+             'Explicit guards in gtls output?') do
+        @explicit = true
+      end
+      opt.on('-s', '--separate',
+             'Split guards from events in glts output?') do
+        @separate = true
+      end
 
       opt.on_tail('--help', "Show this help message") do
         raise Quickl::Help
@@ -96,6 +104,8 @@ module Gisele
       session = Analysis::Compiling::Ast2Session.call(ast)
       glts    = Analysis::Compiling::Ast2Glts.call(session, ast)
       glts    = glts.map(&:determinize) if @determinize
+      glts    = glts.map(&:separate) if @separate
+      glts    = glts.map{|g| g.explicit_guards!} if @explicit
       glts.each do |g|
         case mode
         when :dot      then puts g.to_dot

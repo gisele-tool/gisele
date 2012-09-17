@@ -11,6 +11,8 @@ OPTIONS
       --graph=[MODE]               Compile as a workflow graph (dot)
       --glts=[MODE]                Compile as guarded labeled transition system (dot)
   -d, --deterministic              Determinize gtls output?
+  -e, --explicit                   Explicit guards in gtls output?
+  -s, --separate                   Split guards from events in glts output?
       --help                       Show this help message
       --version                    Show version and exit
 
