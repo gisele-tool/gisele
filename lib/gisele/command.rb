@@ -94,28 +94,24 @@ module Gisele
     end
 
     def compile_graph(ast, option)
-      graphs = Analysis::Compiling::Ast2Graph.call(ast)
-      graphs.each do |graph|
-        puts graph.to_dot
-      end
+      graph = Analysis::Compiling::Ast2Graph.call(ast)
+      puts graph.to_dot
     end
 
     def compile_glts(ast, mode)
       session = Analysis::Compiling::Ast2Session.call(ast)
       glts    = Analysis::Compiling::Ast2Glts.call(session, ast)
-      glts    = glts.map(&:determinize) if @determinize
-      glts    = glts.map(&:separate) if @separate
-      glts    = glts.map{|g| g.explicit_guards!} if @explicit
-      glts.each do |g|
-        case mode
-        when :dot      then puts g.to_dot
-        when :ruby     then puts g.to_ruby_literal
-        when :relation then puts g.to_relation.to_ruby_literal
-        when :text     then puts g.to_relation.to_text
-        when :rash     then puts g.to_relation.to_rash
-        else
-          raise "Unrecognized --glts output mode `mode`"
-        end
+      glts    = glts.determinize if @determinize
+      glts    = glts.separate    if @separate
+      glts    = glts.explicit_guards! if @explicit
+      case mode
+      when :dot      then puts glts.to_dot
+      when :ruby     then puts glts.to_ruby_literal
+      when :relation then puts glts.to_relation.to_ruby_literal
+      when :text     then puts glts.to_relation.to_text
+      when :rash     then puts glts.to_relation.to_rash
+      else
+        raise "Unrecognized --glts output mode `mode`"
       end
     ensure
       session.close if session
