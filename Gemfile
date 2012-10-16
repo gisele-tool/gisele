@@ -5,10 +5,7 @@ group :runtime do
   gem "quickl", "~> 0.4.3"
   gem "awesome_print", "~> 1.0"
   gem "yargi", "~> 0.2.0"
-  gem "alf", :path => "../alf"
-  gem "gisele-analysis", :path => "../gisele-analysis"
-  gem "cudd-rb",         :path => "../cudd-rb"
-  gem "stamina-core",    :path => "../stamina"
+  gem "gisele-analysis", "~> 0.6.0"
 end
 
 group :development do

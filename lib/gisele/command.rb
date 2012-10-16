@@ -107,7 +107,6 @@ module Gisele
       case mode
       when :dot      then puts glts.to_dot
       when :ruby     then puts glts.to_ruby_literal
-      when :relation then puts glts.to_relation.to_ruby_literal
       when :text     then puts glts.to_relation.to_text
       when :rash     then puts glts.to_relation.to_rash
       else
